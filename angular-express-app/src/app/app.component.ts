@@ -1,23 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ApiService } from './api.service';
+import { Component} from '@angular/core';
+import { RouterOutlet} from '@angular/router';
+import { BaseComponent } from "./modules/layout/base/base.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, BaseComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  template: '<h1>{{ message }}</h1>'
+  styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
-  message: string = '';
 
-  constructor(private apiService: ApiService) {}
+export class AppComponent {
 
-  ngOnInit() {
-    this.apiService.getHello().subscribe((response: string) => {
-      this.message = response;
-    });
-  }
 }

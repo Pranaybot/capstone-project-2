@@ -1,0 +1,60 @@
+.home-content {
+  display: flex;
+  align-items: center;
+  justify-content: center; // Center content horizontally
+  flex-direction: column; // Change to column for smaller screens
+  padding: 50px;
+  background: linear-gradient(to right, #3a0e7e, #b573e5); // Adjusted color codes for example
+  text-align: center;
+  min-height: 100vh; // Ensure the home content takes the full viewport height
+  box-sizing: border-box; // Include padding and border in the element's total width and height
+
+  .text-content {
+    flex: 1.5; // Decrease flex to make it narrower
+    text-align: center; // Center-align text on all screen sizes
+    margin-bottom: 20px; // Add margin to separate from image
+    max-width: 500px; // Reduce the maximum width of the text content
+
+    h1 {
+      font-size: 3.5rem; // Increased font size for the heading
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.5rem; // Increased font size for the paragraph
+    }
+  }
+
+  .image-content {
+    flex: 1;
+    max-width: 250px; // Adjust maximum width for the image
+    margin: 0 auto;
+
+    img {
+      width: 80%;
+      height: auto;
+    }
+  }
+}
+
+/* Responsive styles */
+@media (min-width: 768px) {
+  .home-content {
+    flex-direction: row; // Change to row for larger screens
+    text-align: left; // Align text to left on larger screens
+    padding: 0 50px; // Adjust padding for larger screens
+    justify-content: center; // Center content horizontally
+
+    .text-content {
+      text-align: left; // Align text to left on larger screens
+      margin-bottom: 0; // Remove margin for larger screens
+      margin-right: 5px; // Reduce margin to bring closer to the image
+      max-width: 350px; // Reduce the maximum width of the text content for larger screens
+    }
+
+    .image-content {
+      max-width: 40%; // Adjust maximum width for larger screens
+      margin: 0 10px; // Reduce margin to bring content closer together
+    }
+  }
+}

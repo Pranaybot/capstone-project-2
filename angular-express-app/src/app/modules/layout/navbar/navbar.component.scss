@@ -1,0 +1,48 @@
+.navbar-container {
+    display: flex;
+    background-color: #f1f1f1;
+  
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      
+      a {
+        text-decoration: none;
+        color: #fff;
+        padding: 8px 12px;
+        transition: all 0.3s ease;
+  
+        &:hover {
+          background-color: #555;
+        }
+        
+      }
+    }
+  }
+  
+  .logo {
+    flex: 1;
+  
+    a {
+      span {
+        &#taskerr-logo {
+          font-size: 2em;
+        }
+        &#takserr-brand {
+          margin-left: 0.3em;
+        }
+      }
+    }
+  }
+  
+  .other-nav-content {
+    flex: 1;
+  
+    a {
+      margin-top: 0.7em;
+    }
+  }
+  
