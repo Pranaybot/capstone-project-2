@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getHello().subscribe((response: any) => {
+    this.apiService.getHello().subscribe((response: string) => {
       this.message = response;
     });
   }
