@@ -1,5 +1,5 @@
 <ul class="tab-group">
-    <li class="tab active"><a href="#signup">Sign Up</a></li>
-    <li class="tab"><a href="#login">Log In</a></li>
-</ul>
+    <li class="tab" [class.active]="activeTab === 'signup'" (click)="selectTab('signup')"><a href="#">Sign Up</a></li>
+    <li class="tab" [class.active]="activeTab === 'login'" (click)="selectTab('login')"><a href="#">Log In</a></li>
+  </ul>
   

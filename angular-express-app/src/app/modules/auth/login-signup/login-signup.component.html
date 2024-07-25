@@ -1,5 +1,8 @@
 <div class="form">
-    <app-tab-group></app-tab-group>
-    <app-tab-content></app-tab-content>
-</div>
+    <app-tab-group (tabSelected)="onTabSelected($event)"></app-tab-group>
+    <div class="tab-content">
+      <app-signup-form *ngIf="activeTab === 'signup'"></app-signup-form>
+      <app-login-form *ngIf="activeTab === 'login'"></app-login-form>
+    </div>
+  </div>
   
