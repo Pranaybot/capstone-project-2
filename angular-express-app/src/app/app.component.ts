@@ -1,13 +1,15 @@
 import { Component} from '@angular/core';
 import { RouterOutlet} from '@angular/router';
-import { BaseComponent } from "./modules/layout/base/base.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
+  template: `<router-outlet></router-outlet>`,
   standalone: true,
-  imports: [RouterOutlet, BaseComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [
+    RouterOutlet, 
+    CommonModule
+  ]
 })
 
 export class AppComponent {
