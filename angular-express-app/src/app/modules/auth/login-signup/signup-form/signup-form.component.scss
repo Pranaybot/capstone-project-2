@@ -1,5 +1,10 @@
 @import '../variables';
 
+form {
+  max-width: 600px; // Maximum width for the form
+  margin: 0 auto; // Center-align the form
+}
+
 h1 {
   text-align: center;
   color: $white;
@@ -16,7 +21,7 @@ label {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   pointer-events: none;
-  font-size: 22px;
+  font-size: 18px; // Adjusted font size
 
   .req {
     margin: 2px;
@@ -39,16 +44,16 @@ label.highlight {
 }
 
 input, textarea {
-  font-size: 22px;
+  font-size: 18px; // Adjusted font size
   display: block;
-  width: 100%;
+  width: calc(100% - 20px); // Decreased width to align with the button
   height: 100%;
-  padding: 5px 10px;
+  padding: 10px 10px; // Adjusted padding
   background: none;
   background-image: none;
   border: 1px solid $gray-light;
   color: $white;
-  border-radius: 0;
+  border-radius: 4px; // Adjusted border-radius
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
   &:focus {
@@ -58,13 +63,13 @@ input, textarea {
 }
 
 textarea {
-  border: 2px solid $gray-light;
+  border: 1px solid $gray-light; // Adjusted border
   resize: vertical;
 }
 
 .field-wrap {
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 20px; // Adjusted margin
 }
 
 .top-row {
@@ -88,9 +93,9 @@ textarea {
 .button {
   border: 0;
   outline: none;
-  border-radius: 0;
+  border-radius: 4px; // Adjusted border-radius
   padding: 15px 0;
-  font-size: 2rem;
+  font-size: 1.5rem; // Adjusted font size
   font-weight: $bold;
   text-transform: uppercase;
   letter-spacing: .1em;
