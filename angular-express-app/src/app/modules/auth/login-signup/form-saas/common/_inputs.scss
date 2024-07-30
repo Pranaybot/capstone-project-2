@@ -1,0 +1,25 @@
+@import '../utilities/variables';
+
+input, textarea {
+  font-size: 18px; // Adjusted font size
+  display: block;
+  width: calc(100% - 20px); // Decreased width to align with the button
+  height: 100%;
+  padding: 10px 10px; // Adjusted padding
+  background: none;
+  background-image: none;
+  border: 1px solid $gray-light;
+  color: $white;
+  border-radius: 4px; // Adjusted border-radius
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+
+  &:focus {
+    outline: 0;
+    border-color: $main;
+  }
+}
+
+textarea {
+  border: 1px solid $gray-light; // Adjusted border
+  resize: vertical;
+}
