@@ -7,11 +7,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-base',
   template: `
-  <body>
     <app-navbar></app-navbar>
     <router-outlet></router-outlet>
     <app-footer></app-footer> 
-  </body>
   `,
   standalone: true,
   imports: [
@@ -20,6 +18,5 @@ import { CommonModule } from '@angular/common';
     NavbarComponent, 
     FooterComponent
   ],
-  styleUrl: './base.component.scss'
 })
 export class BaseComponent {}

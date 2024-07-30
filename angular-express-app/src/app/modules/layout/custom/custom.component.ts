@@ -5,9 +5,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-custom',
   template: `
-  <body>
     <router-outlet></router-outlet>
-  </body>
   `,
   standalone: true,
   imports: [

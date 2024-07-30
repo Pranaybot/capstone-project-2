@@ -4,7 +4,9 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-login-signup',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [
+    RouterOutlet,
+  ],
   templateUrl: './login-signup.component.html',
   styleUrl: './login-signup.component.scss'
 })
