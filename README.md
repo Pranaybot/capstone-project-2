@@ -64,11 +64,11 @@ from macOS to make sure you can access the project content.
 4. Launch VSCode from your computer, click on 'Open project', and select the folder with the git 
 repository.
 5. Inside your IDE, open a new command prompt window and navigate to your `git` repo.
-6. The application will have two folders, frontend and backend. First, go to the frontend folder under the
-   Task manager folder in the Command Prompt and enter `npm install` to install all of the frontend packages.
-   Do the same for the backend folder.
+6. The application will have two folders, `angular-express-app` and `backend`. First, go to the first folder under the
+   Task manager folder in the Command Prompt and enter `npm install` to install all of the angular packages.
+   Do the same for the `backend` folder.
 7. Once VSCode finishes downloading the required libraries, you can run the app in the command prompt using
-   the command, `ng serve`. Make suere you are in the frontend directory of the project.
+   the command, `ng serve`. Make sure you are in the `angular-express-app` directory of the project.
 8. To stop your project from running, enter `Ctr+C` if you are using Windows or Linux or `Cmd+C` if you are
    a macOs user.
 
@@ -86,8 +86,9 @@ repository.
    instead.
 5. You don't have to worry about additional steps if you are a Windows or Linux user. Homebrew and VSCode
    will work on any operating system.
-6. If you are a macOs user and you are worried that you don't have Python installed, you don't have to
-   worry. Users running the macOs operating system will have Python by default.
+6. You may notice that Homebrew installs Python and Java under different foldesr. This means that you have to accept
+   this installations when installing cassandra with HomeBrew. Not only that, if you are working on a Python or Java
+   application, you must change your interpreter settings for the app to run properly. 
 
 ## Future Development
 
