@@ -53,20 +53,8 @@ whether the application is viewed on a smartphone, tablet, or a computer.
    Once you are on the site, click on the 'Download' button to the left of the VSCode image.
 2. Once the IDE has installed, launch the application from your computer. Then, choose to create a new
    project or open an existing one.
-
-### C) Other steps
-1. Before you start your project, you need to create an assets folder. Go to the frontend folder, use the Command
-   Prompt to get to the app folder which will be located under src.
-2. Next, create an Assets folder by right-clicking `app`, and create 'New File' or highlighting the `app`folder
-   and selecting the new file next to the options that are to the right of your project name in VS Code.
-3. Once you finish this step, copy the .png image that is outside the task-manger folder.
-4. Go to the assets folder and paste the image.
-5. If you update the project according to your needs, keep in mind that GitHub will not track your assets or
-   environments folders because of the .gitignore files in the frontedn and backend folders. In this case,
-   save your image either within the scope of your project or somewhere else which is very secure but easy
-   to remember.
    
-### D) Project build
+### C) Project build
 1. From the github repository, go to Code and copy the HTTPS github repository url to your clipboard.
 2. In your command prompt, find or create an empty directory and run `git clone git_repo_url_link` to
 clone the repository to your local machine. If you don't have `git` installed, follow the instructions 
