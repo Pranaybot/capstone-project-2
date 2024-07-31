@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LogoComponent } from './logo/logo.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
-import { ProfileComponent } from './profile/profile.component';
 import { DomService } from '../../../services/dom.service';
 
 @Component({
@@ -9,8 +8,7 @@ import { DomService } from '../../../services/dom.service';
   standalone: true,
   imports: [
     LogoComponent,
-    NavItemComponent,
-    ProfileComponent
+    NavItemComponent
   ],
   templateUrl: './side-navigation.component.html',
   styleUrl: './side-navigation.component.scss'

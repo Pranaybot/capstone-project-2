@@ -1,12 +1,21 @@
-import { Injectable, Renderer2, ElementRef } from '@angular/core';
+import { Injectable, Renderer2, ElementRef,
+  RendererFactory2, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DomService {
   private closeBtn: HTMLElement | null = null;
+  private renderer: Renderer2;
+  private isServer: boolean;
 
-  constructor(private renderer: Renderer2) { }
+  constructor(rendererFactory: RendererFactory2, 
+    @Inject(PLATFORM_ID) private platformId: Object) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+    this.isServer = isPlatformServer(this.platformId);
+  }
 
   setCloseBtn(element: HTMLElement): void {
     this.closeBtn = element;
@@ -17,10 +26,12 @@ export class DomService {
   }
 
   addDynamicScript(scriptContent: string): void {
-    const script = this.renderer.createElement('script');
-    script.type = 'text/javascript';
-    script.text = scriptContent;
-    this.renderer.appendChild(document.body, script);
+    if (this.isServer) {
+      const script = this.renderer.createElement('script');
+      script.type = 'text/javascript';
+      script.text = scriptContent;
+      this.renderer.appendChild(this.renderer.selectRootElement('body', true), script);
+    }
   }
 
   // New method to set the close button element
@@ -28,4 +39,5 @@ export class DomService {
     const nativeElement = elementRef.nativeElement as HTMLElement;
     this.setCloseBtn(nativeElement);
   }
+
 }
