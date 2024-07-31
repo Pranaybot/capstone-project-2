@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { LogoComponent } from './logo/logo.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -16,7 +16,10 @@ import { DOMService } from '../../../../../services/dom.service';
   styleUrl: './side-navigation.component.scss'
 })
 export class SideNavigationComponent {
-  constructor(private domService: DomService) {}
+  constructor(
+    private domService: DomService,
+    private renderer: Renderer2) { }
+  
   ngOnInit(): void {
     const closeBtn = this.domService.getCloseBtn();
 
@@ -26,7 +29,7 @@ export class SideNavigationComponent {
   }
 
   addDynamicScript(closeBtn: HTMLElement) {
-    const script = document.createElement('script');
+    const script = this.renderer.createElement('script');
     script.type = 'text/javascript';
     script.text = `
       document.addEventListener('DOMContentLoaded', () => {
@@ -53,7 +56,7 @@ export class SideNavigationComponent {
         }
       });
     `;
-    document.body.appendChild(script);
+    this.renderer.appendChild(document.body, script);
   }
   
 }
