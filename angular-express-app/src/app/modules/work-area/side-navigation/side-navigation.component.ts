@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LogoComponent } from './logo/logo.component';
 import { NavItemComponent } from './nav-item/nav-item.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -17,29 +17,29 @@ import { ProfileComponent } from './profile/profile.component';
 export class SideNavigationComponent {
 
   ngOnInit() {
-    const sidebar = document.querySelector('.sidebar');
-    const closeBtn = document.querySelector('#btn');
-    const searchBtn = document.querySelector('.bx-search');
+    const sidebar = document.querySelector('.sidebar') as HTMLElement | null;
+    const closeBtn = document.querySelector('#btn') as HTMLElement | null;
+    const searchBtn = document.querySelector('.bx-search') s HTMLElement | null;
 
-    closeBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
+    closeBtn?.addEventListener('click', () => {
+      sidebar?.classList.toggle('open');
       this.menuBtnChange();
     });
 
-    searchBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
+    searchBtn?.addEventListener('click', () => {
+      sidebar?.classList.toggle('open');
       this.menuBtnChange();
     });
   }
 
   menuBtnChange() {
-    const sidebar = document.querySelector('.sidebar');
-    const closeBtn = document.querySelector('#btn');
+    const sidebar = document.querySelector('.sidebar') as HTMLElement | null;
+    const closeBtn = document.querySelector('#btn') as HTMLElement | null;
 
-    if (sidebar.classList.contains('open')) {
-      closeBtn.classList.replace('bx-menu', 'bx-menu-alt-right');
+    if (sidebar?.classList.contains('open')) {
+      closeBtn?.classList.replace('bx-menu', 'bx-menu-alt-right');
     } else {
-      closeBtn.classList.replace('bx-menu-alt-right', 'bx-menu');
+      closeBtn?.classList.replace('bx-menu-alt-right', 'bx-menu');
     }
   }
   
