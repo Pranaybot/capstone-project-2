@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   standalone: true
 })
 export class NavItemComponent {
-  @Input() icon: string;
-  @Input() label: string;
-  @Input() type: string;
+  @Input() icon: string = '';
+  @Input() label: string = '';
+  @Input() type: string = '';
 }
