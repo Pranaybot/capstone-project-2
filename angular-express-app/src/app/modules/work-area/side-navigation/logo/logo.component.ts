@@ -1,5 +1,5 @@
-import { Component, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
-import { DOMService } from '../../../../../services/dom.service';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { DomService} from '../../../../services/dom.service';
 
 @Component({
   selector: 'app-logo',
@@ -8,28 +8,28 @@ import { DOMService } from '../../../../../services/dom.service';
   templateUrl: './logo.component.html',
   styleUrl: './logo.component.scss'
 })
-export class LogoComponent 
-  implements OnInit {
-      @ViewChild('btn', {static: 
-    false}) btn: ElementRef |undefined;
-    
-    constructor(
-      private renderer: Renderer2, 
-      private domService: DomService) { }
+export class LogoComponent implements OnInit, AfterViewInit {
+  @ViewChild('btn', { static: false }) btn: ElementRef | undefined;
 
-    ngOnInit(): void {
-      const scriptContent = `
+  constructor(private domService: DomService) { }
+
+  ngOnInit(): void {
+    const scriptContent = `
       document.addEventListener('DOMContentLoaded', () => {
-        let closeBtn = document.querySelector('#btn')});
-      `;
-      
-      this.domService.addDynamicScript(scriptContent);
-    }
+        let closeBtn = document.getElementById('btn');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', () => {
+            console.log('Close button clicked');
+          });
+        }
+      });
+    `;
+    this.domService.addDynamicScript(scriptContent);
+  }
 
-    ngAfterViewInit() {
-      if (this.btn) {
-        this.domService.setCloseBtn(this.btn.nativeElement);
-      }
+  ngAfterViewInit(): void {
+    if (this.btn) {
+      this.domService.setElementRef(this.btn);
     }
-          
+  }
 }
