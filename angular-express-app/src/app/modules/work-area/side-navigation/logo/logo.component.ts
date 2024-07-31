@@ -18,18 +18,12 @@ export class LogoComponent
       private domService: DomService) { }
 
     ngOnInit(): void {
-      this.addDynamicScript();
-    }
-
-    addDynamicScript() {
-      const script = this.renderer.createElement('script');
-      script.type = 'text/javascript';
-      script.text = `
-        document.addEventListener('DOMContentLoaded', () => {
-          let closeBtn = document.querySelector('#btn')});
+      const scriptContent = `
+      document.addEventListener('DOMContentLoaded', () => {
+        let closeBtn = document.querySelector('#btn')});
       `;
       
-      this.renderer.appendChild(document.body, script);
+      this.domService.addDynamicScript(scriptContent);
     }
 
     ngAfterViewInit() {
