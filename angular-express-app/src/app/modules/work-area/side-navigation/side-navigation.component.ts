@@ -20,18 +20,8 @@ export class SideNavigationComponent {
     private domService: DomService,
     private renderer: Renderer2) { }
   
-  ngOnInit(): void {
-    const closeBtn = this.domService.getCloseBtn();
-
-    if (closeBtn) {
-      this.addDynamicScript(closeBtn);
-    }
-  }
-
-  addDynamicScript(closeBtn: HTMLElement) {
-    const script = this.renderer.createElement('script');
-    script.type = 'text/javascript';
-    script.text = `
+    ngOnInit(): void {
+      const scriptContent = `
       document.addEventListener('DOMContentLoaded', () => {
         let sidebar = document.querySelector(".sidebar");
         let searchBtn = document.querySelector(".bx-search");
@@ -53,10 +43,11 @@ export class SideNavigationComponent {
          }else {
            closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
          }
-        }
-      });
-    `;
-    this.renderer.appendChild(document.body, script);
-  }
-  
+         }
+       });
+      `;
+      
+      this.domService.addDynamicScript(scriptContent);
+    }
+
 }
