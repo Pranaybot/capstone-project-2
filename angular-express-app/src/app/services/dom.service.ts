@@ -14,14 +14,11 @@ export class DomService {
     return this.closeBtn;
   }
 
- addDynamicScript() {
+ addDynamicScript(scriptContent: string): void {
     const script = this.renderer.createElement('script');
     script.type = 'text/javascript';
-    script.text = `
-      document.addEventListener('DOMContentLoaded', () => {
-        let closeBtn = document.querySelector('#btn')});
-    `;
-    
+    script.text = scriptContent;
+   
     this.renderer.appendChild(document.body, script);
   }
 }
