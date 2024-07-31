@@ -1,0 +1,62 @@
+@import '../utilities/variables';
+
+/* Profile */
+.sidebar li.profile {
+    position: fixed;
+    height: $profile-height;
+    width: $sidebar-width;
+    left: 0;
+    bottom: -8px;
+    padding: 10px 14px;
+    background: $secondary-background-color;
+    transition: $transition-ease;
+    overflow: hidden;
+  }
+  
+  .sidebar.open li.profile {
+    width: $sidebar-open-width;
+  }
+  
+  .sidebar li .profile-details {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  
+  .sidebar li img {
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+  }
+  
+  .sidebar li.profile .name,
+  .sidebar li.profile .job {
+    font-size: 15px;
+    font-weight: 400;
+    color: $text-color;
+    white-space: nowrap;
+  }
+  
+  .sidebar li.profile .job {
+    font-size: 12px;
+  }
+  
+  .sidebar .profile #log_out {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: $secondary-background-color;
+    width: 100%;
+    height: $profile-height;
+    line-height: $profile-height;
+    border-radius: 0px;
+    transition: $transition-ease;
+  }
+  
+  .sidebar.open .profile #log_out {
+    width: 50px;
+    background: none;
+  }

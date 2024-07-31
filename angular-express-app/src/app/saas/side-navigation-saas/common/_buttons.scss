@@ -1,0 +1,17 @@
+@import '../utilities/variables';
+
+/* Buttons */
+.sidebar .logo-details #btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 23px;
+    text-align: center;
+    cursor: pointer;
+    transition: $transition-ease;
+  }
+  
+  .sidebar.open .logo-details #btn {
+    text-align: right;
+  }

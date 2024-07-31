@@ -1,0 +1,9 @@
+
+.work-area {
+  display: flex;
+}
+
+.work-area app-side-navigation {
+  position: relative;
+  z-index: 10;  // Ensure it is on top if needed
+}

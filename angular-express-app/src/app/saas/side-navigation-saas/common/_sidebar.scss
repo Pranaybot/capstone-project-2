@@ -1,0 +1,42 @@
+@import '../utilities/variables';
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: $sidebar-width;
+  background: $background-color;
+  padding: 6px 14px;
+  z-index: $sidebar-z-index;
+  transition: $transition-ease;
+}
+
+.sidebar.open {
+  width: $sidebar-open-width;
+}
+
+.home-section {
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: $sidebar-width;
+  width: calc(100% - #{$sidebar-width});
+  transition: $transition-ease;
+  z-index: 2;
+}
+
+.sidebar.open ~ .home-section {
+  left: $sidebar-open-width;
+  width: calc(100% - #{$sidebar-open-width});
+}
+
+.home-section .text {
+  display: inline-block;
+  color: $text-color-dark;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px;
+}

@@ -1,0 +1,41 @@
+@import '../utilities/variables';
+
+/* Inputs */
+.sidebar input {
+    font-size: $font-size-links;
+    color: $text-color;
+    font-weight: 400;
+    outline: none;
+    height: 50px;
+    width: 100%;
+    width: 50px;
+    border: none;
+    border-radius: 12px;
+    transition: $transition-ease;
+    background: $secondary-background-color;
+  }
+  
+  .sidebar.open input {
+    padding: 0 20px 0 50px;
+    width: 100%;
+  }
+  
+  .sidebar .bx-search {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: $font-size-search-icon;
+    background: $secondary-background-color;
+    color: $text-color;
+  }
+  
+  .sidebar.open .bx-search:hover {
+    background: $secondary-background-color;
+    color: $text-color;
+  }
+  
+  .sidebar .bx-search:hover {
+    background: $text-color;
+    color: $background-color;
+  }
