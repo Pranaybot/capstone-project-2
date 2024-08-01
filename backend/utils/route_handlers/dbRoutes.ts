@@ -1,3 +1,4 @@
+/*
 // dbRoutes.ts
 import { Application } from 'express';
 import initializeDatabase from '../../database/db';
@@ -17,3 +18,4 @@ export function setupDbRoutes(app: Application) {
       console.error("Failed to initialize cassankub", err);
     });
 }
+*/
