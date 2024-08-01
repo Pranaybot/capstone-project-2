@@ -1,3 +1,4 @@
+/*
 import cassandra from "cassandra-driver";
 import client  from "../config/clientConfig";
 import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
@@ -62,3 +63,4 @@ export class CardController {
     }
   }
 }
+*/
