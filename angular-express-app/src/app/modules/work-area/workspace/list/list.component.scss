@@ -1,0 +1,144 @@
+/* Workspace background color */
+:host {
+    display: block;
+    background-color: #f0f2f5;
+    padding: 16px;
+    min-height: 100vh; /* Ensure the background covers the full height of the viewport */
+  }
+  
+  /* Error message styling */
+  #error-message {
+    color: #dc3545; /* Red color for error messages */
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  /* Title styling */
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  /* Container styling */
+  .list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  /* List styling */
+  .list {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 16px;
+    min-width: 300px;
+    position: relative;
+  }
+  
+  /* List input styling */
+  .list input {
+    border: none;
+    border-bottom: 2px solid #007bff;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    padding: 4px;
+    width: 100%;
+  }
+  
+  .list input:focus {
+    outline: none;
+    border-bottom-color: #0056b3;
+  }
+  
+  /* Delete list button styling */
+  .delete-list-button {
+    background-color: transparent;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.2rem;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 0;
+  }
+  
+  .delete-list-button:hover {
+    color: #c82333;
+  }
+  
+  /* Card styling */
+  .card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    padding: 8px;
+  }
+  
+  /* Card text styling */
+  .card p {
+    margin: 4px 0;
+  }
+  
+  /* Button styling */
+  button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    margin-top: 8px;
+    padding: 8px;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .list-container {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  
+    .list {
+      padding: 8px;
+    }
+  
+    .delete-list-button {
+      font-size: 1rem;
+      top: 4px;
+      right: 4px;
+    }
+  
+    button {
+      padding: 6px;
+    }
+  }
+  
+  @media (max-width: 420px) {
+    #error-message {
+      font-size: 1rem;
+    }
+  
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    .list input {
+      font-size: 1rem;
+    }
+  
+    .delete-list-button {
+      font-size: 0.9rem;
+    }
+  }
+  
