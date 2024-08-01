@@ -1,9 +1,9 @@
-import { createUserTableQuery } from "../models/UserModel";
 /*
+import { createUserTableQuery } from "../models/UserModel";
 import { createListTableQuery } from "../models/listModel";
 import { createCardTableQuery } from "../models/CardModel";
 import { createCardTypeQuery } from "../utils/user_defined_types/cardType";
-*/
+
 import client from "../config/clientConfig";
 
 async function initializeDatabase() {
@@ -16,7 +16,7 @@ async function initializeDatabase() {
 
         // Execute type creation queries
         await client.execute(createCardTypeQuery);
-        */
+        
         
         console.log('Database initialized successfully');
     } catch (error) {
@@ -25,3 +25,4 @@ async function initializeDatabase() {
 }
 
 export default initializeDatabase;
+*/
