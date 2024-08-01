@@ -1,4 +1,4 @@
-// src/app/components/card/card.component.ts
+/*
 import { Component, Input } from '@angular/core';
 import { CardService } from "../../../../../../services/card.service";
 import { Card } from "../../../../../../shared/models/card";
@@ -25,7 +25,7 @@ export class CardComponent {
 
   saveCard(card: Card): void {
     if (!card.id) {
-      // Handle the case where card.id is undefined, e.g., log an error or assign a default value
+
       console.error('Card ID is undefined. Cannot update card.');
       return;
     }
@@ -36,7 +36,7 @@ export class CardComponent {
     card.description = card.editingDescription ?? card.description;
     card.activity = card.editingActivity ?? card.activity;
     this.cardService.update_card(card.id, card).subscribe(() => {
-      // Handle success if needed
+
     });
   }
 
@@ -46,7 +46,8 @@ export class CardComponent {
 
   deleteCard(listId: string, cardId: string): void {
     this.cardService.delete_card(listId, cardId).subscribe(() => {
-      // Handle success if needed
+
     });
   }
 }
+*/
