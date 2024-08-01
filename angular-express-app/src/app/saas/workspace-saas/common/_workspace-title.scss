@@ -1,0 +1,12 @@
+@import './common/variables';
+
+app-workspace-title {
+  color: $primary-color;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: $padding;
+
+  @media (max-widht: 768px) {
+    font-size: 1.5rem;
+  }
+}
