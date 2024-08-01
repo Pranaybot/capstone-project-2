@@ -35,7 +35,7 @@ export class SignupFormComponent implements OnInit {
 
   signup() {
     if (this.signupForm.valid) {
-      this.signupHandler.handleSignup(this.signupData); // Delegate signup handling to SignupHandler
+      this.signupHandler.handleSignup(this.signupForm); // Delegate signup handling to SignupHandler
     }
   }
 
