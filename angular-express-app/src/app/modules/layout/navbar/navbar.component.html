@@ -1,11 +1,14 @@
 <div class="navbar-container">
     <nav class="logo">
-        <a href="/"><span id="taskerr-logo">&#8510;</span>
-            <span id="taskerr-brand">Taskerr</span></a>
+        <a href="#"><span id="taskerr-logo">&#8510;</span>
+            <span id="takserr-brand">Taskerr</span></a>
     </nav>
     <nav class="other-nav-content">
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-        <a href="/login_signup">Log in</a>
+        <a routerLink="/">About</a>
+        <a routerLink="#">Contact</a>
+        <a *ngIf="!isWorkArea; else logoutTemplate" href="/login_signup">Log in</a>
+        <ng-template #logoutTemplate>
+            <a [ngClass]="{'logout-button': isWorkArea}">Logout</a>
+        </ng-template>
     </nav>
 </div>
