@@ -1,3 +1,4 @@
+/*
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ListService } from "../../../../../services/list.service";
 import { List } from "../../../../../shared/models/list";
@@ -44,3 +45,4 @@ export class ListComponent implements OnInit {
     this.addList.emit({ name: name, cards: [] });
   }
 }
+*/
