@@ -1,9 +1,52 @@
-
 .work-area {
   display: flex;
-}
+  flex-direction: row;
+  min-height: 100vh;
+  
+  app-side-navigation {
+    flex: 0 0 250px;
+    background-color: #2f3542;
+    height: 100vh;
+    overflow-y: auto;
+  }
 
-.work-area app-side-navigation {
-  position: relative;
-  z-index: 10;  // Ensure it is on top if needed
+  app-workspace {
+    flex: 1;
+    padding: 20px;
+    background-color: #f1f2f6;
+    overflow-y: auto;
+  }
+
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 20px;
+
+    app-side-navigation {
+      background-color: #2f3542;
+      height: auto;
+      position: sticky;
+      top: 0;
+    }
+
+    app-workspace {
+      padding: 16px;
+      background-color: #f1f2f6;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    app-side-navigation {
+      flex: 0 0 auto;
+      width: 100%;
+      height: auto;
+    }
+
+    app-workspace {
+      width: 100%;
+      height: auto;
+    }
+  }
 }
