@@ -1,4 +1,4 @@
-/* Workspace background color */
+/*
 :host {
     display: block;
     background-color: #f0f2f5;
@@ -6,7 +6,7 @@
     min-height: 100vh; /* Ensure the background covers the full height of the viewport */
   }
   
-  /* Error message styling */
+
   #error-message {
     color: #dc3545; /* Red color for error messages */
     font-size: 1.2rem;
@@ -14,7 +14,7 @@
     text-align: center;
   }
   
-  /* Title styling */
+
   h1 {
     font-size: 2rem;
     font-weight: 600;
@@ -22,7 +22,7 @@
     text-align: center;
   }
   
-  /* Container styling */
+
   .list-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -30,7 +30,7 @@
     padding: 16px;
   }
   
-  /* List styling */
+
   .list {
     background-color: #ffffff;
     border: 1px solid #dee2e6;
@@ -40,7 +40,7 @@
     position: relative;
   }
   
-  /* List input styling */
+
   .list input {
     border: none;
     border-bottom: 2px solid #007bff;
@@ -55,7 +55,7 @@
     border-bottom-color: #0056b3;
   }
   
-  /* Delete list button styling */
+
   .delete-list-button {
     background-color: transparent;
     border: none;
@@ -72,7 +72,7 @@
     color: #c82333;
   }
   
-  /* Card styling */
+
   .card {
     background-color: #ffffff;
     border: 1px solid #dee2e6;
@@ -81,12 +81,12 @@
     padding: 8px;
   }
   
-  /* Card text styling */
+
   .card p {
     margin: 4px 0;
   }
   
-  /* Button styling */
+
   button {
     background-color: #007bff;
     border: none;
@@ -102,7 +102,7 @@
     background-color: #0056b3;
   }
   
-  /* Responsive design */
+
   @media (max-width: 768px) {
     .list-container {
       grid-template-columns: 1fr;
@@ -141,4 +141,6 @@
       font-size: 0.9rem;
     }
   }
+*/
+
   
