@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupHandler } from '../../../../shared/handlers/signup-handler';  // Import the SignupHandler class
-import { ReactiveFormsModule, FormsBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SignupFormService } from '../../../../../services/signup-form.service.ts';
 
 @Component({
   selector: 'app-signup-form',
@@ -16,21 +17,11 @@ export class SignupFormComponent implements OnInit {
 
   constructor(
     private signupHandler: SignupHandler,
-    private fb: FormBuilder) {}
+    private signupFormService: SignupFormService) {}
   
   ngOnInit(): void {
     this.signupForm = 
-      this.fb.group({
-        firstName: ['',
-          Validators.required],
-        lastName: ['',
-          Validators.required],
-        username: ['',
-          [Validators.required,
-           Validators.email]],
-        pwd: ['' , 
-          Validators.required]
-      });
+      this.signupFormService.createSignupForm();
   }
 
   signup() {
