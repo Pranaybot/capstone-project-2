@@ -18,10 +18,24 @@
         &:hover {
           background-color: #555;
         }
-        
+  
+        &.logout-button {
+          background-color: #ff0000;
+          color: #ffffff;
+          padding: 10px 20px;
+          border-radius: 5px;
+          text-decoration: none;
+          transition: background-color 0.3s;
+  
+          &:hover {
+            background-color: #cc0000;
+          }
+        }
       }
     }
   }
+  
+ 
   
   .logo {
     flex: 1;
