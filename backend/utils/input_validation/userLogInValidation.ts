@@ -1,3 +1,4 @@
+/*
 import { body } from 'express-validator';
 
 export const validateLogin = () => {
@@ -10,3 +11,4 @@ export const validateLogin = () => {
       .withMessage('Password is required'),
   ];
 };
+*/
