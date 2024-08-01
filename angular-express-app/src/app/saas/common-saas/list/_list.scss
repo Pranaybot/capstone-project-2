@@ -1,0 +1,64 @@
+/*
+@import '../utilities/_variables.scss';
+
+.list {
+  background-color: $text-color;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  padding: 16px;
+  min-width: 300px;
+  position: relative;
+}
+
+.list input {
+  border: none;
+  border-bottom: 2px solid $primary-color;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  padding: 4px;
+  width: 100%;
+}
+
+.list input:focus {
+  outline: none;
+  border-bottom-color: $secondary-color;
+}
+
+.delete-list-button {
+  background-color: transparent;
+  border: none;
+  color: $error-color;
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 0;
+}
+
+.delete-list-button:hover {
+  color: $error-hover-color;
+}
+
+@media (max-width: 768px) {
+  .list {
+    padding: 8px;
+  }
+
+  .delete-list-button {
+    font-size: 1rem;
+    top: 4px;
+    right: 4px;
+  }
+}
+
+@media (max-width: 420px) {
+  .list input {
+    font-size: 1rem;
+  }
+
+  .delete-list-button {
+    font-size: 0.9rem;
+  }
+}
+  */
