@@ -1,0 +1,19 @@
+<div id="error-message"></div>
+<div>
+  <div class="list-container">
+    <!-- Iterate over each list -->
+    <div *ngFor="let list of lists" class="list">
+      <!-- Input for renaming the list -->
+      <input [(ngModel)]="list.name" (keyup.enter)="updateListName()" />
+      <button class="delete-list-button" (click)="deleteListItem(list.id)">x</button>
+
+      <!-- Iterate over each card in the list -->
+      <app-card *ngFor="let card of list.cards" [list]="list" [card]="card"></app-card>
+      
+      <!-- Button to add a new card to the current list -->
+      <button *ngIf="list.id" (click)="addCardToList(list.id)">Add Card</button>
+    </div>
+  </div>
+  <!-- Button to add a new list, shown only if the number of lists is less than the maximum allowed -->
+  <button *ngIf="lists.length < maxLists" (click)="addNewList('New List')">Add List</button>
+</div>
