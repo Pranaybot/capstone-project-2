@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SignupHandler } from '../../../../shared/handlers/signup-handler';  // Import the SignupHandler class
+import { ReactiveFormsModule, FormsBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup-form',
   standalone: true,
-  imports: [],
+  imports: [
+    ReactiveFormsModule
+  ],
   templateUrl: './signup-form.component.html',
   styleUrl: './signup-form.component.scss'
 })
@@ -18,10 +21,7 @@ export class SignupFormComponent {
   };
 
   constructor(
-    private router: Router,
-    private userService: UserService,
-    private signupHandler: SignupHandler // Inject SignupHandler
-  ) {}
+    private signupHandler: SignupHandler) {}
 
   signup() {
     this.signupHandler.handleSignup(this.signupData); // Delegate signup handling to SignupHandler
