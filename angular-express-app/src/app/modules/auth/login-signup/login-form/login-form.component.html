@@ -1,13 +1,15 @@
 <div>
   <h1>Welcome Back!</h1>
-  <form (ngSubmit)="login()">
+  <form 
+    [formGroup]="signupForm"
+    (ngSubmit)="login()">
     <div class="field-wrap">
       <label>Email Address<span class="req">*</span></label>
-      <input type="email" required autocomplete="off" />
+      <input type="email" formControlName="username" required autocomplete="off" />
     </div>
     <div class="field-wrap">
       <label>Password<span class="req">*</span></label>
-      <input type="password" required autocomplete="off" />
+      <input type="password" formControlName="pwd" required autocomplete="off" />
     </div>
     <p class="forgot">
       Forgot Password?
