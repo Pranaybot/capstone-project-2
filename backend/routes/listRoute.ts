@@ -1,3 +1,4 @@
+/*
 import { Router, Request, Response } from 'express';
 import { ListController } from "../controllers/listController";
 import { CardController } from "../controllers/cardController";
@@ -179,3 +180,4 @@ router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
 
 
 export default router;
+*/
