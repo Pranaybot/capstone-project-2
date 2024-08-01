@@ -11,5 +11,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  isWorkArea: boolean = false;
 
 }

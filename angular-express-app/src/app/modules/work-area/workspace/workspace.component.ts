@@ -1,11 +1,16 @@
 //import { Component, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { WorkspaceTitleComponent} from './workspace-title/workspace-title.component';
 //import { List } from "../../../../shared/models/list";
 
 @Component({
   selector: 'app-workspace',
+  standalone: true,
   templateUrl: './workspace.component.html',
-  styleUrls: ['./workspace.component.scss']
+  styleUrls: ['./workspace.component.scss'],
+  imports: [
+    WorkspaceTitleComponent
+  ]
 })
 //export class WorkspaceComponent implements OnInit {
 export class WorkspaceComponent {
