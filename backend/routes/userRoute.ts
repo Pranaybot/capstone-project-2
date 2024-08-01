@@ -1,3 +1,4 @@
+/*
 import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
 import signUpmiddleware  from "../middleware/signUpmiddleWare";
@@ -64,3 +65,4 @@ router.get('/logout', (req: Request, res: Response) => {
 })
 
 export default router;
+*/
