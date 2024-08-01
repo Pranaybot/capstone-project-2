@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { List } from "../../../../shared/models/list";
+//import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+//import { List } from "../../../../shared/models/list";
 
 @Component({
   selector: 'app-workspace',
   templateUrl: './workspace.component.html',
   styleUrls: ['./workspace.component.scss']
 })
-export class WorkspaceComponent implements OnInit {
+//export class WorkspaceComponent implements OnInit {
+export class WorkspaceComponent {
+  /*
   lists: List[] = [];
 
   constructor() { }
@@ -16,4 +19,5 @@ export class WorkspaceComponent implements OnInit {
   onListsChange(lists: List[]): void {
     this.lists = lists;
   }
+  */
 }
