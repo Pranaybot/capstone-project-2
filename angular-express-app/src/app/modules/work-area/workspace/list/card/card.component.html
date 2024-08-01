@@ -1,5 +1,6 @@
+<!--
 <div class="card">
-  <!-- View section -->
+
   <div *ngIf="!card.isEditing" class="view-section">
     <p><strong>Username:</strong> {{ card.username }}</p>
     <p><strong>Title:</strong> {{ card.title }}</p>
@@ -8,7 +9,7 @@
     <button (click)="editCard(card)">Update Card</button>
   </div>
 
-  <!-- Edit section -->
+
   <div *ngIf="card.isEditing" class="edit-section">
     <p><strong>Username:</strong> <input [(ngModel)]="card.editingUsername" /></p>
     <p><strong>Title:</strong> <input [(ngModel)]="card.editingTitle" /></p>
@@ -18,6 +19,7 @@
     <button (click)="cancelEdit(card)">Cancel</button>
   </div>
 
-  <!-- Delete button -->
+
   <button *ngIf="list.id && card.id && !card.isEditing" (click)="deleteCard(list.id, card.id)">Delete Card</button>
 </div>
+-->
