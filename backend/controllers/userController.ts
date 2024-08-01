@@ -1,3 +1,4 @@
+/*
 import * as bcrypt from 'bcrypt'; // Import bcrypt for password hashing
 import cassandra from "cassandra-driver";
 import client  from "../config/clientConfig";
@@ -59,3 +60,4 @@ export class UserController {
   }
 
 }
+*/
