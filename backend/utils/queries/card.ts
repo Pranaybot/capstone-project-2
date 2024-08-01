@@ -1,3 +1,4 @@
+/*
 const SELECT_CARD_BY_ID = `SELECT * FROM cards WHERE id = ?`;
 const ADD_CARD = `INSERT INTO cards (id, username, title, 
           description, activity) VALUES (?, ?, ?, ?, ?)`;
@@ -11,3 +12,4 @@ export default {
     UPDATE_CARD_BY_ID,
     DELETE_CARD_BY_ID
 };
+*/
