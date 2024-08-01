@@ -11,6 +11,7 @@ export class UserService extends BaseService {
     super(http);
   }
 
+  /*
   signup(signupData: any) {
     return this.http.post(`${this.baseUrl}/user/signup`, signupData, { responseType: 'text' });
   }
@@ -18,5 +19,6 @@ export class UserService extends BaseService {
   login(loginData: any) {
     return this.http.post(`${this.baseUrl}/user/login`, loginData, { responseType: 'text' });
   }
+  */
   
 }
