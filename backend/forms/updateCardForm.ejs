@@ -1,0 +1,21 @@
+{{# hasError }}
+  <p style="color: red;">Error: {{ errorMessage }}</p>
+{{/ hasError }}
+
+<form action="/update_card" method="POST">
+  <label for="username">Username:</label>
+  <input type="email" id="username" name="username" required>
+  <br>
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required>
+  <br>
+  <label for="description">Description:</label>  
+  <input type="text" id="description" name="description" required>
+  <br>
+  <label for="activity">Activity:</label>  
+  <input type="text" id="activity" name="activity" required>
+  <br>
+  <input type="hidden" id="cardid" name="cardid" value="{{ userid }}"required>
+  <br>
+  <button type="submit">Submit</button>
+</form>
