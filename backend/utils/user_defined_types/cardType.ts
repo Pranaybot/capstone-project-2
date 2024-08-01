@@ -1,3 +1,4 @@
+/*
 export const createCardTypeQuery = `
   CREATE TYPE IF NOT EXISTS card (
     id uuid,
@@ -7,3 +8,4 @@ export const createCardTypeQuery = `
     activity text
   )
 `;
+*/
