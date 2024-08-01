@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginHandler } from '../../../../shared/handlers/login-handler';  // Import the SignupHandler class
-import { ReactiveFormsModule, FormsBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginFormService } from '../../../../../services/login-form.service.ts';
 
 @Component({
   selector: 'app-login-form',
@@ -16,18 +17,12 @@ export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
-    private loginHandler: LoginHandler, // Inject LoginHandler
-    private fb: FormBuilder) {}
+    private loginHandler: LoginHandler, 
+    private loginFormService: SignupFormService) {}
   
   ngOnInit(): void {
     this.loginForm = 
-      this.fb.group({
-        username: ['',
-          [Validators.required,
-           Validators.email]],
-        pwd: ['' , 
-          Validators.required]
-      });
+      this.loginFormService.createLoginForm();
   }
 
   login() {
