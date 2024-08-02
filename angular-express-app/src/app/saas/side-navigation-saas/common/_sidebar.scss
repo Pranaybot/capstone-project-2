@@ -16,27 +16,3 @@
 .sidebar.open {
   width: $sidebar-open-width;
 }
-
-.home-section {
-  position: relative;
-  background: #E4E9F7;
-  min-height: 100vh;
-  top: 0;
-  left: $sidebar-width;
-  width: calc(100% - #{$sidebar-width});
-  transition: $transition-ease;
-  z-index: 2;
-}
-
-.sidebar.open ~ .home-section {
-  left: $sidebar-open-width;
-  width: calc(100% - #{$sidebar-open-width});
-}
-
-.home-section .text {
-  display: inline-block;
-  color: $text-color-dark;
-  font-size: 25px;
-  font-weight: 500;
-  margin: 18px;
-}
