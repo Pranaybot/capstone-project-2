@@ -1,25 +1,24 @@
-//import { Component, OnInit } from '@angular/core';
-//import { LoginHandler } from '../../../../shared/handlers/login-handler';
-//import { ReactiveFormsModule } from '@angular/forms';
-// import { LoginFormService } from '../../../../../services/login-form.service.ts';
-import { Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LoginHandler } from '../../../../shared/handlers/login-handler';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { LoginFormService } from '../../../../services/login-form.service';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
   imports: [
-    //ReactiveFormsModule
+    ReactiveFormsModule
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
-export class LoginFormComponent {
-  /*
-  loginForm: FormGroup;
+export class LoginFormComponent implements OnInit {
+  
+  loginForm!: FormGroup;
 
   constructor(
-    private loginHandler: LoginHandler {}
-    //private loginFormService: SignupFormService
+    private loginHandler: LoginHandler,
+    private loginFormService: LoginFormService) {}
   
   ngOnInit(): void {
     
@@ -27,14 +26,13 @@ export class LoginFormComponent {
       this.loginFormService.createLoginForm();
     
   }
-  */
 
   login() {
-    /*
+    
     if (this.loginForm.valid) {
       this.loginHandler.handleLogin(this.loginForm); // Delegate login handling to LoginHandler
-    } */
-    console.log('logged in successfully');
+    } 
+
   }
   
 }
