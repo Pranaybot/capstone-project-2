@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,9 @@ import { FormGroup } from '@angular/forms';
 export class SignupHandler {
   constructor(private router: Router, private userService: UserService) {}
 
-  handleSignup(signupForm: FormGroup) {
+  handleSignup(signupForm: FormGroup): Observable<any> {
     const signupData = signupForm.value; // Extract form data
-    this.userService.signup(signupData)
-      .subscribe({
-        next: (response: any) => this.onSignupSuccess(response),
-        error: (error: any) => this.onSignupError(error)
-      });
+    return this.userService.signup(signupData);
   }
 
   private onSignupSuccess(response: any) {
