@@ -1,4 +1,4 @@
-/*
+
 import { body } from 'express-validator';
 
 export const validateSignup = () => {
@@ -17,4 +17,4 @@ export const validateSignup = () => {
       .withMessage('Password must be at least 8 characters long'),
   ];
 };
-*/
+

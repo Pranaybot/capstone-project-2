@@ -1,7 +1,7 @@
-/*
+
 import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
-import signUpmiddleware  from "../middleware/signUpmiddleWare";
+import signUpmiddleware  from "../middleware/signupMiddleware";
 import loginMiddleware from "../middleware/loginMiddleware";
 import { Application } from 'express-serve-static-core';
 import app from "../server";
@@ -29,12 +29,6 @@ router.post('/signup', signUpmiddleware, async (req: Request, res: Response) => 
         }
     } catch (error) {
         console.error('Failed to create user', error);
-        res.send(`
-            <script>
-                localStorage.setItem('error', ${JSON.stringify(error.message)});
-                window.location.href = '/login_signup';
-            </script>
-        `);
     }
 });
 
@@ -50,12 +44,6 @@ router.post('/login', loginMiddleware, async (req: Request, res: Response) => {
         } 
     } catch (error) {
         console.error('Invalid username or password', error);
-        res.send(`
-            <script>
-                localStorage.setItem('error', ${JSON.stringify(error.message)});
-                window.location.href = '/login_signup';
-            </script>
-        `);
     }
 });
 
@@ -65,4 +53,4 @@ router.get('/logout', (req: Request, res: Response) => {
 })
 
 export default router;
-*/
+

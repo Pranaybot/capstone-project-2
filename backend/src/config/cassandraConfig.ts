@@ -1,4 +1,4 @@
-/*
+
 const config = {
     "contactPoints": ["127.1.1.23"],
     "localDataCenter": "center1",
@@ -9,5 +9,5 @@ const config = {
     }
 };
 
-module.exports = config;
-*/
+export default config;
+

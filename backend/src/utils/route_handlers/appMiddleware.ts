@@ -1,4 +1,4 @@
-/*
+
 // appMiddleware.ts
 import { Application } from 'express';
 import bodyParser from 'body-parser';
@@ -13,4 +13,4 @@ export function setupMiddleware(app: Application) {
   // Serve static files from the Angular app
   app.use(express.static(path.join(__dirname, '../../frontend/src')));
 }
-*/
+

@@ -1,4 +1,4 @@
-/*
+
 import { validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 
@@ -16,4 +16,4 @@ const createBaseMiddleware = (validationFunction: () => any) => {
 };
 
 export default createBaseMiddleware;
-*/
+
