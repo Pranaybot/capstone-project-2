@@ -15,7 +15,7 @@ export function setupDbRoutes(app: Application) {
       // app.use('/list', listRoute);
     })
     .catch((err: any) => {
-      console.error("Failed to initialize cassankub", err);
+      console.error("Failed to initialize Cassandra DB", err);
     });
 }
 
