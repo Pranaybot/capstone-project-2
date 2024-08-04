@@ -1,16 +1,23 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  isWorkArea: boolean = false;
+  constructor(private authService: AuthService) {}
 
+  isUserLoggedIn(): boolean {
+    return this.authService.isUserLoggedIn();
+  }
+
+  logout() {
+    this.authService.logout();
+    window.location.href = '/logout'; // Redirect to logout route
+  }
 }

@@ -2,19 +2,19 @@ import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
 import signUpMiddleware from "../middleware/signupMiddleware";
 import loginMiddleware from "../middleware/loginMiddleware";
-import { Application } from 'express-serve-static-core';
 import { validationResult } from 'express-validator';
-import app from "../server";
 
 const router = Router();
 const userController = new UserController();
 
-function do_login(user: any, app: Application) {
-    app.locals.user_id = user.id;
+function do_login(user: any, req: Request) {
+    req.session.user_id = user.id; // Use session or any other way to manage login state
+    req.session.isLoggedIn = true;
 }
 
-function do_logout() {
-    delete app.locals.user_id;
+function do_logout(req: Request) {
+    delete req.session.user_id;
+    req.session.isLoggedIn = false;
 }
 
 router.post('/signup', signUpMiddleware, async (req: Request, res: Response) => {
@@ -28,7 +28,7 @@ router.post('/signup', signUpMiddleware, async (req: Request, res: Response) => 
     try {
         const user = await userController.signup(firstname, lastname, username, pwd);
         if (user) {
-            do_login(user, app);
+            do_login(user, req);
             res.redirect("/work_area");
         }
     } catch (error) {
@@ -48,8 +48,7 @@ router.post('/login', loginMiddleware, async (req: Request, res: Response) => {
     try {
         const user = await userController.login(username, pwd);
         if (user) {
-            // Redirect to work_area Angular component on successful login
-            do_login(user, app);
+            do_login(user, req);
             res.redirect('/work_area');
         }
     } catch (error) {
@@ -59,7 +58,7 @@ router.post('/login', loginMiddleware, async (req: Request, res: Response) => {
 });
 
 router.get('/logout', (req: Request, res: Response) => {
-    do_logout();
+    do_logout(req);
     res.redirect("/");
 });
 
