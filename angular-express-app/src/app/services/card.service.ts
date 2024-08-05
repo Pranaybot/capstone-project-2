@@ -1,4 +1,4 @@
-
+/*
 // src/app/services/card.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -22,4 +22,5 @@ export class CardService extends BaseService {
     return this.http.delete<void>(`${this.baseUrl}/list/${listId}/cards/${cardId}`);
   }
 }
+*/
 
