@@ -1,4 +1,4 @@
-/*
+
 export interface Card {
     id?: string;
     username: string;
@@ -11,5 +11,5 @@ export interface Card {
     editingDescription?: string;
     editingActivity?: string;
   }
-  */
+  
   
