@@ -1,0 +1,5 @@
+.@import './utilites/error-mixin';
+
+.error {
+  @include error-message;
+}
