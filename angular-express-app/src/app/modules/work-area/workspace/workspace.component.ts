@@ -1,6 +1,7 @@
 //import { Component, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { WorkspaceTitleComponent} from './workspace-title/workspace-title.component';
+//import { ListComponent} from './list/list.component';
 //import { List } from "../../../../shared/models/list";
 
 @Component({
