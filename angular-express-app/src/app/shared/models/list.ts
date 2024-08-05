@@ -1,4 +1,4 @@
-/*
+
 import { Card } from './card'; // Adjust the import path based on your project structure
 
 export interface List {
@@ -6,4 +6,4 @@ export interface List {
   name: string;
   cards?: Card[]; // Add cards property as an optional array of Card objects
 }
-*/
+
