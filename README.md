@@ -63,31 +63,55 @@ whether the application is viewed on a smartphone, tablet, or a computer.
                                                    `CASSANDRA_PASSWORD=""`
 3. The `.env` file already contains a keyspace name. While you can't rename a keyspace directly, here are some steps you can follow to work around it:
 
-   # Steps
-   
+   # Step One
    a) Create a new keyspace with a desired name using the `CREATE KEYSPACE` command like this: `CREATE KEYSPACE new_keyspace_name WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1};`
+
+   # Step Two
    b) Next, you should copy the schema from the old keyspace to the new one. You do this by getting the
    schema from the old keyspace table like this: `DESCRIBE TABLE old_keyspace_name.table_name;`. Once
    you get the details, you copy the schema details and paste it into this command as follows: `CREATE TABLE new_keyspace_name.table_name (
    -- Table schema goes here);`
+
+   # Step Three
    c) After the second step, you can migrate data from the old keyspace to the new one by using the `COPY` command or an external tool like `sstableloader` or `cassandra-loader`. Here is an example for how you can achive this: `-- Copy data from the old keyspace to the new keyspace COPY old_keyspace_name.table_name TO 'data.csv'; COPY new_keyspace_name.table_name FROM 'data.csv';`
+
+   # Step Four
    d) Update the keyspace entry in the configuration file to use the new keypace
    by renaming the old one to the new one you created.
-   e) If you wish to drop the old keyspace, use this command, `DROP KEYSPACE old_keyspace_name;`. In this case, the keyspace name would be `my_keyspace`.
-4. You will also notice that the `.env` file has empty credential values for username and pasword. For the application, you can leave this blank. However, if you wish to create credential details, follow these steps:
 
-   # Steps
+   # Step Five
+   e) If you wish to drop the old keyspace, use this command, `DROP KEYSPACE old_keyspace_name;`. In this case, the keyspace name would be `my_keyspace`.
+
    
-   a) Locate the `cassandra.yaml` file. It is typically located in the `conf` directory of your Cassandra installation like this: `/etc/cassandra/cassandra.yaml`. 
+5. You will also notice that the `.env` file has empty credential values for username and pasword. For the application, you can leave this blank. However, if you wish to create credential details, follow these steps:
+
+   # Step One
+   a) Locate the `cassandra.yaml` file. It is typically located in the `conf` directory of your Cassandra installation like this: `/etc/cassandra/cassandra.yaml`.
+
+   # Step Two
    b) To open the file, you can open it using `nano` or `vim` like this: `sudo nano /path/to/cassandra/conf/cassandra.yaml`. Also, you can open it using 'Notepad' if you are on Windows, 'TextEdit' on macOs, or something similar on 'Linux' or 'Ubuntu'.
+
+   # Step Three
    c) Find and modify the `authenticator` line in the yaml file to use `PasswordAuthenticator` as follows:
    `authenticator: PasswordAuthenticator`. Then, save the changes and close the text editor.
+
+   # Step Four
    d) Restart the Cassandra service. You can do it like this method or something similar to it: `sudo systemctl restart cassandra`. You can also try this command: `sudo service cassandra restart`.
+
+   # Step Five
    e) Connect to Cassandra DB by typing `cqlsh` in 'Command Prompt' or 'Terminal' if you are using macOs.
+
+   # Step Six
    f) Create a new user using this command: `CREATE USER username WITH PASSWORD 'password' NOSUPERUSER;`
    You can set the name of `USER` and `PASSWORD` to something you like.
+
+   # Step Seven
    g) Optionally, you can grant permissions to the user. One command you could use is this one: `GRANT ALL PERMISSIONS ON KEYSPACE keyspace_name TO username;`
-   h) Exit the `cqlsh` instance by typing `exit`; or Ctr+d. In the env file, enter the values you created for username and password. 
+
+   # Step Eight
+   h) Exit the `cqlsh` instance by typing `exit`; or Ctr+d. In the env file, enter the values you created for username and password.
+
+   # Step Nine
    i) If you wish to interact with Cassandra directly, use the command here with the username and password you specified: `cqlsh -u username -p password`.
 
 ### D) Project build
