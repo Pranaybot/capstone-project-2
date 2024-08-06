@@ -55,20 +55,23 @@ whether the application is viewed on a smartphone, tablet, or a computer.
    project or open an existing one.
 
 ### C) Other steps
-1. In VSCode, open a 'Command prompt' window. It is called `Terminal` in macOs.
-2. In the window, type `cqlsh`. It will connect to a
-Cassandra cluster. 
-3. The config object for Cassandra DB in the `backend` folder found under the cassandraConfig file under the `config` file under `src` already contains a keyspace name. While you can't rename a keyspace directly, here are some steps you can follow to work around it:
+1. In VSCode, go to the `backend` directory and create a folder called `.env` under the 'src' folder.
+2. In the `.env` file, add some entries like this: `CASSANDRA_HOST=127.0.0.1`
+                                                   `CASSANDRA_DATACENTER=datacenter1`
+                                                   `CASSANDRA_KEYSPACE=my_keyspace`
+                                                   `CASSANDRA_USERNAME=""`
+                                                   `CASSANDRA_PASSWORD=""`
+3. The `.env` file already contains a keyspace name. While you can't rename a keyspace directly, here are some steps you can follow to work around it:
    a) Create a new keyspace with a desired name using the `CREATE KEYSPACE` command like this: `CREATE KEYSPACE new_keyspace_name WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1};`
    b) Next, you should copy the schema from the old keyspace to the new one. You do this by getting the
    schema from the old keyspace table like this: `DESCRIBE TABLE old_keyspace_name.table_name;`. Once
    you get the details, you copy the schema details and paste it into this command as follows: `CREATE TABLE new_keyspace_name.table_name (
    -- Table schema goes here);`
    c) After the second step, you can migrate data from the old keyspace to the new one by using the `COPY` command or an external tool like `sstableloader` or `cassandra-loader`. Here is an example for how you can achive this: `-- Copy data from the old keyspace to the new keyspace COPY old_keyspace_name.table_name TO 'data.csv'; COPY new_keyspace_name.table_name FROM 'data.csv';`
-   d) Update the config object to use the new keypace
+   d) Update the keyspace entry in the configuration file to use the new keypace
    by renaming the old one to the new one you created.
    e) If you wish to drop the old keyspace, use this command, `DROP KEYSPACE old_keyspace_name;`. In this case, the keyspace name would be `my_keyspace`.
-4. You will also notice that the config object has empty credential values for username and pasword. For the application, you can leave this blank. However, if you wish to create credential details, follow these steps:
+4. You will also notice that the `.env` file has empty credential values for username and pasword. For the application, you can leave this blank. However, if you wish to create credential details, follow these steps:
    a) Locate the `cassandra.yaml` file. It is typically located in the `conf` directory of your Cassandra installation like this: `/etc/cassandra/cassandra.yaml`. 
    b) To open the file, you can open it using `nano` or `vim` like this: `sudo nano /path/to/cassandra/conf/cassandra.yaml`. Also, you can open it using 'Notepad' if you are on Windows, 'TextEdit' on macOs, or something similar on 'Linux' or 'Ubuntu'.
    c) Find and modify the `authenticator` line in the yaml file to use `PasswordAuthenticator` as follows:
@@ -78,7 +81,7 @@ Cassandra cluster.
    f) Create a new user using this command: `CREATE USER username WITH PASSWORD 'password' NOSUPERUSER;`
    You can set the name of `USER` and `PASSWORD` to something you like.
    g) Optionally, you can grant permissions to the user. One command you could use is this one: `GRANT ALL PERMISSIONS ON KEYSPACE keyspace_name TO username;`
-   h) Exit the `cqlsh` instance by typing `exit`; or Ctr+d. In the config object found in the cassandraConfig file, enter the values you created for username and password. 
+   h) Exit the `cqlsh` instance by typing `exit`; or Ctr+d. In the env file, enter the values you created for username and password. 
    i) If you wish to interact with Cassandra directly, use the command here with the username and password you specified: `cqlsh -u username -p password`.
 
 ### D) Project build
@@ -119,28 +122,7 @@ repository.
 7. Drop the old keypsace if you verifed that all of your data has successfully migrated, the new keypace
 is functioning, and you don't have any use cases that
 depend on the old keyspace.
-8. When you enter your credential details for the `config` object in the 'cassandraConfig' file, you will be connected to Cassandra automatically.
-9. If you wish to make your database configuration details more secure, you can create a `.env` file and follow these steps:
-   a) Install `dotenv` like this: `npm install dotenv`.
-   b) Create a `.env` file with these details:
-   `CASSANDRA_HOST=127.0.0.1`
-    `CASSANDRA_DATACENTER=datacenter1`
-    `CASSANDRA_KEYSPACE=my_keyspace`
-    `CASSANDRA_USERNAME=''`
-    `CASSANDRA_PASSWORD=''`.
-    If you have username and password details, you enter them here. Place this file in the `config` file of the `src` folder in the `backend` directory.
-   c) Finally, modify the `cassandraConfig` file like this: `require('dotenv').config(); `
-          `const config = {`
-    `"contactPoints": [process.env.CASSANDRA_HOST]`,
-    `"localDataCenter": process.env.CASSANDRA_DATACENTER,`
-    `"keyspace": process.env.CASSANDRA_KEYSPACE`,
-    `"credentials": {`
-        `"username": process.env.CASSANDRA_USERNAME,`
-        `"password": process.env.CASSANDRA_PASSWORD`
-    `}`
-`};`
-
-   `export default config;`
+8. When you enter your credential details for username and password in the `.env` file, you will be connected to Cassandra automatically.
 
 ## Future Development
 
