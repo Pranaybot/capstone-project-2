@@ -8,4 +8,3 @@ export function startServer(app: Application) {
   });
 }
 
-module.exports = startServer;
