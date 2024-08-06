@@ -13,5 +13,5 @@ const config = {
         "password": process.env.CASSANDRA_PASSWORD   // Leave empty if authentication is not enabled
     }
 };
-console.log(config);
-//export default config;
+
+export default config;
