@@ -1,4 +1,8 @@
-require('dotenv').config({path: "../.env"});
+const dotenv = require('dotenv');
+const path = require('path');
+
+// Configure dotenv to load environment variables from the .env file
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const config = {
     "contactPoints": [process.env.CASSANDRA_HOST],
@@ -9,5 +13,5 @@ const config = {
         "password": process.env.CASSANDRA_PASSWORD   // Leave empty if authentication is not enabled
     }
 };
-
-export default config;
+console.log(config);
+//export default config;
