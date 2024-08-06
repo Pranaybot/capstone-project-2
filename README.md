@@ -94,12 +94,15 @@ from macOS to make sure you can access the project content.
 4. Launch VSCode from your computer, click on 'Open project', and select the folder with the git 
 repository.
 5. Inside your IDE, open a new command prompt window and navigate to your `git` repo.
-6. The application will have two folders, `angular-express-app` and `backend`. First, go to the first folder under the
-   Task manager folder in the Command Prompt and enter `npm install` to install all of the angular packages.
-   Do the same for the `backend` folder.
-7. Once VSCode finishes downloading the required libraries, you can run the app in the command prompt using
+6. The application will have two folders, `angular-express-app` and `backend`. First, go to the second folder under the
+   root directory, 'capstone-project-2, in the Command Prompt and enter `npm install` to install all of the backend packages.
+7. Install Anglar CLI by using the command, `npm install -g @angular/cli`. If you are a macOS user, include sudo before the
+   actual command.
+8. Once the library is installed, go to the `angular-express-app` folder and install the packages listed in the package.json
+   file like this: `npm install`.
+10. Once VSCode finishes downloading the required libraries, you can run the app in the command prompt using
    the command, `ng serve`. Make sure you are in the `angular-express-app` directory of the project.
-8. To stop your project from running, enter `Ctr+C` if you are using Windows or Linux or `Cmd+C` if you are
+11. To stop your project from running, enter `Ctr+C` if you are using Windows or Linux or `Cmd+C` if you are
    a macOs user.
 
 ## Tips and Troubleshooting
