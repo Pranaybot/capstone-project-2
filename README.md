@@ -62,7 +62,7 @@ whether the application is viewed on a smartphone, tablet, or a computer.
                                                    `CASSANDRA_PASSWORD=""`
 3. The `.env` file already contains a keyspace name. While you can't rename a keyspace directly, here are some steps you can follow to work around it:
 
-   #### Steps
+   ### Steps
    a) Create a new keyspace with a desired name using the `CREATE KEYSPACE` command like this: `CREATE KEYSPACE new_keyspace_name WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1};`
    b) Next, you should copy the schema from the old keyspace to the new one. You do this by getting the
    schema from the old keyspace table like this: `DESCRIBE TABLE old_keyspace_name.table_name;`. Once
@@ -75,7 +75,7 @@ whether the application is viewed on a smartphone, tablet, or a computer.
    
 5. You will also notice that the `.env` file has empty credential values for username and pasword. For the application, you can leave this blank. However, if you wish to create credential details, follow these steps:
 
-   #### Steps
+   ### Steps
    a) Locate the `cassandra.yaml` file. It is typically located in the `conf` directory of your Cassandra installation like this: `/etc/cassandra/cassandra.yaml`.
    b) To open the file, you can open it using `nano` or `vim` like this: `sudo nano /path/to/cassandra/conf/cassandra.yaml`. Also, you can open it using 'Notepad' if you are on Windows, 'TextEdit' on macOs, or something similar on 'Linux' or 'Ubuntu'.
    c) Find and modify the `authenticator` line in the yaml file to use `PasswordAuthenticator` as follows:
