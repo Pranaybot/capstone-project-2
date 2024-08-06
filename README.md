@@ -5,11 +5,10 @@
 
 Taskerr is a task manager application. It allows users to manage
 their tasks and monitor their porgress. The application allows users
-to create tasks and rank them from 1 being very important to 5 being 
-a low priority. Also, the application comes with three defined lists:
-'Tasks', 'In Progress', and 'Completed' by default, but users have the 
-option to add seven more lists to their workspace. Finally, lists in the
-applicaton hold cards, but lists and cards can be added, updated, or deleted.
+to create tasks and move them from the 'Tasks' list to 'In Progress' and
+'Completed' lists which are made by default. Moreover, users have the 
+option to adjust their work accordingly by using up to ten lists in their workspace. 
+Finally, lists in the applicaton hold cards, but lists and cards can be added, updated, or deleted.
 
 You can view the deployed application here: `https://capstone-two-4wnd.onrender.com`
 
