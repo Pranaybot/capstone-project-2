@@ -1,11 +1,12 @@
+require('dotenv').config({path: "../.env"});
 
 const config = {
-    "contactPoints": ["127.0.0.1"],
-    "localDataCenter": "datacenter1",
-    "keyspace": "my_keyspace",
+    "contactPoints": [process.env.CASSANDRA_HOST],
+    "localDataCenter": process.env.CASSANDRA_DATACENTER,
+    "keyspace": process.env.CASSANDRA_KEYSPACE,
     "credentials":{
-        "username": "",  // Leave empty if authentication is not enabled
-        "password": ""   // Leave empty if authentication is not enabled
+        "username": process.env.CASSANDRA_USERNAME,  // Leave empty if authentication is not enabled
+        "password": process.env.CASSANDRA_PASSWORD   // Leave empty if authentication is not enabled
     }
 };
 
