@@ -131,6 +131,8 @@ repository.
 is functioning, and you don't have any use cases that
 depend on the old keyspace.
 8. When you enter your credential details for username and password in the `.env` file, you will be connected to Cassandra automatically.
+9. If you want to re-configure the Apache Cassandra to have distributed nodes, you can refer to these links: `docs.datastax.com` and
+   `cassandra.apache.org`.
 
 ## Future Development
 
