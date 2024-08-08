@@ -12,11 +12,11 @@ export class UserService extends BaseService {
   }
 
   signup(signupData: any) {
-    return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'text' });
+    return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' });
   }
 
   login(loginData: any) {
-    return this.http.post(`${this.apiUrl}/user/login`, loginData, { responseType: 'text' });
+    return this.http.post(`${this.apiUrl}/user/login`, loginData, { responseType: 'json' });
   }
   
 }

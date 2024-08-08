@@ -2,13 +2,11 @@
   <h1>Welcome Back!</h1>
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="field-wrap">
-      <label>Email Address<span class="req">*</span></label>
-      <input type="email" formControlName="username" required autocomplete="off" />
+      <input type="email" formControlName="username" required autocomplete="off" placeholder="Email Address" />
       <div *ngIf="errorMessages.username" class="error">{{ errorMessages.username }}</div>
     </div>
     <div class="field-wrap">
-      <label>Password<span class="req">*</span></label>
-      <input type="password" formControlName="pwd" required autocomplete="off" />
+      <input type="password" formControlName="pwd" required autocomplete="off" placeholder="Password" />
       <div *ngIf="errorMessages.pwd" class="error">{{ errorMessages.pwd }}</div>
     </div>
     <p class="forgot">

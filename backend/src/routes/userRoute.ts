@@ -23,10 +23,10 @@ router.post('/signup', signUpMiddleware, async (req: Request, res: Response) => 
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstname, lastname, username, pwd } = req.body;
+    const { firstName, lastName, username, pwd } = req.body; // Note: Matching formControlName
 
     try {
-        const user = await userController.signup(firstname, lastname, username, pwd);
+        const user = await userController.signup(firstName, lastName, username, pwd);
         if (user) {
             do_login(user, req);
             res.redirect("/work_area");

@@ -13,6 +13,10 @@ input, textarea {
   border-radius: 4px; // Adjusted border-radius
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 
+  &::placeholder {
+    color: rgba($white, 0.5);
+  }
+
   &:focus {
     outline: 0;
     border-color: $main;

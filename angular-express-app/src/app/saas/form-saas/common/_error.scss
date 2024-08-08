@@ -1,4 +1,4 @@
-@import './utilites/error-mixin';
+@import '../utilities/error-mixin';
 
 .error {
   @include error-message;

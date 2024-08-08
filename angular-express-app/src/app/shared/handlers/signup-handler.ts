@@ -11,7 +11,12 @@ export class SignupHandler {
   constructor(private router: Router, private userService: UserService) {}
 
   handleSignup(signupForm: FormGroup): Observable<any> {
-    const signupData = signupForm.value; // Extract form data
+    const signupData = {
+      firstName: signupForm.get('firstName')?.value,
+      lastName: signupForm.get('lastName')?.value,
+      username: signupForm.get('username')?.value,
+      pwd: signupForm.get('pwd')?.value
+    };
     return this.userService.signup(signupData);
   }
 
