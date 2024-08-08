@@ -8,7 +8,7 @@ export class MessageService {
   private messageSubject = new BehaviorSubject<string>('');
   message$ = this.messageSubject.asObservable();
 
-  showMessage(message: string, duration: number = 3000): void {
+  showMessage(message: string, duration: number = 12000): void {
     this.messageSubject.next(message);
     setTimeout(() => this.messageSubject.next(''), duration);
   }
