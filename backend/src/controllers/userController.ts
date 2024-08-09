@@ -25,7 +25,7 @@ export class UserController {
             userId, hashedPassword];
         await client.execute(userQueries.INSERT_USER, insertParams, { prepare: true });
 
-        const curr_user = await findUserByEmail(userId);
+        const curr_user = await this.findUserByEmail(userId);
         if (!curr_user) {
             console.error('Error retrieving newly created user');
             return null;
@@ -41,7 +41,7 @@ export class UserController {
   async login(username: string, password: string): Promise<any | null> {
     try {
         // Update the query to use username instead of id
-        const curr_user = await findUserByEmail(username);
+        const curr_user = await this.findUserByEmail(username);
         if(!curr_user) {
           console.error('Error retrieving newly created user');
           return null;
