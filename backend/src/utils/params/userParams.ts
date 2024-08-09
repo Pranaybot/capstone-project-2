@@ -1,5 +1,4 @@
 import cassandra from "cassandra-driver";
-import { UUID } from "crypto";
 
 function selectUserByEmailParams(userId: string) {
     return [userId];
