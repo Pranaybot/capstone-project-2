@@ -19,7 +19,7 @@ router.post('/signup', async (req: Request, res: Response) => {
     const { firstName, lastName, username, pwd } = req.body; // Note: Matching formControlName
 
     try {
-        const existingUser = awaitfindUserByEmail(email);
+        const existingUser = awaitfindUserByEmail(username);
         if (existingUser) {
             return res.status(409).json({ message: 'User already exists with this email.' });
         }
@@ -30,7 +30,7 @@ router.post('/signup', async (req: Request, res: Response) => {
             return res.status(201).json({ message: 'User created successfully.' });
         }
     } catch (error) {
-        res.status(500).json({ messsage: 'Server error' });
+        return res.status(500).json({ messsage: 'Server error' });
     }
 });
 
