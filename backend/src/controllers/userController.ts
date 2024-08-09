@@ -41,16 +41,13 @@ export class UserController {
   async login(username: string, password: string): Promise<any | null> {
     try {
         // Update the query to use username instead of id
-        const selectParams = [username];
-        const result = await client.execute(userQueries.SELECT_USER_BY_USERNAME, 
-            selectParams, { prepare: true });
-
-        if (result.rows.length === 0) {
-            return null; // User not found
+        const curr_user = await findUserByEmail(username);
+        if(!curr_user) {
+          console.error('Error retrieving newly created user');
+          return null;
         }
-
-        const user = result.rows[0];
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+      
+        const isPasswordValid = await bcrypt.compare(password, curr_user.password);
 
         if (isPasswordValid) {
             return user;
