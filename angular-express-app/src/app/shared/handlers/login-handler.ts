@@ -1,19 +1,31 @@
 import { Injectable } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { AuthHandlerService } from './auth-handler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginHandler {
-  constructor(private userService: UserService) {}
 
-  handleLogin(loginForm: FormGroup): Observable<any> {
+  constructor(
+    private userService: UserService,
+    private authHandlerService: AuthHandlerService
+  ) {}
+
+  handleLogin(loginForm: FormGroup): void {
     const loginData = {
       username: loginForm.get('username')?.value,
       pwd: loginForm.get('pwd')?.value
     };
-    return this.userService.login(loginData);
+
+    this.userService.login(loginData).subscribe({
+      next: () => {
+        this.authHandlerService.handleAuthSuccess();
+      },
+      error: (errorResponse) => {
+        this.authHandlerService.handleAuthError(errorResponse);
+      }
+    });
   }
 }
