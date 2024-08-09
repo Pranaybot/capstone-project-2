@@ -17,7 +17,6 @@ export class UserController {
   
   async signup(firstName: string, lastName: string, userId: string, 
     password: string): Promise<any | null> {
-    try {
         const id = uuidv4(); // Generate a new UUID for the user
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -32,14 +31,9 @@ export class UserController {
         }
       
         return curr_user;
-    } catch (error) {
-        console.error('Error creating user:', error);
-        return null;
-    }
   }
 
   async login(username: string, password: string): Promise<any | null> {
-    try {
         // Update the query to use username instead of id
         const curr_user = await this.findUserByEmail(username);
         if(!curr_user) {
@@ -55,11 +49,5 @@ export class UserController {
             console.error('Incorrect password');
             return null;
         }
-    } catch (error) {
-        console.error('Error logging in user:', error);
-        return null;
-    }
   }
-
-}
 
