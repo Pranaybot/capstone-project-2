@@ -6,6 +6,15 @@ import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 import userQueries from "../utils/queries/user";
 
 export class UserController {
+
+  async findUserByEmail(userId: string): Promise<any | null> {
+    const selectParams = [cassandra.types.Uuid.fromString(id)];
+    const result = await client.execute(userQueries.SELECT_USER_BY_ID, 
+        selectParams, { prepare: true });
+
+    return result.rows.length > 0 ? result.rows[0] : null;
+  }
+  
   async signup(firstName: string, lastName: string, userId: string, 
     password: string): Promise<any | null> {
     try {
@@ -16,17 +25,13 @@ export class UserController {
             userId, hashedPassword];
         await client.execute(userQueries.INSERT_USER, insertParams, { prepare: true });
 
-        const selectParams = [cassandra.types.Uuid.fromString(id)];
-        const result = await client.execute(userQueries.SELECT_USER_BY_ID, 
-            selectParams, { prepare: true });
-
-        if (result.rows.length === 0) {
+        const curr_user = await findUserByEmail(userId);
+        if (!curr_user) {
             console.error('Error retrieving newly created user');
             return null;
         }
-
-        const newUser = result.rows[0];
-        return newUser;
+      
+        return curr_user;
     } catch (error) {
         console.error('Error creating user:', error);
         return null;
