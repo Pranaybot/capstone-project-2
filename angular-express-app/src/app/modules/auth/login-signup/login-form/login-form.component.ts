@@ -3,6 +3,7 @@ import { LoginHandler } from '../../../../shared/handlers/login-handler';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LoginFormService } from '../../../../services/login-form.service';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-form',
@@ -17,11 +18,11 @@ import { CommonModule } from '@angular/common';
 export class LoginFormComponent implements OnInit {
   
   loginForm!: FormGroup;
-  errorMessages: any = {};
 
   constructor(
     private loginHandler: LoginHandler,
-    private loginFormService: LoginFormService) {}
+    private loginFormService: LoginFormService,
+    private snackBar: MatSnackBar) {}
   
   ngOnInit(): void {
     this.loginForm = this.loginFormService.createLoginForm();
@@ -32,18 +33,19 @@ export class LoginFormComponent implements OnInit {
       this.loginHandler.handleLogin(this.loginForm).subscribe({
         next: (response) => {
           // Handle successful login
-          console.log('Login successful:', response);
-          this.errorMessages = {}; // Clear any previous errors
+          this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
         },
         error: (errorResponse) => {
           if (errorResponse.status === 400) {
-            this.errorMessages = errorResponse.error.errors.reduce((acc: any, err: any) => {
-              acc[err.param] = err.msg;
-              return acc;
-            }, {});
+            this.snackBar.open('Signup failed: ' + errorResponse.error.message, 'Close', { duration: 5000 });
+          } else {
+            this.snackBar.open('An unexpected error occurred. Please try again.', 'Close', { duration: 5000 });
           }
         }
       });
+    } else {
+      this.loginForm.markAllAsTouched();
+      this.snackBar.open('Please fill out all required fields correctly.', 'Close', { duration: 5000 });
     }
   }
 }

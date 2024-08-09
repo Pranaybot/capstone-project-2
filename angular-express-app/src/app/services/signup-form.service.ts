@@ -17,7 +17,9 @@ export class SignupFormService {
         [Validators.required,
          Validators.email]],
       pwd: ['',
-        Validators.required]
+        [Validators.required,
+        Validators.minLength(8)],
+      ]
     });
   }
 }

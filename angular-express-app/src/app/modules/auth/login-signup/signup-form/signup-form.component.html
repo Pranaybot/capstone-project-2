@@ -4,20 +4,38 @@
     <div class="top-row">
       <div class="field-wrap">
         <input type="text" formControlName="firstName" required autocomplete="off" placeholder="First Name" />
-        <div *ngIf="errorMessages.firstName" class="error">{{ errorMessages.firstName }}</div>
+        <div *ngIf="signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched" class="error">
+          <p>First name can't be blank</p>
+        </div>
       </div>
       <div class="field-wrap">
         <input type="text" formControlName="lastName" required autocomplete="off" placeholder="Last Name" />
-        <div *ngIf="errorMessages.lastName" class="error">{{ errorMessages.lastName }}</div>
+        <div *ngIf="signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched" class="error">
+           <p>Last name can't be blank</p>
+        </div>
       </div>
     </div>
     <div class="field-wrap">
       <input type="email" formControlName="username" required autocomplete="off" placeholder="Email Address" />
-      <div *ngIf="errorMessages.username" class="error">{{ errorMessages.username }}</div>
+      <div *ngIf="signupForm.get('username')?.touched" class="error">
+        <p *ngIf="signupForm.get('username')?.errors?.['required']">
+          Username can't be blank
+        </p>
+        <p *ngIf="signupForm.get('username')?.errors?.['email']">
+          Please enter a valid email address
+        </p>
+      </div>
     </div>
     <div class="field-wrap">
       <input type="password" formControlName="pwd" required autocomplete="off" placeholder="Password" />
-      <div *ngIf="errorMessages.pwd" class="error">{{ errorMessages.pwd }}</div>
+      <div *ngIf="signupForm.get('pwd')?.touched" class="error">
+        <p *ngIf="signupForm.get('pwd')?.errors?.['required']">
+          Password can't be blank
+        </p>
+        <p *ngIf="signupForm.get('pwd')?.errors?.['minlength']">
+          Password must be at least 8 characters long
+        </p>
+      </div>
     </div>
     <button type="submit" class="button button-block">Get Started</button>
   </form>

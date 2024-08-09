@@ -2,12 +2,27 @@
   <h1>Welcome Back!</h1>
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="field-wrap">
-      <input type="email" formControlName="username" required autocomplete="off" placeholder="Email Address" />
-      <div *ngIf="errorMessages.username" class="error">{{ errorMessages.username }}</div>
+      <input type="email" formControlName="username" required autocomplete="off" placeholder="Email Address">
+      <div *ngIf="loginForm.get('username')?.touched" class="error">
+        <p *ngIf="loginForm.get('username')?.errors?.['required']">
+          Username can't be blank
+        </p>
+        <p *ngIf="loginForm.get('username')?.errors?.['email']">
+          Please enter a valid email address
+        </p>
+      </div>
     </div>
     <div class="field-wrap">
-      <input type="password" formControlName="pwd" required autocomplete="off" placeholder="Password" />
-      <div *ngIf="errorMessages.pwd" class="error">{{ errorMessages.pwd }}</div>
+      <input type="password" formControlName="pwd" required autocomplete="off" placeholder="Password">
+      <div *ngIf="loginForm.get('pwd')?.touched" class="error">
+        <p *ngIf="loginForm.get('pwd')?.errors?.['required']">
+          Password can't be blank
+        </p>
+        <!-- Optional: Only include this if you want to validate password length on login -->
+        <p *ngIf="loginForm.get('pwd')?.errors?.['minlength']">
+          Password must be at least 8 characters long
+        </p>
+      </div>
     </div>
     <p class="forgot">
       Forgot Password?
