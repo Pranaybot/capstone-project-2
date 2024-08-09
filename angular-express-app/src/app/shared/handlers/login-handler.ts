@@ -8,21 +8,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginHandler {
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private userService: UserService) {}
 
   handleLogin(loginForm: FormGroup): Observable<any> {
-    const loginData = loginForm.value; // Extract form data
+    const loginData = {
+      username: signupForm.get('username')?.value,
+      pwd: signupForm.get('pwd')?.value
+    };
     return this.userService.login(loginData);
-  }
-
-  private onLoginSuccess(response: any) {
-    console.log('Login successful:', response);
-    // Optionally, redirect to a new page upon successful login
-    this.router.navigate(['/work-area']); // Example: Navigate to '/work-area' after login
-  }
-
-  private onLoginError(error: any) {
-    console.error('Login failed:', error);
-    // Handle error scenarios, e.g., display error messages
   }
 }
