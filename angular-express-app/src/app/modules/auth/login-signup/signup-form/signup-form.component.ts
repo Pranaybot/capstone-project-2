@@ -22,7 +22,8 @@ export class SignupFormComponent implements OnInit {
   constructor(
     private signupHandler: SignupHandler,
     private signupFormService: SignupFormService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
     
   ngOnInit(): void {
@@ -33,12 +34,12 @@ export class SignupFormComponent implements OnInit {
     console.log(this.signupForm);
     if (this.signupForm.valid) {
       this.signupHandler.handleSignup(this.signupForm).subscribe({
-        next: (response) => {
+        next: () => {
           // Handle successful signup
-          this.snackBar.open('Signup successful!', 'Close', { duration: 3000 });
+          this.router.navigate(['/work_area'])
         },
         error: (errorResponse) => {
-          if (errorResponse.status === 400) {
+          if (errorResponse.status === 409) {
             // Show a specific error message to the user
             this.snackBar.open('Signup failed: ' + errorResponse.error.message, 'Close', { duration: 5000 });
           } else {
