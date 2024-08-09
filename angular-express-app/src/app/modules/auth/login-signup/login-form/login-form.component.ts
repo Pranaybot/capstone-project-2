@@ -22,7 +22,9 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private loginHandler: LoginHandler,
     private loginFormService: LoginFormService,
-    private snackBar: MatSnackBar) {}
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
   
   ngOnInit(): void {
     this.loginForm = this.loginFormService.createLoginForm();
@@ -31,16 +33,12 @@ export class LoginFormComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.loginHandler.handleLogin(this.loginForm).subscribe({
-        next: (response) => {
+        next: () => {
           // Handle successful login
-          this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
+          this.router.navigate(['/work_area'])
         },
         error: (errorResponse) => {
-          if (errorResponse.status === 400) {
-            this.snackBar.open('Signup failed: ' + errorResponse.error.message, 'Close', { duration: 5000 });
-          } else {
-            this.snackBar.open('An unexpected error occurred. Please try again.', 'Close', { duration: 5000 });
-          }
+          this.snackBar.open(errorResponse.error.message, 'Close', { duration: 5000 });
         }
       });
     } else {
