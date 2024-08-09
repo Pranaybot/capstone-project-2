@@ -19,7 +19,7 @@ router.post('/signup', async (req: Request, res: Response) => {
     const { firstName, lastName, username, pwd } = req.body; // Note: Matching formControlName
 
     try {
-        const existingUser = await findUserByEmail(username);
+        const existingUser = await userController.findUserByEmail(username);
         if (existingUser) {
             return res.status(409).json({ message: 'User already exists with this email.' });
         }

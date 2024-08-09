@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -12,8 +11,8 @@ export class LoginHandler {
 
   handleLogin(loginForm: FormGroup): Observable<any> {
     const loginData = {
-      username: signupForm.get('username')?.value,
-      pwd: signupForm.get('pwd')?.value
+      username: loginForm.get('username')?.value,
+      pwd: loginForm.get('pwd')?.value
     };
     return this.userService.login(loginData);
   }

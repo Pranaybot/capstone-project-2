@@ -8,8 +8,8 @@ import userQueries from "../utils/queries/user";
 export class UserController {
 
   async findUserByEmail(userId: string): Promise<any | null> {
-    const selectParams = [cassandra.types.Uuid.fromString(id)];
-    const result = await client.execute(userQueries.SELECT_USER_BY_ID, 
+    const selectParams = [userId];
+    const result = await client.execute(userQueries.SELECT_USER_BY_USERNAME, 
         selectParams, { prepare: true });
 
     return result.rows.length > 0 ? result.rows[0] : null;
@@ -44,10 +44,11 @@ export class UserController {
         const isPasswordValid = await bcrypt.compare(password, curr_user.password);
 
         if (isPasswordValid) {
-            return user;
+            return curr_user;
         } else {
             console.error('Incorrect password');
             return null;
         }
   }
 
+}
