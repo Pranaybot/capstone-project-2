@@ -25,7 +25,12 @@ export class SignupFormComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router
   ) {}
-    
+
+  private handleError(error: any) {
+    const errorMessage = error?.error?.message || 'An unexpected error occured. Please try again later.';
+    this.snackBar.open(errorMessage, 'Close', { duration: 3000});
+  }
+  
   ngOnInit(): void {
     this.signupForm = this.signupFormService.createSignupForm();
   }
@@ -39,7 +44,7 @@ export class SignupFormComponent implements OnInit {
           this.router.navigate(['/work_area'])
         },
         error: (errorResponse) => {
-          this.snackBar.open(errorResponse.error.message, 'Close', { duration: 5000 });
+          this.handleError(errorResponse);
         }
       });
     } else {
