@@ -1,16 +1,15 @@
 
 import * as bcrypt from 'bcrypt'; // Import bcrypt for password hashing
-import cassandra from "cassandra-driver";
 import client  from "../config/clientConfig";
 import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 import userQueries from "../utils/queries/user";
+import userParams from "../utils/params/userParams";
 
 export class UserController {
 
   async findUserByEmail(userId: string): Promise<any | null> {
-    const selectParams = [userId];
     const result = await client.execute(userQueries.SELECT_USER_BY_USERNAME, 
-        selectParams, { prepare: true });
+      userParams.selectUserByEmailParams(userId), { prepare: true });
 
     return result.rows.length > 0 ? result.rows[0] : null;
   }
@@ -20,9 +19,9 @@ export class UserController {
         const id = uuidv4(); // Generate a new UUID for the user
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const insertParams = [cassandra.types.Uuid.fromString(id), firstName, lastName, 
-            userId, hashedPassword];
-        await client.execute(userQueries.INSERT_USER, insertParams, { prepare: true });
+        await client.execute(userQueries.INSERT_USER, 
+          userParams.signupUserParams(id, firstName, lastName, 
+            userId, hashedPassword), { prepare: true });
 
         const curr_user = await this.findUserByEmail(userId);
         if (!curr_user) {
