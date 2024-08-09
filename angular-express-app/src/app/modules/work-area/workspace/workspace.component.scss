@@ -1,15 +1,3 @@
 //@import '../../../saas/workspace-saas/common/app-list';
 @import '../../../saas/workspace-saas/common/workspace-title';
 
-.welcome-message {
-    font-size: 1.2rem;
-    color: #4caf50; /* or any color you prefer */
-    margin-bottom: 1rem;
-    animation: fadeOut 1s ease-out forwards;
-}
-  
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-}
-  

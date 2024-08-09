@@ -1,6 +1,5 @@
+import { Component } from '@angular/core';
 //import { Component, OnInit } from '@angular/core';
-import { Component, Input, OnInit } from '@angular/core';
-import { MessageService } from '../../../services/message.service'; // Adjust the path as needed
 import { WorkspaceTitleComponent} from './workspace-title/workspace-title.component';
 import { CommonModule } from '@angular/common';
 
@@ -17,18 +16,8 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ]
 })
-export class WorkspaceComponent implements OnInit {
-//export class WorkspaceComponent {
-  @Input() welcomeMessage: string = '';
-  currentMessage: string = '';
-
-  constructor(private messageService: MessageService) {}
-
-  ngOnInit(): void {
-    this.messageService.message$.subscribe(message => {
-      this.currentMessage = message;
-    });
-  }
+//export class WorkspaceComponent implements OnInit {
+export class WorkspaceComponent {
   /*
   lists: List[] = [];
 

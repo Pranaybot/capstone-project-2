@@ -10,24 +10,15 @@ export const routes: Routes = [
       path: '',
       component: BaseComponent,
       children: [
-        { 
-          path: '', 
-          component: HomeComponent 
-        },
-        { path: 'work_area', 
-          component: WorkAreaComponent,
-          data: { message: 'Welcome ${req.session.user_id}' }
-        }
+        { path: '', component: HomeComponent },
+        { path: 'work_area', component: WorkAreaComponent }
       ]
     },
     {
       path: '',
       component: CustomComponent,
       children: [
-        { 
-          path: 'login_signup', 
-          component: LoginSignupComponent 
-        },
+        { path: 'login_signup', component: LoginSignupComponent }
       ]
     }
   ];
