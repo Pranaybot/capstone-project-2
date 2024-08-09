@@ -39,12 +39,7 @@ export class SignupFormComponent implements OnInit {
           this.router.navigate(['/work_area'])
         },
         error: (errorResponse) => {
-          if (errorResponse.status === 409) {
-            // Show a specific error message to the user
-            this.snackBar.open('Signup failed: ' + errorResponse.error.message, 'Close', { duration: 5000 });
-          } else {
-            this.snackBar.open('An unexpected error occurred. Please try again.', 'Close', { duration: 5000 });
-          }
+          this.snackBar.open(errorResponse.error.message, 'Close', { duration: 5000 });
         }
       });
     } else {
