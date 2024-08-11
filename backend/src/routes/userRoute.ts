@@ -5,12 +5,13 @@ const router = Router();
 const userController = new UserController();
 
 function do_login(user: any, req: Request) {
-    req.session.user_id = user.id; // Use session or any other way to manage login state
+    req.session.userId= user.id; // Use session or any other way to manage login state
     req.session.isLoggedIn = true;
+    console.log(req.session);
 }
 
 function do_logout(req: Request) {
-    delete req.session.user_id;
+    delete req.session.userId;
     req.session.isLoggedIn = false;
 }
 
@@ -46,7 +47,7 @@ router.post('/login', async (req: Request, res: Response) => {
             do_login(user, req);
             return res.json({ message: 'Logged in successfully' })
         } else {
-            return res.json({ message: 'Invalid username or password' })
+            return res.status(401).json({ message: 'Invalid username or password' })
         }
     } catch (error) {
         return res.status(500).json({ messsage: 'Server error' });
@@ -55,7 +56,7 @@ router.post('/login', async (req: Request, res: Response) => {
 
 router.get('/check-login', (req: Request, res: Response) => {
     const isLoggedIn = req.session.isLoggedIn || false;
-    res.json({ isLoggedIn });
+    return res.json({ isLoggedIn });
 });
   
 router.get('/logout', (req: Request, res: Response) => {
