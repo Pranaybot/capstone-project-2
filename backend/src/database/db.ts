@@ -1,4 +1,5 @@
 
+import { createSessionsTableQuery } from "../models/SessionsModel";
 import { createUserTableQuery } from "../models/UserModel";
 /*
 import { createListTableQuery } from "../models/listModel";
@@ -11,6 +12,7 @@ import client from "../config/clientConfig";
 async function initializeDatabase() {
     try {
         // Execute table creation queries
+        await client.execute(createSessionsTableQuery);
         await client.execute(createUserTableQuery);
         
         /*

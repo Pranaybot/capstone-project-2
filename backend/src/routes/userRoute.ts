@@ -5,14 +5,29 @@ const router = Router();
 const userController = new UserController();
 
 function do_login(user: any, req: Request) {
-    req.session.userId= user.id; // Use session or any other way to manage login state
+    req.session.userId = user.id; // Set custom session properties
     req.session.isLoggedIn = true;
-    console.log(req.session);
+
+    req.session.save((err: any) => {
+        if (err) {
+            console.error('Error saving session:', err);
+        } else {
+            console.log('Session saved successfully:', req.session);
+        }
+    });
 }
 
 function do_logout(req: Request) {
     delete req.session.userId;
     req.session.isLoggedIn = false;
+
+    req.session.save((err: any) => {
+        if (err) {
+            console.error('Error saving session after logout:', err);
+        } else {
+            console.log('Session cleared successfully.');
+        }
+    });
 }
 
 router.post('/signup', async (req: Request, res: Response) => {
