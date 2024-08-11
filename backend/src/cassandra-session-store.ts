@@ -13,20 +13,35 @@ class CassandraStore extends session.Store {
       this.client = client;
     }
 
-    async get(sid: string, callback: (err: any, session?: any) => void) {
+    async get(): Promise<any> {
       try {
-        const result = await this.client.execute(sessionQueries.SELECT_SESSION_BY_ID,
-          sessionParams.selectOrDeleteSessionByIdParams(sid));
+        // Wrap the callback-based execute method in a Promise
+        const result = await new Promise<any>((resolve, reject) => {
+          this.client.execute(sessionQueries.SELECT_SESSIONS, (err: any, result: any) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        });
+  
         if (result.rowLength === 0) {
-          return callback(null, null);
+          return null; // No sessions found
         }
+  
         const sessionData = result.first();
-        callback(null, JSON.parse(sessionData.session_data));
-      } catch (err) {
-        callback(err);
+        try {
+          return JSON.parse(sessionData.session_data); // Return the parsed session data
+        } catch (parseError: any) {
+          throw new Error(`Error parsing session data: ${parseError.message}`);
+        }
+      } catch (err: any) {
+        throw new Error(`Error retrieving session: ${err.message}`);
       }
     }
   
+    
     async set(sid: string, session: any, callback: (err: any) => void) {
       try {
         const sessionData = JSON.stringify(session);
@@ -38,13 +53,20 @@ class CassandraStore extends session.Store {
       }
     }
   
-    async destroy(sid: string, callback: (err: any) => void) {
+    async destroy(sessionId: string): Promise<void> {
       try {
-        await this.client.execute(sessionQueries.DELETE_SESSION_BY_ID, 
-          sessionParams.selectOrDeleteSessionByIdParams(sid));
-        callback(null);
-      } catch (err) {
-        callback(err);
+        // Wrap the callback-based execute method in a Promise
+        await new Promise<void>((resolve, reject) => {
+          this.client.execute(sessionQueries.DELETE_SESSION_BY_ID, [sessionId], (err: any) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+        });
+      } catch (err: any) {
+        throw new Error(`Error deleting session: ${err.message}`);
       }
     }
 }

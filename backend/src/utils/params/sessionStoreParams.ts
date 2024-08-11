@@ -1,5 +1,5 @@
 
-function selectOrDeleteSessionByIdParams(sid: string) {
+function deleteSessionByIdParams(sid: string) {
     return [sid];
 }
 
@@ -8,6 +8,6 @@ function addSessionDataByIdParams(sid: string, sessionData: any) {
 }
 
 export default {
-    selectOrDeleteSessionByIdParams,
+    deleteSessionByIdParams,
     addSessionDataByIdParams
 };

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseService } from "../services/base.service"
 
@@ -30,15 +30,12 @@ export class AuthService extends BaseService{
     return this.loggedIn.asObservable();
   }
 
-  private checkLoginStatus(): void {
-    // Check the initial login status on service creation
-    this.http.get(`${this.apiUrl}/user/check-login`).subscribe({
-      next: (response: any) => {
-        this.loggedIn.next(response.isLoggedIn);
-      },
-      error: () => {
-        this.loggedIn.next(false);
-      }
-    });
+  private async checkLoginStatus(): Promise<void> {
+    try {
+      const response = await lastValueFrom(this.http.get(`${this.apiUrl}/user/check-login`));
+      this.loggedIn.next(true);
+    } catch (error) {
+      this.loggedIn.next(false);
+    }
   }
 }
