@@ -21,24 +21,23 @@ function do_login(user: any, req: Request, store: CassandraStore) {
     });
 }
 
-async function do_logout(res: Response, store: CassandraStore) {
+async function do_logout(req: Request, res: Response, store: CassandraStore) {
     try {
-        // Retrieve the session from the store
-        const session = await store.get();
-
-        if (session) {
-            // Destroy the session
-            await store.destroy(session.session_id);
-            res.status(200).send('Session destroyed successfully');
-        } else {
-            res.status(404).send('Session not found');
-        }
+      // Retrieve the session using the session ID
+      const session = await store.get(req.sessionID);
+      if (session) {
+        // Destroy the session
+        await store.destroy(req.sessionID);
+        res.status(200).send('Session destroyed successfully');
+      } else {
+        res.status(404).send('Session not found');
+      }
     } catch (err) {
-        console.error('Error:', err);
-        res.status(500).send('Server error');
+      console.error('Error checking login status:', err);
+      res.status(500).send('Server error');
     }
-}
-
+  }
+  
 
 router.post('/signup', async (req: Request, res: Response) => {
 
@@ -69,6 +68,7 @@ router.post('/login', async (req: Request, res: Response) => {
     try {
         const user = await userController.login(username, pwd);
         if (user) {
+            debugger;
             do_login(user, req, store);
             return res.json({ message: 'Logged in successfully' })
         } else {
@@ -81,15 +81,15 @@ router.post('/login', async (req: Request, res: Response) => {
 
 router.get('/check-login', async (req: Request, res: Response) => {
     try {
-      // Retrieve sessions from the store
-      const sessionData = await store.get();
+      // Retrieve the session data using the session ID from the store
+      const sessionData = await store.get(req.sessionID);
   
       if (!sessionData) {
-        // No sessions found
+        // No session found for the given session ID
         return res.status(401).json({ error: 'No active session found' });
       }
   
-      // Check if the first session indicates the user is logged in
+      // Check if the session indicates the user is logged in
       const isLoggedIn = sessionData.isLoggedIn;
       return res.json({ isLoggedIn });
     } catch (err) {
@@ -98,9 +98,9 @@ router.get('/check-login', async (req: Request, res: Response) => {
     }
   });
   
+  
 router.get('/logout', (req: Request, res: Response) => {
-    debugger;
-    do_logout(res, store);
+    do_logout(req, res, store);
     res.redirect("/");
 });
 

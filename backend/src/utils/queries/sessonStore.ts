@@ -1,5 +1,5 @@
 
-const SELECT_SESSIONS = `SELECT * FROM sessions ALLOW FILTERING`;
+const SELECT_SESSIONS = `SELECT * FROM sessions ALLOW FILTERING`; // No bind variables
 const DELETE_SESSION_BY_ID = `DELETE FROM sessions WHERE session_id = ?`;
 const ADD_SESSION_DATA_BY_ID = `INSERT INTO sessions (session_id, session_data) VALUES (?, ?)`;
 

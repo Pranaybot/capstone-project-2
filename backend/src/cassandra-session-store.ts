@@ -13,11 +13,10 @@ class CassandraStore extends session.Store {
       this.client = client;
     }
 
-    async get(): Promise<any> {
+    async get(sid: string): Promise<any> {
       try {
-        // Wrap the callback-based execute method in a Promise
         const result = await new Promise<any>((resolve, reject) => {
-          this.client.execute(sessionQueries.SELECT_SESSIONS, (err: any, result: any) => {
+          this.client.execute(sessionQueries.SELECT_SESSIONS, [], (err: any, result: any) => { // No bind variables for SELECT_SESSIONS
             if (err) {
               reject(err);
             } else {
@@ -25,21 +24,26 @@ class CassandraStore extends session.Store {
             }
           });
         });
-  
+    
         if (result.rowLength === 0) {
           return null; // No sessions found
         }
-  
-        const sessionData = result.first();
+    
+        // Find the session with the matching ID
+        const session = result.rows.find((row: any) => row.session_id === sid);
+        if (!session) {
+          return null; // Session ID not found
+        }
+    
         try {
-          return JSON.parse(sessionData.session_data); // Return the parsed session data
+          return JSON.parse(session.session_data); // Return the parsed session data
         } catch (parseError: any) {
           throw new Error(`Error parsing session data: ${parseError.message}`);
         }
       } catch (err: any) {
         throw new Error(`Error retrieving session: ${err.message}`);
       }
-    }
+    }    
   
     
     async set(sid: string, session: any, callback: (err: any) => void) {
@@ -57,7 +61,8 @@ class CassandraStore extends session.Store {
       try {
         // Wrap the callback-based execute method in a Promise
         await new Promise<void>((resolve, reject) => {
-          this.client.execute(sessionQueries.DELETE_SESSION_BY_ID, [sessionId], (err: any) => {
+          this.client.execute(sessionQueries.DELETE_SESSION_BY_ID, 
+            sessionParams.deleteSessionByIdParams(sessionId), (err: any) => {
             if (err) {
               reject(err);
             } else {
