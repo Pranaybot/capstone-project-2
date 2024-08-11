@@ -6,10 +6,10 @@
     <nav class="other-nav-content">
       <a>About</a>
       <a>Contact</a>
-      <a *ngIf="!isUserLoggedIn(); else logoutTemplate" href="/login_signup">Log in</a>
+      <a *ngIf="!isLoggedIn; else logoutTemplate" href="/login_signup">Log in</a>
       <ng-template #logoutTemplate>
-        <a (click)="logout()" class="logout-button">Logout</a>
+        <a (click)="onLogout()" class="logout-button">Logout</a>
       </ng-template>
     </nav>
-  </div>
+</div>
   

@@ -1,20 +1,44 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { BaseService } from "../services/base.service"
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  private isLoggedIn: boolean = false;
+export class AuthService extends BaseService{
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
-  login() {
-    this.isLoggedIn = true;
+  constructor(http: HttpClient) {
+    super(http);
+    this.checkLoginStatus();
   }
 
-  logout() {
-    this.isLoggedIn = false;
+  logout(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user/logout`).pipe(
+      map((response: any) => {
+        this.loggedIn.next(false);
+        return response;
+      })
+    );
+  }
+  
+
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedIn.asObservable();
   }
 
-  isUserLoggedIn(): boolean {
-    return this.isLoggedIn;
+  private checkLoginStatus(): void {
+    // Check the initial login status on service creation
+    this.http.get(`${this.apiUrl}/user/check-login`).subscribe({
+      next: (response: any) => {
+        this.loggedIn.next(response.isLoggedIn);
+      },
+      error: () => {
+        this.loggedIn.next(false);
+      }
+    });
   }
 }

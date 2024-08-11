@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 
@@ -9,15 +9,20 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+  isLoggedIn: boolean = false;
+
   constructor(private authService: AuthService) {}
 
-  isUserLoggedIn(): boolean {
-    return this.authService.isUserLoggedIn();
+  ngOnInit(): void {
+    this.authService.isLoggedIn().subscribe(status => {
+      this.isLoggedIn = status;
+    });
   }
 
-  logout() {
-    this.authService.logout();
-    window.location.href = '/logout'; // Redirect to logout route
+  onLogout(): void {
+    this.authService.logout().subscribe(() => {
+      // Handle successful logout (e.g., navigate to home page)
+    });
   }
 }

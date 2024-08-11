@@ -53,6 +53,11 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 });
 
+router.get('/check-login', (req: Request, res: Response) => {
+    const isLoggedIn = req.session.isLoggedIn || false;
+    res.json({ isLoggedIn });
+});
+  
 router.get('/logout', (req: Request, res: Response) => {
     do_logout(req);
     res.redirect("/");
