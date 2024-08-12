@@ -7,7 +7,7 @@
       <a class="nav-links">About</a>
       <a class="nav-links" id="second-nav-link">Contact</a>
       <a *ngIf="!loggedIn" href="/login_signup">Login</a>
-      <a *ngIf="loggedIn"(click)="logout()" class="logout-button">Logout</a>
+      <a *ngIf="loggedIn" (click)="logout()" class="logout-button">Logout</a>
     </nav>
 </div>
   
