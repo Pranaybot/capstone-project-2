@@ -13,67 +13,50 @@ class CassandraStore extends session.Store {
       this.client = client;
     }
 
-    async get(sid: string): Promise<any> {
+    async get(): Promise<any> {
       try {
-        const result = await new Promise<any>((resolve, reject) => {
-          this.client.execute(sessionQueries.SELECT_SESSIONS, [], (err: any, result: any) => { // No bind variables for SELECT_SESSIONS
-            if (err) {
-              reject(err);
-            } else {
-              resolve(result);
-            }
-          });
-        });
+        const result = await this.client.execute(sessionQueries.SELECT_SESSIONS, [], { prepare: true });
     
         if (result.rowLength === 0) {
-          return null; // No sessions found
+          return {}; // Return an empty object if no sessions are found
         }
     
-        // Find the session with the matching ID
-        const session = result.rows.find((row: any) => row.session_id === sid);
-        if (!session) {
-          return null; // Session ID not found
-        }
+        const sessions = result.rows.reduce((acc: any, row: any) => {
+          acc[row.session_id] = JSON.parse(row.session_data);
+          return acc;
+        }, {});
     
-        try {
-          return JSON.parse(session.session_data); // Return the parsed session data
-        } catch (parseError: any) {
-          throw new Error(`Error parsing session data: ${parseError.message}`);
-        }
+        return sessions; // Return the JSON object containing all sessions
       } catch (err: any) {
-        throw new Error(`Error retrieving session: ${err.message}`);
+        throw new Error(`Error retrieving sessions: ${err.message}`);
       }
-    }    
-  
+    }
     
-    async set(sid: string, session: any, callback: (err: any) => void) {
+    async set(sid: string, session: any, callback: (err?: any) => void) {
       try {
         const sessionData = JSON.stringify(session);
         await this.client.execute(sessionQueries.ADD_SESSION_DATA_BY_ID,
           sessionParams.addSessionDataByIdParams(sid, sessionData), { prepare: true });
         callback(null);
-      } catch (err) {
-        callback(err);
+      } catch (err:any) {
+        callback(new Error(`Error saving session: ${err.message}`));
       }
     }
   
-    async destroy(sessionId: string): Promise<void> {
+    async destroy(sid: string, callback?: (err?: any) => void): Promise<void> {
       try {
-        // Wrap the callback-based execute method in a Promise
-        await new Promise<void>((resolve, reject) => {
-          this.client.execute(sessionQueries.DELETE_SESSION_BY_ID, 
-            sessionParams.deleteSessionByIdParams(sessionId), (err: any) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve();
-            }
-          });
-        });
+        await this.client.execute(sessionQueries.DELETE_SESSION, [], { prepare: true });
+        if (callback) {
+          callback(null); // Call the callback with no error if successful
+        }
       } catch (err: any) {
-        throw new Error(`Error deleting session: ${err.message}`);
+        if (callback) {
+          callback(new Error(`Error deleting sessions: ${err.message}`)); // Call the callback with an error if something goes wrong
+        }
       }
     }
+    
+    
 }
   
 export default CassandraStore;

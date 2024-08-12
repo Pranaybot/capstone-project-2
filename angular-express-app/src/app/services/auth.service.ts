@@ -20,7 +20,7 @@ export class AuthService extends BaseService{
     return this.http.get(`${this.apiUrl}/user/logout`).pipe(
       map((response: any) => {
         this.loggedIn.next(false);
-        return response;
+        return this.loggedIn;
       })
     );
   }
@@ -30,12 +30,12 @@ export class AuthService extends BaseService{
     return this.loggedIn.asObservable();
   }
 
-  private async checkLoginStatus(): Promise<void> {
+  async checkLoginStatus(): Promise<void> {
     try {
       const response = await lastValueFrom(this.http.get(`${this.apiUrl}/user/check-login`));
       this.loggedIn.next(true);
     } catch (error) {
-      this.loggedIn.next(false);
+      console.log(error);
     }
   }
 }

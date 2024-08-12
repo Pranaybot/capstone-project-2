@@ -24,10 +24,10 @@ function do_login(user: any, req: Request, store: CassandraStore) {
 async function do_logout(req: Request, res: Response, store: CassandraStore) {
     try {
       // Retrieve the session using the session ID
-      const session = await store.get(req.sessionID);
+      const session = await store.get();
       if (session) {
         // Destroy the session
-        await store.destroy(req.sessionID);
+        await store.destroy(session.session_id);
         res.status(200).send('Session destroyed successfully');
       } else {
         res.status(404).send('Session not found');
@@ -82,11 +82,11 @@ router.post('/login', async (req: Request, res: Response) => {
 router.get('/check-login', async (req: Request, res: Response) => {
     try {
       // Retrieve the session data using the session ID from the store
-      const sessionData = await store.get(req.sessionID);
+      const sessionData = await store.get();
   
       if (!sessionData) {
         // No session found for the given session ID
-        return res.status(401).json({ error: 'No active session found' });
+        return res.json({ error: 'No active session found' });
       }
   
       // Check if the session indicates the user is logged in
@@ -100,8 +100,8 @@ router.get('/check-login', async (req: Request, res: Response) => {
   
   
 router.get('/logout', (req: Request, res: Response) => {
+    debugger;
     do_logout(req, res, store);
-    res.redirect("/");
 });
 
 export default router;
