@@ -1,41 +1,40 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseService } from "../services/base.service"
+import { Router } from "@angular/router";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends BaseService{
-  private loggedIn = new BehaviorSubject<boolean>(false);
-
+  
   constructor(http: HttpClient) {
     super(http);
-    this.checkLoginStatus();
+    private router: Router;
   }
 
-  logout(): Observable<any> {
+  logout(): void {
     return this.http.get(`${this.apiUrl}/user/logout`).pipe(
       map((response: any) => {
-        this.loggedIn.next(false);
-        return this.loggedIn;
+        this.router.navigate(["/"]);
       })
     );
   }
   
-
-  isLoggedIn(): Observable<boolean> {
-    return this.loggedIn.asObservable();
-  }
-
-  async checkLoginStatus(): Promise<void> {
+  isLoggedIn(): boolean {
     try {
       const response = await lastValueFrom(this.http.get(`${this.apiUrl}/user/check-login`));
-      this.loggedIn.next(true);
+      if (response) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
       console.log(error);
     }
   }
+
 }
