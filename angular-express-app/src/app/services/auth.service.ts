@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseService } from "../services/base.service"
 import { Router } from "@angular/router";
@@ -24,16 +24,17 @@ export class AuthService extends BaseService{
     );
   }
   
-  isLoggedIn(): boolean {
+  async isLoggedIn():Promise<boolean> {
     try {
-      const response = await lastValueFrom(this.http.get(`${this.apiUrl}/user/check-login`));
-      if (response) {
-        return true;
-      } else {
+      const response = await lastValueFrom(this.http.get(`${this.apiUrl}/user/check-login`)).toPromise();
+      if (response.error) {
         return false;
+      } else {
+        return true;
       }
     } catch (error) {
       console.log(error);
+      return false;
     }
   }
 
