@@ -17,11 +17,13 @@ export class AuthService extends BaseService{
   }
 
   logout(): void {
-    return this.http.get(`${this.apiUrl}/user/logout`).pipe(
-      map((response: any) => {
+    this.http.get(`${this.apiUrl}/user/logout`).subscribe({
+      next: () => {
         this.router.navigate(["/"]);
-      })
-    );
+      },
+      error: (err: any) => {
+        console.error('Logout failed', err);
+      }
   }
   
   async isLoggedIn():Promise<boolean> {
