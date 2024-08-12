@@ -28,7 +28,7 @@ export class AuthService extends BaseService{
   
   async isLoggedIn():Promise<boolean> {
     try {
-      const response = await lastValueFrom(this.http.get(`${this.apiUrl}/user/check-login`)).toPromise();
+      const response = await this.http.get<{ error?: string }>(`${this.apiUrl}/user/check-login`).toPromise();
       if (response.error) {
         return false;
       } else {
