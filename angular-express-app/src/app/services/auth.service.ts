@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { BaseService } from "../services/base.service"
+import { BaseService } from "../services/base.service";
 import { Router } from "@angular/router";
-
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends BaseService{
+export class AuthService extends BaseService {
   
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private router: Router) {
     super(http);
-    private router: Router;
   }
 
   logout(): void {
@@ -24,20 +21,17 @@ export class AuthService extends BaseService{
       error: (err: any) => {
         console.error('Logout failed', err);
       }
+    });
   }
   
-  async isLoggedIn():Promise<boolean> {
+  // Inside the AuthService class
+  async isLoggedIn(): Promise<boolean> {
     try {
-      const response = await this.http.get<{ error?: string }>(`${this.apiUrl}/user/check-login`).toPromise();
-      if (response.error) {
-        return false;
-      } else {
-        return true;
-      }
+      const response = await firstValueFrom(this.http.get<{ error?: string }>(`${this.apiUrl}/user/check-login`));
+      return !response?.error;
     } catch (error) {
       console.log(error);
       return false;
     }
   }
-
 }

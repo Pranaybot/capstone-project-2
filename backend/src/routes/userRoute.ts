@@ -21,7 +21,7 @@ function do_login(user: any, req: Request, store: CassandraStore) {
     });
 }
 
-function do_logout(req: Request, res: Response, store: CassandraStore) {
+async function do_logout(req: Request, res: Response, store: CassandraStore) {
     try {
       // Retrieve the session using the session ID
       const session = await store.get();
