@@ -1,65 +1,86 @@
 .navbar-container {
-    display: flex;
-    background-color: #f1f1f1;
-  
-    nav {
+  display: flex;
+  background-color: #f1f1f1;
+
+  nav {
       display: flex;
       justify-content: center;
       background-color: #333;
       color: #fff;
       padding: 10px;
-      
+
       a {
-        text-decoration: none;
-        color: #fff;
-        padding: 8px 12px;
-        transition: all 0.3s ease;
-  
-        &:hover {
-          background-color: #555;
-        }
-  
-        &.logout-button {
-          background-color: #ff0000;
-          color: #ffffff;
-          padding: 10px 20px;
-          border-radius: 5px;
           text-decoration: none;
-          transition: background-color 0.3s;
-  
+          color: #fff;
+          padding: 8px 12px;
+          transition: all 0.3s ease;
+
           &:hover {
-            background-color: #cc0000;
+              background-color: #555;
           }
-        }
+
+          &.logout-button {
+              background-color: #ff0000;
+              color: #ffffff;
+              padding: 10px 20px;
+              border-radius: 5px;
+              text-decoration: none;
+              transition: background-color 0.3s;
+              cursor: pointer;
+
+              &:hover {
+                  background-color: #cc0000;
+              }
+          }
+
+          // New style for the login button
+          &[href="/login_signup"] {
+              background-color: #008CBA; /* Different color for Log In */
+              color: #ffffff;
+              padding: 10px 20px;
+              border-radius: 5px;
+              text-decoration: none;
+              transition: background-color 0.3s;
+
+              &:hover {
+                  background-color: #005f75; /* Darker shade for hover effect */
+              }
+          }
       }
-    }
   }
-  
- 
-  
-  .logo {
-    flex: 1;
-  
-    a {
+}
+
+.logo {
+  flex: 1;
+
+  a {
       span {
-        &#taskerr-logo {
-          font-size: 3em;
-          color: #c1bdba;
-        }
-        &#taskerr-brand {
-          margin-left: 0.3em;
-          font-size: 1.3em;
-          color: #c1bdba;
-        }
+          &#taskerr-logo {
+              font-size: 3em;
+              color: #c1bdba;
+          }
+          &#taskerr-brand {
+              margin-left: 0.3em;
+              font-size: 1.3em;
+              color: #c1bdba;
+          }
       }
-    }
   }
-  
-  .other-nav-content {
-    flex: 1;
-  
-    a {
+}
+
+.other-nav-content {
+  flex: 1;
+
+  a {
       margin-top: 0.7em;
-    }
   }
-  
+}
+
+.nav-links {
+    cursor: pointer;
+}
+
+// Adding space between Contact and the buttons
+#second-nav-link {
+    margin-right: 20px; /* Adjust this value as needed */
+}

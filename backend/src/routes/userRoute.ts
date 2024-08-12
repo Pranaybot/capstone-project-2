@@ -28,13 +28,13 @@ async function do_logout(req: Request, res: Response, store: CassandraStore) {
       if (session) {
         // Destroy the session
         await store.destroy(session.session_id);
-        res.status(200).send('Session destroyed successfully');
+        res.status(200).json({ message: 'Session destroyed successfully' });
       } else {
-        res.status(404).send('Session not found');
+        res.status(404).json({ error: 'Session not found' });
       }
     } catch (err) {
       console.error('Error checking login status:', err);
-      res.status(500).send('Server error');
+      res.status(500).json({ error: 'Server error' });
     }
   }
   
@@ -100,7 +100,6 @@ router.get('/check-login', async (req: Request, res: Response) => {
   
   
 router.get('/logout', (req: Request, res: Response) => {
-    debugger;
     do_logout(req, res, store);
 });
 

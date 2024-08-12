@@ -16,7 +16,7 @@ export class AuthService extends BaseService {
   logout(): void {
     this.http.get(`${this.apiUrl}/user/logout`).subscribe({
       next: () => {
-        this.router.navigate(["/"]);
+        this.router.navigate(["/"]); // Navigate to home page on logout
       },
       error: (err: any) => {
         console.error('Logout failed', err);
