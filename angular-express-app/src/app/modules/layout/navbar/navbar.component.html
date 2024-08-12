@@ -7,7 +7,7 @@
       <a>About</a>
       <a>Contact</a>
       <a *ngIf="!loggedIn" href="/login_signup">Log in</a>
-      <a *ngIf="loggedIn"(click)="authService.logout()" class="logout-button">Logout</a>
+      <a *ngIf="loggedIn"(click)="logout()" class="logout-button">Logout</a>
     </nav>
 </div>
   
