@@ -8,7 +8,14 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService extends BaseService {
+  isLoggedIn: boolean = false;
+  isHome = false;
 
+  constructor(http: HttpClient, private router: Router) {
+    super(http);
+  }
+
+  /*
   constructor(http: HttpClient, private router: Router) {
     super(http);
   }
@@ -34,5 +41,6 @@ export class AuthService extends BaseService {
       }
     });
   }
+  */
 
 }

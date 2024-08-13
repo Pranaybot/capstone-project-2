@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../services/auth.service';
+//import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,18 +11,26 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  loggedIn: boolean = false;  // Class property
+  showLogOutButton: boolean = false;
 
-  constructor(
-    private authService: AuthService) {}
-  
-  async ngOnInit() {
-    // Set the loggedIn variable based on the isLoggedIn method result
-    this.loggedIn = await this.authService.checkLoginStatus();
+  constructor(public userservice: UserService) {}
+
+  ngOnInit(): void {
+    this.checkLogoutButtonVisibility();
   }
 
-  logout(): void {
-    this.authService.logout();
-    this.loggedIn = false;
+  checkLogoutButtonVisibility() {
+    if (this.userservice.isLoggedIn 
+      && !this.userservice.isHome) {
+      this.showLogOutButton = true;
+    } else if (!this.userservice.isLoggedIn
+      && this.userservice.isHome) {
+      this.showLogOutButton = false;
+    } 
+  }
+
+  onLogout() {
+    this.userservice.logout();
+    this.checkLogoutButtonVisibility();
   }
 }
