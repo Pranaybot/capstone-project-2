@@ -14,12 +14,16 @@ export class CardService extends BaseService {
     super(http);
   }
 
+  add_card(listId: string, card: Card): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/card/${listId}/cards`, card);
+  }
+
   update_card(cardId: string, card: Card): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/list/cards/${cardId}`, card);
+    return this.http.post<void>(`${this.baseUrl}/card/${cardId}`, card);
   }
 
   delete_card(listId: string, cardId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/list/${listId}/cards/${cardId}`);
+    return this.http.delete<void>(`${this.baseUrl}/card/${listId}/cards/${cardId}`);
   }
 }
 */

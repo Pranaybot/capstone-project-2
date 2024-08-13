@@ -1,8 +1,9 @@
-/*
+
 import cassandra from "cassandra-driver";
 import client  from "../config/clientConfig";
 import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 import cardQueries from "../utils/queries/card";
+import cardParams from "../utils/params/cardParams";
 
 export class CardController {
 
@@ -10,7 +11,7 @@ export class CardController {
     try {
 	      const selectParams = [cassandra.types.Uuid.fromString(id)];
         const result = await client.execute(cardQueries.SELECT_CARD_BY_ID, 
-          selectParams, {prepare: true});
+          cardParams.findOrDeleteCardParams(id), {prepare: true});
       
         return result;
     } catch (error) {
@@ -23,11 +24,9 @@ export class CardController {
     description: string, activity: string): Promise<any | null> {
     try {
         const cardId = uuidv4(); // Generate a new UUID for the card
-
-        const insertParams = [cassandra.types.Uuid.fromString(cardId), username, title, 
-          description, activity];
         const cardInsert = await client.execute(cardQueries.ADD_CARD, 
-          insertParams, { prepare: true });
+          cardParams.createCardParams(cardId, username,title, 
+            description, activity), { prepare: true });
         return cardInsert;
     } catch (error) {
         console.error('Error creating card:', error);
@@ -38,11 +37,9 @@ export class CardController {
   async updateCard(cardId: string, username?: string, title?: string, 
     description?: string, activity?: string): Promise<any | null> {
     try {
-
-      const updateParams = [username, title, description, activity, 
-        cassandra.types.Uuid.fromString(cardId)];
       const card_update = await client.execute(cardQueries.UPDATE_CARD_BY_ID, 
-        updateParams, { prepare: true });
+        cardParams.updateCardParams(cardId, username, title, 
+          description, activity), { prepare: true });
       return card_update;
     } catch (error) {
       console.error('Error updating card:', error);
@@ -52,10 +49,8 @@ export class CardController {
 
   async deleteCard(id: string): Promise<any | null> {
     try {
-        const types = cassandra.types;
-        const deleteParams = [types.Uuid.fromString(id)];
         const card_delete = await client.execute(cardQueries.DELETE_CARD_BY_ID, 
-          deleteParams, { prepare: true });
+          cardParams.findOrDeleteCardParams(id), { prepare: true });
         return card_delete;
     } catch (error) {
         console.error('Error deleting list:', error);
@@ -63,4 +58,4 @@ export class CardController {
     }
   }
 }
-*/
+

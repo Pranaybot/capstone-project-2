@@ -1,4 +1,4 @@
-/*
+
 export const createListTableQuery = `
   CREATE TABLE IF NOT EXISTS lists (
     id uuid PRIMARY KEY,
@@ -6,4 +6,4 @@ export const createListTableQuery = `
     cards list<frozen<card>>
   )
 `;
-*/
+

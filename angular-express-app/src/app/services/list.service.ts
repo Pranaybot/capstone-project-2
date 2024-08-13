@@ -31,10 +31,6 @@ export class ListService extends BaseService {
     return this.http.delete<void>(`${this.baseUrl}/list/${id}`);
   }
 
-  add_card(listId: string, card: Card): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/list/${listId}/cards`, card);
-  }
-
 }
 */
 

@@ -1,8 +1,9 @@
-/*
+
 import cassandra from "cassandra-driver";
 import client from "../config/clientConfig";
 import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 import listQueries from "../utils/queries/list";
+import listParams from "../utils/params/listParams";
 
 export class ListController {
 
@@ -20,7 +21,7 @@ export class ListController {
     try {
       const selectParams = [cassandra.types.Uuid.fromString(id)];
       const result = await client.execute(listQueries.SELECT_LIST_BY_ID, 
-        selectParams, { prepare: true });
+        listParams.selectListByIdParams(id), { prepare: true });
       return result.rows; // Return the rows directly
     } catch (error) {
       console.error('Error fetching list:', error);
@@ -33,14 +34,8 @@ export class ListController {
     try {
         const id = uuidv4(); // Generate a new UUID for the list
 
-        const insertParams = [
-            cassandra.types.Uuid.fromString(id), // Convert generated UUID to Cassandra UUID
-            name,
-            cards
-        ];
-
         const listInsert = await client.execute(listQueries.ADD_LIST, 
-          insertParams, { prepare: true });
+          listParams.createListParams(id, name, cards), { prepare: true });
         return listInsert;
     } catch (error) {
         console.error('Error creating list:', error);
@@ -52,7 +47,7 @@ export class ListController {
     try {
       const updateParams = [name, cassandra.types.Uuid.fromString(id)];
       const listUpdate = await client.execute(listQueries.UPDATE_LIST_BY_ID, 
-        updateParams, { prepare: true });
+        listParams.updateListParams(id, name), { prepare: true });
       return listUpdate;
     } catch (error) {
       console.error('Error updating list:', error);
@@ -64,7 +59,7 @@ export class ListController {
     try {
       const deleteParams = [cassandra.types.Uuid.fromString(id)];
       const listDelete = await client.execute(listQueries.DELETE_LIST_BY_ID, 
-        deleteParams, { prepare: true });
+        listParams.deleteListParams(id), { prepare: true });
       return listDelete;
     } catch (error) {
       console.error('Error deleting list:', error);
@@ -72,4 +67,4 @@ export class ListController {
     }
   }
 }
-*/
+

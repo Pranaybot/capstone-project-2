@@ -1,4 +1,4 @@
-/*
+
 const SELECT_ALL_LISTS = `SELECT * FROM lists`;
 const SELECT_LIST_BY_ID = `SELECT * FROM lists WHERE id = ?`;
 const ADD_LIST = `INSERT INTO lists (id, name, cards) VALUES (?, ?, ?)`;
@@ -13,4 +13,4 @@ export default {
     UPDATE_LIST_BY_ID,
     DELETE_LIST_BY_ID
 };
-*/
+
