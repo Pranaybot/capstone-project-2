@@ -9,7 +9,6 @@ export function setupMiddleware(app: Application) {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
-
   // Serve static files from the Angular app
   app.use(express.static(path.join(__dirname, '../../../angular-express-app/src')));
 }

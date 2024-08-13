@@ -7,6 +7,7 @@ const router = Router();
 const userController = new UserController();
 const store = new CassandraStore(client);
 
+
 function do_login(user: any, req: Request, store: CassandraStore) {
     req.session.userId = user.id; // Set custom session properties
     req.session.isLoggedIn = true;
@@ -20,6 +21,7 @@ function do_login(user: any, req: Request, store: CassandraStore) {
         }
     });
 }
+
 
 async function do_logout(req: Request, res: Response, store: CassandraStore) {
     try {
@@ -37,7 +39,6 @@ async function do_logout(req: Request, res: Response, store: CassandraStore) {
       res.status(500).json({ error: 'Server error' });
     }
   }
-  
 
 router.post('/signup', async (req: Request, res: Response) => {
 
@@ -51,6 +52,7 @@ router.post('/signup', async (req: Request, res: Response) => {
         
         const user = await userController.signup(firstName, lastName, username, pwd);
         if (user) {
+            //do_login(user, req, store);
             do_login(user, req, store);
             return res.status(201).json({ message: 'User created successfully.' });
         } else {
@@ -68,6 +70,7 @@ router.post('/login', async (req: Request, res: Response) => {
     try {
         const user = await userController.login(username, pwd);
         if (user) {
+            //do_login(user, req, store);
             do_login(user, req, store);
             return res.json({ message: 'Logged in successfully' })
         } else {
@@ -96,9 +99,10 @@ router.get('/check-login', async (req: Request, res: Response) => {
       res.status(500).json({ error: 'Server error' });
     }
   });
-  
-  
+
+
 router.get('/logout', (req: Request, res: Response) => {
+    //do_logout(req, res, store);
     do_logout(req, res, store);
 });
 

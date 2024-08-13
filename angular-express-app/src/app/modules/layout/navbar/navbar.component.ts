@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +12,9 @@ import { Subscription } from 'rxjs';
 export class NavbarComponent implements OnInit {
   loggedIn: boolean = false;  // Class property
 
-  constructor(public authService: AuthService) {}
-
+  constructor(
+    private authService: AuthService) {}
+  
   async ngOnInit() {
     // Set the loggedIn variable based on the isLoggedIn method result
     this.loggedIn = await this.authService.checkLoginStatus();
@@ -22,6 +22,6 @@ export class NavbarComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
-    this.loggedIn = false;  // Update the loggedIn status on logout
+    this.loggedIn = false;
   }
 }
