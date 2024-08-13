@@ -68,7 +68,6 @@ router.post('/login', async (req: Request, res: Response) => {
     try {
         const user = await userController.login(username, pwd);
         if (user) {
-            debugger;
             do_login(user, req, store);
             return res.json({ message: 'Logged in successfully' })
         } else {
@@ -83,14 +82,14 @@ router.get('/check-login', async (req: Request, res: Response) => {
     try {
       // Retrieve the session data using the session ID from the store
       const sessionData = await store.get();
-  
+      
       if (!sessionData) {
         // No session found for the given session ID
         return res.json({ error: 'No active session found' });
       }
   
       // Check if the session indicates the user is logged in
-      const isLoggedIn = sessionData.isLoggedIn;
+      const isLoggedIn = sessionData;
       return res.json({ isLoggedIn });
     } catch (err) {
       console.error('Error checking login status:', err);

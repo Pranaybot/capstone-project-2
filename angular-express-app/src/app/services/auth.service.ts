@@ -16,7 +16,8 @@ export class AuthService extends BaseService {
   async checkLoginStatus(): Promise<boolean> {
     try {
       const response = await firstValueFrom(this.http.get<{ error?: string }>(`${this.apiUrl}/user/check-login`));
-      return !response?.error;
+      const isNotEmpty = Object.keys(response).length > 0;
+      return isNotEmpty;
     } catch (error) {
       console.log(error);
       return false;
