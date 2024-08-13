@@ -11,24 +11,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  loggedIn: boolean = false;
-  private authSubscription: Subscription = new Subscription();
+  loggedIn: boolean = false;  // Class property
 
   constructor(public authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.authSubscription.add(
-      this.authService.loggedIn$.subscribe(status => {
-        this.loggedIn = status;
-      })
-    );
-  }
-  
-  logout(): void {
-    this.authService.logout();
+  async ngOnInit() {
+    // Set the loggedIn variable based on the isLoggedIn method result
+    this.loggedIn = await this.authService.checkLoginStatus();
   }
 
-  ngOnDestroy(): void {
-    this.authSubscription.unsubscribe();
+  logout(): void {
+    this.authService.logout();
+    this.loggedIn = false;  // Update the loggedIn status on logout
   }
 }
