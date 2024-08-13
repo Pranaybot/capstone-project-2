@@ -33,7 +33,7 @@ router.post('/add_list', async (req: Request, res: Response) => {
       const createdList = await listController.createList(name, cards);
 
       if (createdList) {
-        res.json({ redirect: "/" });
+        res.json({ redirect: "/list" });
       } 
   } catch (error) {
       return res.json('Error adding list');
@@ -47,7 +47,7 @@ router.post('/update_list', async (req: Request, res: Response) => {
       const updatedList = await listController.updateList(id, name);
 
       if (updatedList) {
-        res.json({ redirect: "/" });
+        res.json({ redirect: "/list" });
       } 
 	  
   } catch (error) {
@@ -64,7 +64,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
       const listToBeDeleted = await listController.deleteList(listId);
 
       if (listToBeDeleted) {
-        res.json({ redirect: "/" });
+        res.json({ redirect: "/list" });
       }
 	  
   } catch (error) {

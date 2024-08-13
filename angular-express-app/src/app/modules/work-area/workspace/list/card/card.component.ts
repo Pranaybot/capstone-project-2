@@ -1,8 +1,8 @@
 /*
 import { Component, Input } from '@angular/core';
-import { CardService } from "../../../../../../services/card.service";
-import { Card } from "../../../../../../shared/models/card";
-import { List } from "../../../../../../shared/models/list";
+import { CardService } from "../../../../../services/card.service";
+import { Card } from "../../../../../shared/models/card";
+import { List } from "../../../../../shared/models/list";
 
 @Component({
   selector: 'app-card',

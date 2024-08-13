@@ -3,32 +3,46 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from "../services/base.service"
 import { List } from '../shared/models/list';
-import { Card } from '../shared/models/card';
 import { Observable } from 'rxjs';
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListService extends BaseService {
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private router: Router) {
     super(http);
   }
 
   get_all_lists(): Observable<List[]> {
-    return this.http.get<List[]>(`${this.baseUrl}/list/`);
+    return this.http.get<List[]>(`${this.apiUrl}/list/`);
   }
 
-  add_list(name: string, cards: any): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/list/add_list`, { name, cards });
+  add_list(name: string, cards: any): void {
+      this.http.post<void>(`${this.apiUrl}/list/add_list`, 
+      { name, cards }).subscribe((response: any) => {
+        if (response.redirect) {
+        this.router.navigate([response.redirect]);
+      }
+    });
+  } 
+
+  update_list(id: string, name: string): void {
+      this.http.post<void>(`${this.apiUrl}/list/update_list`, 
+      { id, name }).subscribe((response: any) => {
+        if (response.redirect) {
+        this.router.navigate([response.redirect]);
+      }
+    });
   }
 
-  update_list(id: string, name: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/list/update_list`, { id, name });
-  }
-
-  delete_list(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/list/${id}`);
+  delete_list(id: string): void {
+    this.http.delete<void>(`${this.apiUrl}/list/${id}`).subscribe((response: any) => {
+      if (response.redirect) {
+        this.router.navigate([response.redirect]);
+      }
+    });
   }
 
 }

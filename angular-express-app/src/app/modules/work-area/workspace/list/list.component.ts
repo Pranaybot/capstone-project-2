@@ -1,8 +1,8 @@
 /*
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ListService } from "../../../../../services/list.service";
-import { List } from "../../../../../shared/models/list";
-import { Card } from "../../../../../shared/models/card";
+import { ListService } from "../../../../services/list.service";
+import { List } from "../../../../shared/models/list";
+import { Card } from "../../../../shared/models/card";
 
 @Component({
   selector: 'app-list',
