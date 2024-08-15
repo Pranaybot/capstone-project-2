@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-//import { Component, OnInit } from '@angular/core';
 import { WorkspaceTitleComponent} from './workspace-title/workspace-title.component';
 import { CommonModule } from '@angular/common';
 
 //import { ListComponent} from './list/list.component';
-//import { List } from "../../../../shared/models/list";
 
 @Component({
   selector: 'app-workspace',
@@ -13,10 +11,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./workspace.component.scss'],
   imports: [
     WorkspaceTitleComponent,
-    CommonModule
+    CommonModule,
+    //ListComponent
   ]
 })
-//export class WorkspaceComponent implements OnInit {
 export class WorkspaceComponent {
   /*
   lists: List[] = [];

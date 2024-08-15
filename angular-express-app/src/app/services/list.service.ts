@@ -1,4 +1,4 @@
-/*
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from "../services/base.service"
@@ -20,18 +20,18 @@ export class ListService extends BaseService {
   }
 
   add_list(name: string, cards: any): void {
-      this.http.post<void>(`${this.apiUrl}/list/add_list`, 
-      { name, cards }).subscribe((response: any) => {
-        if (response.redirect) {
+    this.http.post<void>(`${this.apiUrl}/list/add_list`, 
+    { name, cards }).subscribe((response: any) => {
+      if (response.redirect) {
         this.router.navigate([response.redirect]);
       }
     });
-  } 
+  }
 
   update_list(id: string, name: string): void {
-      this.http.post<void>(`${this.apiUrl}/list/update_list`, 
-      { id, name }).subscribe((response: any) => {
-        if (response.redirect) {
+    this.http.post<void>(`${this.apiUrl}/list/update_list`, 
+    { id, name }).subscribe((response: any) => {
+      if (response.redirect) {
         this.router.navigate([response.redirect]);
       }
     });
@@ -46,5 +46,5 @@ export class ListService extends BaseService {
   }
 
 }
-*/
+
 

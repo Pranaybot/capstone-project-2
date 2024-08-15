@@ -3,15 +3,12 @@
 <div>
   <div class="list-container">
     <div *ngFor="let list of lists" class="list">
-
-      <input [(ngModel)]="list.name" (keyup.enter)="updateListName()" />
+      <input [(ngModel)]="list.name" (keyup.enter)="updateListName(list)" />
       <button class="delete-list-button" (click)="deleteListItem(list.id)">x</button>
 
-
       <app-card *ngFor="let card of list.cards" [list]="list" [card]="card"></app-card>
-      
 
-      <button *ngIf="list.id" (click)="addCardToList(list.id)">Add Card</button>
+      <button *ngIf="list.id" (click)="addCardToList(list.id!)">Add Card</button>
     </div>
   </div>
 

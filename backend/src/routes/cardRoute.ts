@@ -12,58 +12,53 @@ router.post('/:listId/cards', async (req: Request, res: Response) => {
     const listId = req.params.listId;
     const { username, title, description, activity } = req.body;
   
-    const list = await cardController.findCard(listId);
+    const list = await listController.findList(listId);
     if (!list) {
-      // Handle the case where the list is not found (e.g., return an error)
       return res.status(404).json({ message: "List not found" });
     }
   
-    const card = await cardController.createCard(username, title, 
-    description, activity);
-    
+    const card = await cardController.createCard(username, title, description, activity);
     list.cards.push(card);
-    res.json({ redirect: "/list" });
-  } catch(error) {
-      return res.json('Error creating card');
-  }
 
+    await listController.updateList(listId, list.name); // Save updated list with new card
+
+    res.json({ list });
+  } catch(error: any) {
+      return res.status(500).json({ error: error.message });
+  }
 });
 
 router.post('/:cardId', async (req: Request, res: Response) => {
-
   try {
     const cardId = req.params.cardId;
     const { username, title, description, activity } = req.body;
   
-    const card = await cardController.updateCard(cardId, username, title, 
-    description, activity);
-      
-    res.json({ redirect: "/list" });
-  } catch(error) {
-      return res.json('Error updating card');
+    await cardController.updateCard(cardId, username, title, description, activity);
+    res.json({ message: 'Card updated successfully' });
+  } catch(error: any) {
+    return res.status(500).json({ error: error.message });
   }
-
 });
 
 router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
-
   try {
     const listId = req.params.listId;
     const cardId = req.params.cardId;
+    
     const list = await listController.findList(listId);
     if (!list) {
-      // Handle the case where the list is not found (e.g., return an error)
       return res.status(404).json({ message: "List not found" });
     }
   
-    const card = await cardController.findCard(cardId);
+    const updatedCards = list.cards.filter((card: any) => card.cardId !== cardId);
+    list.cards = updatedCards;
+    await cardController.deleteCard(cardId);
+    await listController.updateList(listId, list.name); // Save updated list without deleted card
     
-    list.cards.remove(card);
-    res.json({ redirect: "/list" });
-  } catch(error) {
-    return res.json('Error deleting card');
+    res.json({ list });
+  } catch(error: any) {
+    return res.status(500).json({ error: error.message });
   }
-
 });
 
 

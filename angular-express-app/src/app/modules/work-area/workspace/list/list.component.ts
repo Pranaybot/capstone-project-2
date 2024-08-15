@@ -3,11 +3,20 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ListService } from "../../../../services/list.service";
 import { List } from "../../../../shared/models/list";
 import { Card } from "../../../../shared/models/card";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+//import { CardComponent } from "./card/card.component";
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    //CardComponent
+  ]
 })
 export class ListComponent implements OnInit {
   @Input() list!: List;
@@ -22,9 +31,9 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  updateListName(): void {
-    if (this.list && this.list.id && this.list.name !== undefined) {
-      this.updateList.emit({ id: this.list.id, name: this.list.name });
+  updateListName(list: List): void {
+      if (list && list.id && list.name !== undefined) {
+      this.updateList.emit({ id: list.id, name: list.name });
     }
   }
 

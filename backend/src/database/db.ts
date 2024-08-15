@@ -1,24 +1,21 @@
-
 import { createSessionsTableQuery } from "../models/SessionsModel";
 import { createUserTableQuery } from "../models/UserModel";
 import { createListTableQuery } from "../models/ListModel";
 import { createCardTableQuery } from "../models/CardModel";
-//import { createCardTypeQuery } from "../utils/user_defined_types/cardType";
-
+import { createCardTypeQuery } from "../cardType";
 
 import client from "../config/clientConfig";
 
 async function initializeDatabase() {
     try {
-        // Execute table creation queries
+        // Execute type creation queries first
+        await client.execute(createCardTypeQuery);
+
+        // Then execute table creation queries
         await client.execute(createSessionsTableQuery);
         await client.execute(createUserTableQuery);
         await client.execute(createListTableQuery);
         await client.execute(createCardTableQuery);
-
-        // Execute type creation queries
-        //await client.execute(createCardTypeQuery);
-        
         
         console.log('Database initialized successfully');
     } catch (error) {
@@ -27,4 +24,3 @@ async function initializeDatabase() {
 }
 
 export default initializeDatabase;
-

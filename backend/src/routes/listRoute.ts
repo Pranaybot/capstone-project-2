@@ -8,67 +8,40 @@ const listController = new ListController();
 router.get('/', async (req: Request, res: Response) => {
   try {
       const lists = await listController.findAllLists();
-      const result = lists.rows.map((row: { listId: { toString: () => any; }; name: any; cards: any[]; }) => {
-            row.listId.toString(),
-            row.name,
-            row.cards.map((card: any) => {
-                card.cardId.toString(),
-                card.username,
-                card.title,
-                card.description,
-                card.activity
-            })
-      });
-      res.json(result);
-  } catch (error) {
-      return res.json('Error adding or updating card:');
+      res.json(lists);
+  } catch (error: any) {
+      return res.status(500).json({ error: error.message });
   }
 });
 
 // Handle form submission and validation
 router.post('/add_list', async (req: Request, res: Response) => {
   try {
-      // Create card in the database
       const { name, cards } = req.body;
       const createdList = await listController.createList(name, cards);
-
-      if (createdList) {
-        res.json({ redirect: "/list" });
-      } 
-  } catch (error) {
-      return res.json('Error adding list');
+      res.json({ list: createdList });
+  } catch (error: any) {
+      return res.status(500).json({ error: error.message });
   }
 });
 
 router.post('/update_list', async (req: Request, res: Response) => {
   try {
-      // Create card in the database
       const { id, name } = req.body;
-      const updatedList = await listController.updateList(id, name);
-
-      if (updatedList) {
-        res.json({ redirect: "/list" });
-      } 
-	  
-  } catch (error) {
-      return res.json('Error updating list');
+      await listController.updateList(id, name);
+      res.json({ message: 'List updated successfully' });
+  } catch (error: any) {
+      return res.status(500).json({ error: error.message });
   }
 });
 
-  // Delete a card by ID
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
-       const listId = req.params.id;
-	
-      // Attempt to delete the card from the database
-      const listToBeDeleted = await listController.deleteList(listId);
-
-      if (listToBeDeleted) {
-        res.json({ redirect: "/list" });
-      }
-	  
-  } catch (error) {
-      return res.json('Error deleting list');
+      const listId = req.params.id;
+      await listController.deleteList(listId);
+      res.json({ message: 'List deleted successfully' });
+  } catch (error: any) {
+      return res.status(500).json({ error: error.message });
   }
 });
 
