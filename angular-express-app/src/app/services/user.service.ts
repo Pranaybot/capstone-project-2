@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 })
 export class UserService extends BaseService {
   isLoggedIn: boolean = false;
-  isHome = true;
+  isHome: boolean = true;
 
   constructor(http: HttpClient, private router: Router) {
     super(http);
