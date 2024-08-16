@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { WorkspaceTitleComponent} from './workspace-title/workspace-title.component';
 import { CommonModule } from '@angular/common';
-
-//import { ListComponent} from './list/list.component';
+import { ListComponent} from './list/list.component';
 
 @Component({
   selector: 'app-workspace',
@@ -12,19 +11,9 @@ import { CommonModule } from '@angular/common';
   imports: [
     WorkspaceTitleComponent,
     CommonModule,
-    //ListComponent
+    ListComponent
   ]
 })
 export class WorkspaceComponent {
-  /*
-  lists: List[] = [];
-
-  constructor() { }
-
-  ngOnInit(): void { }
-
-  onListsChange(lists: List[]): void {
-    this.lists = lists;
-  }
-  */
+  
 }

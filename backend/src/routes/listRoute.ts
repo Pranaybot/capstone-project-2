@@ -1,6 +1,7 @@
 
 import { Router, Request, Response } from 'express';
 import { ListController } from "../controllers/listController";
+import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 
 const router = Router();
 const listController = new ListController();
@@ -17,9 +18,10 @@ router.get('/', async (req: Request, res: Response) => {
 // Handle form submission and validation
 router.post('/add_list', async (req: Request, res: Response) => {
   try {
+      const id = uuidv4(); // Generate a new UUID for the list
       const { name, cards } = req.body;
-      const createdList = await listController.createList(name, cards);
-      res.json({ list: createdList });
+      await listController.createList(id, name, cards);
+      res.json({ message: 'List created successfully' });
   } catch (error: any) {
       return res.status(500).json({ error: error.message });
   }

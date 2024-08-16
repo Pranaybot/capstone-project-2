@@ -1,11 +1,11 @@
-/*
+
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ListService } from "../../../../services/list.service";
 import { List } from "../../../../shared/models/list";
 import { Card } from "../../../../shared/models/card";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-//import { CardComponent } from "./card/card.component";
+import { CardComponent } from "./card/card.component";
 
 @Component({
   selector: 'app-list',
@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    //CardComponent
+    CardComponent
   ]
 })
 export class ListComponent implements OnInit {
@@ -54,4 +54,4 @@ export class ListComponent implements OnInit {
     this.addList.emit({ name: name, cards: [] });
   }
 }
-*/
+

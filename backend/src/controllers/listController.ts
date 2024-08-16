@@ -1,6 +1,5 @@
 
 import client from "../config/clientConfig";
-import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 import listQueries from "../utils/queries/list";
 import listParams from "../utils/params/listParams";
 
@@ -27,14 +26,12 @@ export class ListController {
     }
   }
 
-  async createList(name: string, cards: { cardId: number, username: string, 
-    title: string, description: string, activity: string }[]): Promise<any> {
+  async createList(id: string, name: string, 
+    cards: { cardId: number, username: string, title: string, 
+      description: string, activity: string }[]): Promise<void> {
     try {
-        const id = uuidv4(); // Generate a new UUID for the list
-        const listData = { id, name, cards };
         await client.execute(listQueries.ADD_LIST, 
           listParams.createListParams(id, name, cards), { prepare: true });
-        return listData;
     } catch (error) {
       console.error('Error creating list:', error);
       throw new Error('Failed to create list');

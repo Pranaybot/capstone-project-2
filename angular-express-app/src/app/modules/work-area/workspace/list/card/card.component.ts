@@ -1,4 +1,4 @@
-/*
+
 import { Component, Input } from '@angular/core';
 import { CardService } from "../../../../../services/card.service";
 import { Card } from "../../../../../shared/models/card";
@@ -53,4 +53,4 @@ export class CardComponent {
     this.cardService.delete_card(listId, cardId);
   }
 }
-*/
+

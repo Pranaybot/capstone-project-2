@@ -2,6 +2,7 @@
 import { Router, Request, Response } from 'express';
 import { ListController } from "../controllers/listController";
 import { CardController } from "../controllers/cardController";
+import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 
 const router = Router();
 const listController = new ListController();
@@ -16,12 +17,12 @@ router.post('/:listId/cards', async (req: Request, res: Response) => {
     if (!list) {
       return res.status(404).json({ message: "List not found" });
     }
-  
-    const card = await cardController.createCard(username, title, description, activity);
+    
+    const cardId = uuidv4(); // Generate a new UUID for the card
+    await cardController.createCard(cardId, username, title, description, activity);
+    const card = await cardController.findCard(cardId);
     list.cards.push(card);
-
-    await listController.updateList(listId, list.name); // Save updated list with new card
-
+    
     res.json({ list });
   } catch(error: any) {
       return res.status(500).json({ error: error.message });
@@ -52,9 +53,7 @@ router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
   
     const updatedCards = list.cards.filter((card: any) => card.cardId !== cardId);
     list.cards = updatedCards;
-    await cardController.deleteCard(cardId);
-    await listController.updateList(listId, list.name); // Save updated list without deleted card
-    
+    await cardController.deleteCard(cardId);    
     res.json({ list });
   } catch(error: any) {
     return res.status(500).json({ error: error.message });

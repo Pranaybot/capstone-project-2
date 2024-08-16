@@ -1,6 +1,5 @@
 
 import client  from "../config/clientConfig";
-import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 import cardQueries from "../utils/queries/card";
 import cardParams from "../utils/params/cardParams";
 
@@ -17,15 +16,12 @@ export class CardController {
     }
   }
   
-  async createCard(username: string, title: string, 
-    description: string, activity: string): Promise<any> {
+  async createCard(id: string, username: string, title: string, 
+    description: string, activity: string): Promise<void> {
     try {
-        const cardId = uuidv4(); // Generate a new UUID for the card
-        const cardData = { cardId, username, title, description, activity };
         await client.execute(cardQueries.ADD_CARD, 
-          cardParams.createCardParams(cardId, username,title, 
+          cardParams.createCardParams(id, username, title, 
             description, activity), { prepare: true });
-        return cardData;
     } catch (error) {
       console.error('Error creating card:', error);
       throw new Error('Failed to create card');
