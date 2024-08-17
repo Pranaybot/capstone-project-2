@@ -21,6 +21,10 @@ export class UserService extends BaseService {
     return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' });
   }
 
+  resetPassword(resetPasswordData: any) {
+    return this.http.post(`${this.apiUrl}/user/reset_password`, resetPasswordData, { responseType: 'json' });
+  }
+
   login(loginData: any) {
     this.isLoggedIn = true;
     this.isHome = false;

@@ -1,7 +1,11 @@
 import cassandra from "cassandra-driver";
 
-function selectUserByEmailParams(userId: string) {
+function selectUserByUsernameParams(userId: string) {
     return [userId];
+}
+
+function selectUserByPasswordParams(hashedPassword: string) {
+    return [hashedPassword];
 }
 
 function signupUserParams(id: string, firstName: string, 
@@ -10,7 +14,13 @@ function signupUserParams(id: string, firstName: string,
             userId, hashedPassword];
 }
 
+function updateUserPasswordParams(id: string, hashedPassword: string) {
+        return [cassandra.types.Uuid.fromString(id), hashedPassword];
+}
+
 export default {
-    selectUserByEmailParams,
-    signupUserParams
+    selectUserByUsernameParams,
+    selectUserByPasswordParams,
+    signupUserParams,
+    updateUserPasswordParams
 };

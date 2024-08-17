@@ -4,6 +4,7 @@ import { LoginSignupComponent } from "./modules/auth/login-signup/login-signup.c
 import { BaseComponent } from "./modules/layout/base/base.component";
 import { CustomComponent } from "./modules/layout/custom/custom.component";
 import { WorkAreaComponent } from "./modules/work-area/work-area.component";
+import { ResetPasswordComponent } from './modules/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
     {
@@ -18,7 +19,8 @@ export const routes: Routes = [
       path: '',
       component: CustomComponent,
       children: [
-        { path: 'login_signup', component: LoginSignupComponent }
+        { path: 'login_signup', component: LoginSignupComponent },
+        { path: 'reset_password', component: ResetPasswordComponent },
       ]
     }
   ];

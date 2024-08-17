@@ -3,6 +3,7 @@ import { LoginHandler } from '../../../../shared/handlers/login-handler';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LoginFormService } from '../../../../services/login-form.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -20,7 +21,8 @@ export class LoginFormComponent implements OnInit {
 
   constructor(
     private loginHandler: LoginHandler,
-    private loginFormService: LoginFormService
+    private loginFormService: LoginFormService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -34,5 +36,9 @@ export class LoginFormComponent implements OnInit {
       this.loginForm.markAllAsTouched();
       // Show validation error message
     }
+  }
+
+  onForgot() {
+    this.router.navigate(['/reset_password']);
   }
 }

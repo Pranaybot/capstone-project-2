@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
 import CassandraStore from "../cassandra-session-store";
 import client from '../config/clientConfig';
+import * as bcrypt from 'bcrypt'; // Import bcrypt for password hashing
 
 const router = Router();
 const userController = new UserController();
@@ -22,6 +23,14 @@ function do_login(user: any, req: Request, store: CassandraStore) {
     });
 }
 
+function check_passwords(password1: string, password2: string) {
+    if (password1 !== password2) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 
 async function do_logout(req: Request, res: Response, store: CassandraStore) {
     try {
@@ -38,15 +47,15 @@ async function do_logout(req: Request, res: Response, store: CassandraStore) {
       console.error('Error checking login status:', err);
       res.status(500).json({ error: 'Server error' });
     }
-  }
+}
 
 router.post('/signup', async (req: Request, res: Response) => {
 
     const { firstName, lastName, username, pwd } = req.body; // Note: Matching formControlName
 
     try {
-        const existingUser = await userController.findUserByEmail(username);
-        if (existingUser) {
+        const currUser = await userController.findUserByEmail(username);
+        if (currUser) {
             return res.status(409).json({ message: 'User already exists with this email.' });
         }
         
@@ -75,6 +84,36 @@ router.post('/login', async (req: Request, res: Response) => {
             return res.json({ message: 'Logged in successfully' })
         } else {
             return res.status(401).json({ message: 'Invalid username or password' })
+        }
+    } catch (error) {
+        return res.status(500).json({ messsage: 'Server error' });
+    }
+});
+
+router.post('/reset_password', async (req: Request, res: Response) => {
+
+    const { old_pwd, new_pwd, new_pwd_match } = req.body;
+
+    try {
+        const currUser = await userController.findUserByPassword(old_pwd);
+        if (currUser) {
+
+            const isPasswordValid = await bcrypt.compare(old_pwd, currUser.password);
+
+            if (isPasswordValid) {
+                 if(check_passwords(new_pwd, new_pwd_match)){
+                    const hashedPassword = await bcrypt.hash(new_pwd, 10);
+                    await userController.updateUserPassword(currUser.id, hashedPassword);
+                    
+                    return res.json({ message: "The password updated successfully" });
+                 } else {
+                    return res.json({ message: "The passwords don't match"});
+                 }
+            } else {
+                return res.json({ message: "The old password you entered is invalid" });
+            }
+        } else {
+            return res.json({ message: "User does not exist" });
         }
     } catch (error) {
         return res.status(500).json({ messsage: 'Server error' });
