@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-side-navigation',
   standalone: true,
-  imports: [],
   templateUrl: './side-navigation.component.html',
-  styleUrl: './side-navigation.component.scss'
+  styleUrls: ['./side-navigation.component.scss']
 })
 export class SideNavigationComponent {
+  @Output() settingsClick = new EventEmitter<void>();
+
+  onSettingsClick() {
+    this.settingsClick.emit();
+  }
 
 }

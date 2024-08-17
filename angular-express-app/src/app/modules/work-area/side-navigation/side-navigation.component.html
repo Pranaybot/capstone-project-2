@@ -1,33 +1,33 @@
 <!-- src/app/side-navigation/side-navigation.component.html -->
 <div class="sidebar-container">
-    <div class="sidebar">
-        <nav class="sidebar-nav">
-            <ul>
-                <li>
-                    <a>
-                        <i class='bx bx-home'></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <i class='bx bx-user'></i>
-                        <span>User</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <i class='bx bx-message'></i>
-                        <span>Messages</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <i class='bx bx-cog'></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul>
+        <li>
+          <a>
+            <i class='bx bx-home'></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <i class='bx bx-user'></i>
+            <span>User</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <i class='bx bx-message'></i>
+            <span>Messages</span>
+          </a>
+        </li>
+        <li>
+          <a (click)="onSettingsClick()">
+            <i class='bx bx-cog'></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>

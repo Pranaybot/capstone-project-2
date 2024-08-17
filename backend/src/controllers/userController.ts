@@ -14,11 +14,10 @@ export class UserController {
     return result.rows.length > 0 ? result.rows[0] : null;
   }
 
-  async findUserByPassword(hashedPassword: string): Promise<any | null> {
-    const result = await client.execute(userQueries.SELECT_USER_BY_PASSWORD, 
-      userParams.selectUserByPasswordParams(hashedPassword), { prepare: true });
-
-    return result.rows.length > 0 ? result.rows[0] : null;
+  async updateUserPassword(id: string, hashedPassword: string): Promise<void> {
+    // Update the query to use username instead of id
+    await client.execute(userQueries.UPDATE_USER_PASSWORD, 
+      userParams.updateUserPasswordParams(id, hashedPassword), {prepare: true});
   }
 
   async signup(firstName: string, lastName: string, userId: string, 
@@ -55,12 +54,6 @@ export class UserController {
             console.error('Incorrect password');
             return null;
         }
-  }
-
-  async updateUserPassword(id: string, hashedPassword: string): Promise<void> {
-    // Update the query to use username instead of id
-    await client.execute(userQueries.UPDATE_USER_PASSWORD, 
-      userParams.updateUserPasswordParams(id, hashedPassword), {prepare: true});
   }
 
 }

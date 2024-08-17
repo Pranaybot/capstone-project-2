@@ -9,6 +9,9 @@ export class ResetPasswordFormService {
 
   createResetPasswordForm(): FormGroup {
     return this.fb.group({
+      username: ['', 
+        [Validators.required,
+         Validators.email]],
       old_pwd: ['',
         [Validators.required,
         Validators.minLength(8)]],

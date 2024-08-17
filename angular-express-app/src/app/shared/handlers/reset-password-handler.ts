@@ -15,9 +15,10 @@ export class ResetPasswordHandler {
 
   handleResetPassword(resetPasswordForm: FormGroup): void {
     const resetPasswordData = {
+      username: resetPasswordForm.get('username')?.value,
       old_pwd: resetPasswordForm.get('old_pwd')?.value,
       new_pwd: resetPasswordForm.get('new_pwd')?.value,
-      new_pwd_match: resetPasswordForm.get('new_pwd')?.value
+      new_pwd_match: resetPasswordForm.get('new_pwd_match')?.value
     };
 
     this.userService.resetPassword(resetPasswordData).subscribe({

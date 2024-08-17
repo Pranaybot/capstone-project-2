@@ -90,20 +90,23 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 });
 
-router.post('/reset_password', async (req: Request, res: Response) => {
+router.patch('/reset_password', async (req: Request, res: Response) => {
 
-    const { old_pwd, new_pwd, new_pwd_match } = req.body;
+    const { username, old_pwd, new_pwd, new_pwd_match } = req.body;
 
     try {
-        const currUser = await userController.findUserByPassword(old_pwd);
+        const currUser = await userController.findUserByEmail(username);
         if (currUser) {
 
             const isPasswordValid = await bcrypt.compare(old_pwd, currUser.password);
 
             if (isPasswordValid) {
                  if(check_passwords(new_pwd, new_pwd_match)){
+                    debugger;
                     const hashedPassword = await bcrypt.hash(new_pwd, 10);
-                    await userController.updateUserPassword(currUser.id, hashedPassword);
+                    const id = String(currUser.id);
+                    console.log(id);
+                    await userController.updateUserPassword(id, hashedPassword);
                     
                     return res.json({ message: "The password updated successfully" });
                  } else {

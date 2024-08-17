@@ -22,7 +22,7 @@ export class UserService extends BaseService {
   }
 
   resetPassword(resetPasswordData: any) {
-    return this.http.post(`${this.apiUrl}/user/reset_password`, resetPasswordData, { responseType: 'json' });
+    return this.http.patch(`${this.apiUrl}/user/reset_password`, resetPasswordData, { responseType: 'json' });
   }
 
   login(loginData: any) {

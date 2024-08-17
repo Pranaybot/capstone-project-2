@@ -1,6 +1,6 @@
 footer {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--footer-bg);
+  color: var(--footer-text);
   padding: 20px;
   display: grid;
   gap: 20px;
@@ -11,7 +11,7 @@ footer {
 
   a {
     text-decoration: none;
-    color: #fff;
+    color: var(--footer-text);
   }
 
   .main-links {
@@ -33,7 +33,7 @@ footer {
     gap: 20px;
 
     a, i {
-      margin-left: 0; // Reset margin as gap handles spacing
+      margin-left: 0;
     }
   }
 
@@ -41,7 +41,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 20px; // Add some space between first-main-link and other-main-links
+    margin-right: 20px;
 
     p {
       margin-top: -0.2em;
@@ -49,12 +49,12 @@ footer {
 
     #taskerr-logo {
       font-size: 2.4em;
-      color:#c1bdba;
+      color: #c1bdba;
     }
 
     #taskerr-brand {
       margin-left: 0.3em;
-      color:#c1bdba;
+      color: #c1bdba;
     }
 
     #login-link {
@@ -70,17 +70,17 @@ footer {
     > div {
       display: flex;
       flex-direction: column;
-      align-items: flex-start; // Align items to the left
+      align-items: flex-start;
 
       p {
         margin: 0;
-        text-align: left; // Ensure text is aligned to the left
+        text-align: left;
       }
 
       .main-link-description {
         margin-top: 0.5em;
         width: 80%;
-        text-align: left; // Ensure text is aligned to the left
+        text-align: left;
         cursor: pointer;
       }
     }
@@ -94,4 +94,3 @@ footer {
     }
   }
 }
-

@@ -9,3 +9,63 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Global Styles (e.g., styles.scss) */
+
+/* Global Styles (e.g., styles.scss) */
+
+:root {
+  /* Light theme colors */
+  --sidebar-bg-light: #34495e;
+  --sidebar-text-light: #fff;
+  --sidebar-bg-light-hover: #3c5a6b; /* Lighter variant for hover effect */
+
+  /* Dark theme colors */
+  --sidebar-bg-dark: #2c3e50;
+  --sidebar-text-dark: #fff;
+  --sidebar-bg-dark-hover: #34495e; /* Lighter variant for hover effect */
+
+  /* Navbar colors */
+  --navbar-bg-light: #f1f1f1;
+  --navbar-text-light: #333;
+  --navbar-bg-light-hover: #e0e0e0;
+
+  --navbar-bg-dark: #333;
+  --navbar-text-dark: #fff;
+  --navbar-bg-dark-hover: #444;
+
+  /* Footer colors */
+  --footer-bg-light: #333;
+  --footer-text-light: #fff;
+
+  --footer-bg-dark: #222;
+  --footer-text-dark: #ccc;
+}
+
+
+body[data-theme='dark'] {
+  --sidebar-bg: var(--sidebar-bg-dark);
+  --sidebar-text: var(--sidebar-text-dark);
+  --sidebar-bg-hover: var(--sidebar-bg-dark-hover);
+
+  --navbar-bg: var(--navbar-bg-dark);
+  --navbar-text: var(--navbar-text-dark);
+  --navbar-bg-hover: var(--navbar-bg-dark-hover);
+
+  --footer-bg: var(--footer-bg-dark);
+  --footer-text: var(--footer-text-dark);
+}
+
+body[data-theme='light'] {
+  --sidebar-bg: var(--sidebar-bg-light);
+  --sidebar-text: var(--sidebar-text-light);
+  --sidebar-bg-hover: var(--sidebar-bg-light-hover);
+
+  --navbar-bg: var(--navbar-bg-light);
+  --navbar-text: var(--navbar-text-light);
+  --navbar-bg-hover: var(--navbar-bg-light-hover);
+
+  --footer-bg: var(--footer-bg-light);
+  --footer-text: var(--footer-text-light);
+}
+
