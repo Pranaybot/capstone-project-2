@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../services/forms/user.service';
 import { FormGroup } from '@angular/forms';
 import { AuthHandlerService } from './auth-handler';
 
@@ -23,7 +23,7 @@ export class LoginHandler {
       next: () => {
         this.authHandlerService.handleAuthSuccess();
       },
-      error: (errorResponse) => {
+      error: (errorResponse: any) => {
         this.authHandlerService.handleAuthError(errorResponse);
       }
     });

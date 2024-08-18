@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupHandler } from '../../../../shared/handlers/signup-handler';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SignupFormService } from '../../../../services/signup-form.service';
+import { SignupFormService } from '../../../../services/forms/signup-form.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

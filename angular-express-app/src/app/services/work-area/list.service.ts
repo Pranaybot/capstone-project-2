@@ -1,8 +1,8 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BaseService } from "../services/base.service"
-import { List } from '../shared/models/list';
+import { BaseService } from "../base.service"
+import { List } from '../../shared/models/list';
 import { Observable } from 'rxjs';
 import { Router } from "@angular/router";
 

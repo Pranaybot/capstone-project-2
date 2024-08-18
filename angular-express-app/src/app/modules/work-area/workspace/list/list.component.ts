@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ListService } from "../../../../services/list.service";
+import { ListService } from "../../../../services/work-area/list.service";
 import { List } from "../../../../shared/models/list";
 import { Card } from "../../../../shared/models/card";
 import { CommonModule } from '@angular/common';

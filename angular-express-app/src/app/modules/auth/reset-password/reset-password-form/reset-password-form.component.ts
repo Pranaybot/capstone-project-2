@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ResetPasswordHandler } from '../../../../shared/handlers/reset-password-handler';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ResetPasswordFormService } from '../../../../services/reset-password-form.service'
+import { ResetPasswordFormService } from '../../../../services/forms/reset-password-form.service'
 import { CommonModule } from '@angular/common';
 
 @Component({

@@ -1,9 +1,8 @@
-import { Component, ViewChild, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { CommonModule } from '@angular/common';
-import { CookieService } from "ngx-cookie-service"; // Use a cookie service library
+import { ThemeService } from '../../services/settings/theme.service';
 
 @Component({
   selector: 'app-work-area',
@@ -23,34 +22,25 @@ export class WorkAreaComponent implements AfterViewInit{
 
   @ViewChild(WorkspaceComponent) workspaceComponent!: WorkspaceComponent;
 
-  private isBrowser: boolean;
-
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private cookieService: CookieService
-  ) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-  }
+  constructor(private themeService: ThemeService) {}
 
   ngOnInit() {
-    if (this.isBrowser) {
-      // Load saved background color and theme
-      const savedColor = this.cookieService.get('workspaceBackgroundColor');
-      if (savedColor && this.workspaceComponent) {
-        this.workspaceComponent.changeBackgroundColor(savedColor);
-      }
+    // Load saved background color and theme
+    const savedColor = this.themeService.getSavedBackgroundColor();
+    if (savedColor && this.workspaceComponent) {
+      this.workspaceComponent.changeBackgroundColor(savedColor);
+    }
 
-      const savedTheme = this.cookieService.get('workspaceTheme');
-      if (savedTheme) {
-        this.currentTheme = savedTheme;
-        this.applyTheme(savedTheme);
-      }
+    const savedTheme = this.themeService.getSavedTheme();
+    if (savedTheme) {
+      this.currentTheme = savedTheme;
+      this.themeService.applyTheme(savedTheme);
     }
   }
 
   ngAfterViewInit() {
     // Retrieve the stored background color and apply it
-    const savedColor = this.cookieService.get('workspaceBackgroundColor');
+    const savedColor = this.themeService.getSavedBackgroundColor();
     if (savedColor) {
       this.workspaceComponent.changeBackgroundColor(savedColor);
     }
@@ -67,10 +57,7 @@ export class WorkAreaComponent implements AfterViewInit{
   changeBackgroundColor(color: string) {
     if (this.workspaceComponent) {
       this.workspaceComponent.changeBackgroundColor(color);
-      // Save the color to localStorage
-      if (this.isBrowser) {
-        this.cookieService.set('workspaceBackgroundColor', color);
-      }
+      this.themeService.applyBackgroundColor(color);
       this.closeSettingsModal();
     } else {
       console.error('WorkspaceComponent is not available.');
@@ -79,13 +66,7 @@ export class WorkAreaComponent implements AfterViewInit{
 
   changeTheme(theme: string) {
     this.currentTheme = theme;
-    this.applyTheme(theme);
-    if (this.isBrowser) {
-      this.cookieService.set('workspaceTheme', theme);
-    }
+    this.themeService.applyTheme(theme);
   }
 
-  private applyTheme(theme: string) {
-    document.body.setAttribute('data-theme', theme);
-  }
 }

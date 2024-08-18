@@ -2,8 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BaseService } from './base.service';
-import { Card } from '../shared/models/card';
+import { BaseService } from '../base.service';
+import { Card } from '../../shared/models/card';
 import { Router } from "@angular/router";
 import { subscribe } from 'diagnostics_channel';
 

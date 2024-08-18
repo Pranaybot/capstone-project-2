@@ -1,6 +1,6 @@
 
 import { Component, Input } from '@angular/core';
-import { CardService } from "../../../../../services/card.service";
+import { CardService } from "../../../../../services/work-area/card.service";
 import { Card } from "../../../../../shared/models/card";
 import { List } from "../../../../../shared/models/list";
 import { CommonModule } from '@angular/common';
