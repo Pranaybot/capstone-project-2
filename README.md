@@ -34,6 +34,12 @@ is used to validate user input for adding or updating cards or lists.
 The content of the application shrinks or enlarges to fit the size of the screen regardless of 
 whether the application is viewed on a smartphone, tablet, or a computer.
 
+### Theme toggle for Taskerr work area
+Users can toggle the light/dark theme for the work area page to allow for ease of reading based on their location.
+
+### Background Customization
+The application contains several background templates which allow for the customization of the Taskerr workspace in the work area page.
+
 ## Project setup and build
 
 ### A) Apache Cassandra setup
@@ -137,8 +143,6 @@ depend on the old keyspace.
 
 1. Allow users to change password / have a forgotten password system in place.
 2. Allow users to delete their own accounts.
-3. Implement automatic light/dark theme toggle for application based on the time
-of day and season.
 4. Integrate app with Google Calendar to make task management simpler, flexible, and easier to update.
 5. Allow users to select different backgrounds for their Taskerr workspace.
 
