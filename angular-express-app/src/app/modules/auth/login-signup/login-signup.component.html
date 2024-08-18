@@ -1,13 +1,15 @@
-<div class="logo-name">
-  <span id="taskerr-logo">&#8510;</span>
-  <span id="taskerr-brand">Taskerr</span>
-</div>
-<div class="form">
-  <app-tab-group
-    [activeTab]="activeTab"
-    (tabSelected)="onTabSelected($event)">
-  </app-tab-group>
-  <app-tab-content
-    [activeTab]="activeTab">
-  </app-tab-content>
+<div class="login-signup-page">
+  <div class="logo-name">
+    <span id="taskerr-logo">&#8510;</span>
+    <span id="taskerr-brand">Taskerr</span>
+  </div>
+  <div class="form">
+    <app-tab-group
+      [activeTab]="activeTab"
+      (tabSelected)="onTabSelected($event)">
+    </app-tab-group>
+    <app-tab-content
+      [activeTab]="activeTab">
+    </app-tab-content>
+  </div>
 </div>

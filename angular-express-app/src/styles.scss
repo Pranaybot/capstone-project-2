@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import './app/saas/form-saas/forms/login-signup-body';
 
 body {
     margin: 0px;
@@ -16,30 +15,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root {
   /* Light theme colors */
-  --sidebar-bg-light: #34495e;
-  --sidebar-text-light: #fff;
-  --sidebar-bg-light-hover: #3c5a6b; /* Lighter variant for hover effect */
+  --sidebar-bg-dark: #34495e;
+  --sidebar-text-dark: #fff;
+  --sidebar-bg-dard-hover: #3c5a6b; /* Lighter variant for hover effect */
 
   /* Dark theme colors */
-  --sidebar-bg-dark: #2c3e50;
-  --sidebar-text-dark: #fff;
-  --sidebar-bg-dark-hover: #34495e; /* Lighter variant for hover effect */
+  --sidebar-bg-light: #2c3e50;
+  --sidebar-text-light: #fff;
+  --sidebar-bg-light-hover: #34495e; /* Lighter variant for hover effect */
 
   /* Navbar colors */
-  --navbar-bg-light: #f1f1f1;
-  --navbar-text-light: #333;
-  --navbar-bg-light-hover: #e0e0e0;
-
   --navbar-bg-dark: #333;
   --navbar-text-dark: #fff;
-  --navbar-bg-dark-hover: #444;
+  --navbar-bg-dark-hover: #e0e0e0;
+
+  --navbar-bg-light: #222;
+  --navbar-text-light: #ccc;
+  --navbar-bg-light-hover: #444;
 
   /* Footer colors */
-  --footer-bg-light: #333;
-  --footer-text-light: #fff;
+  --footer-bg-dark: #333;
+  --footer-text-dark: #fff;
 
-  --footer-bg-dark: #222;
-  --footer-text-dark: #ccc;
+  --footer-bg-light: #222;
+  --footer-text-light: #ccc;
 }
 
 

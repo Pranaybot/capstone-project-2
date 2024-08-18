@@ -8,46 +8,81 @@
       justify-content: center;
       background-color: var(--navbar-bg);
       color: var(--navbar-text);
+      padding: 10px;
   
       a {
         text-decoration: none;
         color: var(--navbar-text);
         padding: 8px 12px;
         transition: all 0.3s ease;
-        box-sizing: border-box;
         cursor: pointer;
   
         &:hover {
           background-color: var(--navbar-bg-hover);
         }
+
+        &.logout-button {
+          background-color: #ff0000;
+          color: #ffffff;
+          padding: 10px 20px;
+          border-radius: 5px;
+          text-decoration: none;
+          transition: background-color 0.3s;
+          cursor: pointer;
+
+          &:hover {
+              background-color: #cc0000;
+          }
+      }
+
+       // New style for the login button
+       &[href="/login_signup"] {
+        background-color: #008CBA; /* Different color for Log In */
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #005f75; /* Darker shade for hover effect */
+        }
       }
     }
   }
+}
   
-  .logo span {
-    &#taskerr-logo {
-      font-size: 3em;
-      color: #c1bdba;
-    }
-  
-    &#taskerr-brand {
-      margin-left: 0.3em;
-      font-size: 1.3em;
-      color: #c1bdba;
-    }
+.logo {
+  flex: 1;
+
+  a {
+      span {
+          &#taskerr-logo {
+              font-size: 3em;
+              color: #c1bdba;
+          }
+          &#taskerr-brand {
+              margin-left: 0.3em;
+              font-size: 1.3em;
+              color: #c1bdba;
+          }
+      }
   }
-  
-  .other-nav-content {
-    a {
+}
+
+.other-nav-content {
+  flex: 1;
+
+  a {
       margin-top: 0.7em;
-    }
-  
-    #second-nav-link {
-      margin-right: 20px;
-    }
   }
-  
-  .nav-links {
+}
+
+.nav-links {
     cursor: pointer;
-  }
-  
+}
+
+// Adding space between Contact and the buttons
+#second-nav-link {
+    margin-right: 20px; /* Adjust this value as needed */
+}
