@@ -1,19 +1,17 @@
 import cassandra from "cassandra-driver";
 
 function findOrDeleteCardParams(id: string) {
-    return [cassandra.types.Uuid.fromString(id)];
+    return [id];
 }
 
 function createCardParams(cardId: string, username: string, title: string, 
     description: string, activity: string) {
-        return [cassandra.types.Uuid.fromString(cardId), username, title, 
-            description, activity];
+        return [cardId, username, title, description, activity];
 }
 
 function updateCardParams(cardId: string, username?: string, title?: string, 
     description?: string, activity?: string) {
-        return [cassandra.types.Uuid.fromString(cardId), username, title, 
-            description, activity];
+        return [username, title, description, activity, cardId];
 }
 
 export default {
