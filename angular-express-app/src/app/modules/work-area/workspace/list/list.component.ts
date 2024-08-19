@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ListService } from "../../../../services/work-area/list.service";
 import { List } from "../../../../shared/models/list";
@@ -19,7 +18,6 @@ import { CardComponent } from "./card/card.component";
   ]
 })
 export class ListComponent implements OnInit {
-  @Input() list!: List;
   @Input() lists: List[] = [];
   @Input() maxLists: number = 10;
   @Output() updateList = new EventEmitter<{ id: string, name: string }>();
@@ -30,24 +28,26 @@ export class ListComponent implements OnInit {
   constructor(private listService: ListService) {}
 
   ngOnInit(): void {
+    // Only add default lists if the list array is empty
     if (this.lists.length === 0) {
       this.addDefaultLists();
     }
   }
 
   addDefaultLists(): void {
-    const defaultLists: { name: string, cards: Card[] }[] =[
+    const defaultLists: { name: string, cards: Card[] }[] = [
       { name: 'To Do', cards: [] },
       { name: 'In Progress', cards: [] },
       { name: 'Done', cards: [] }
     ];
-    for(const list of defaultLists) {
+
+    defaultLists.forEach(list => {
       this.addNewList(list.name);
-    }
+    });
   }
 
   updateListName(list: List): void {
-      if (list && list.id && list.name !== undefined) {
+    if (list && list.id && list.name) {
       this.updateList.emit({ id: list.id, name: list.name });
     }
   }
@@ -59,14 +59,17 @@ export class ListComponent implements OnInit {
   }
 
   addCardToList(listId: string): void {
-    this.addCard.emit({
-      listId: listId,
-      card: { username: '', title: 'New Card', description: '', activity: '' }
-    });
+    if (listId) {
+      this.addCard.emit({
+        listId: listId,
+        card: { username: '', title: 'New Card', description: '', activity: '' }
+      });
+    }
   }
 
   addNewList(name: string): void {
-    this.addList.emit({ name: name, cards: [] });
+    if (this.lists.length < this.maxLists) {
+      this.addList.emit({ name: name, cards: [] });
+    }
   }
 }
-

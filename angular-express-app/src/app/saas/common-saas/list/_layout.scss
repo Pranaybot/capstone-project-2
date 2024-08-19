@@ -1,11 +1,10 @@
-
 @import '../utilities/_variables.scss';
 
 :host {
   display: block;
   background-color: $background-color;
   padding: 16px;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 .list-container {
@@ -13,6 +12,12 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
   padding: 16px;
+  align-items: start; /* Ensures the "Add Card" button aligns at the top with the lists */
+}
+
+button.add-list-button {
+  grid-column: span 1;
+  justify-self: start; /* Aligns the "Add New List" button to the left within the grid */
 }
 
 @media (max-width: 768px) {
@@ -20,5 +25,9 @@
     grid-template-columns: 1fr;
     gap: 8px;
   }
-}
 
+  button.add-list-button {
+    width: 100%; /* Ensures the "Add New List" button takes full width on smaller screens */
+    justify-self: stretch;
+  }
+}
