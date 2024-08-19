@@ -29,7 +29,22 @@ export class ListComponent implements OnInit {
 
   constructor(private listService: ListService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.lists.length === 0) {
+      this.addDefaultLists();
+    }
+  }
+
+  addDefaultLists(): void {
+    const defaultLists: { name: string, cards: Card[] }[] =[
+      { name: 'To Do', cards: [] },
+      { name: 'In Progress', cards: [] },
+      { name: 'Done', cards: [] }
+    ];
+    for(const list of defaultLists) {
+      this.addNewList(list.name);
+    }
+  }
 
   updateListName(list: List): void {
       if (list && list.id && list.name !== undefined) {
