@@ -8,6 +8,13 @@ const router = Router();
 const userController = new UserController();
 const store = new CassandraStore(client);
 
+function check_passwords(password1: string, password2: string) {
+    if (password1 !== password2) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 function do_login(user: any, req: Request, store: CassandraStore) {
     req.session.userId = user.id; // Set custom session properties
@@ -22,15 +29,6 @@ function do_login(user: any, req: Request, store: CassandraStore) {
         }
     });
 }
-
-function check_passwords(password1: string, password2: string) {
-    if (password1 !== password2) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
 
 async function do_logout(req: Request, res: Response, store: CassandraStore) {
     try {
@@ -95,19 +93,17 @@ router.patch('/reset_password', async (req: Request, res: Response) => {
     const { username, old_pwd, new_pwd, new_pwd_match } = req.body;
 
     try {
-        const currUser = await userController.findUserByEmail(username);
+        const currUser = await userController.findUserByEmail(username)
         if (currUser) {
-
+            
             const isPasswordValid = await bcrypt.compare(old_pwd, currUser.password);
 
             if (isPasswordValid) {
                  if(check_passwords(new_pwd, new_pwd_match)){
-                    debugger;
                     const hashedPassword = await bcrypt.hash(new_pwd, 10);
-                    const id = String(currUser.id);
-                    console.log(id);
-                    await userController.updateUserPassword(id, hashedPassword);
-                    
+                    const currUserId = currUser.id.toString();
+
+                    await userController.updateUserPassword(hashedPassword, currUserId);
                     return res.json({ message: "The password updated successfully" });
                  } else {
                     return res.json({ message: "The passwords don't match"});

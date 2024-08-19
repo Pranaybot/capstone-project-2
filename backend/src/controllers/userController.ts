@@ -14,15 +14,16 @@ export class UserController {
     return result.rows.length > 0 ? result.rows[0] : null;
   }
 
-  async updateUserPassword(id: string, hashedPassword: string): Promise<void> {
+  async updateUserPassword(hashedPassword: string, id: string): Promise<void> {
     // Update the query to use username instead of id
     await client.execute(userQueries.UPDATE_USER_PASSWORD, 
-      userParams.updateUserPasswordParams(id, hashedPassword), {prepare: true});
+    userParams.updateUserPasswordParams(hashedPassword, id), {prepare: true});
   }
 
   async signup(firstName: string, lastName: string, userId: string, 
     password: string): Promise<any | null> {
-        const id = uuidv4(); // Generate a new UUID for the user
+        const id = uuidv4().toString(); // Generate a new UUID for the user
+        console.log(typeof id);
         const hashedPassword = await bcrypt.hash(password, 10);
 
         await client.execute(userQueries.INSERT_USER, 
