@@ -40,6 +40,10 @@ Users can toggle the light/dark theme for the work area page to allow for ease o
 ### Background Customization
 The application contains several background templates which allow for the customization of the Taskerr workspace in the work area page.
 
+### Reset Password Option
+The application has a reset password link option on the 'Login'
+form which allows a user to change their user password.
+
 ## Project setup and build
 
 ### A) Apache Cassandra setup
