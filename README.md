@@ -145,9 +145,7 @@ depend on the old keyspace.
 
 ## Future Development
 
-1. Allow users to change password / have a forgotten password system in place.
-2. Allow users to delete their own accounts.
-4. Integrate app with Google Calendar to make task management simpler, flexible, and easier to update.
-5. Allow users to select different backgrounds for their Taskerr workspace.
+1. Allow users to delete their own accounts.
+2. Integrate app with Google Calendar to make task management simpler, flexible, and easier to update.
 
 
