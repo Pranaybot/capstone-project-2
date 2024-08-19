@@ -4,10 +4,12 @@ h1 {
     font-weight: 600;
     margin-bottom: 16px;
     text-align: center;
+    color: $primary-color;
   }
   
   @media (max-width: 420px) {
     h1 {
       font-size: 1.5rem;
+      margin-bottom: 12px;
     }
   }
