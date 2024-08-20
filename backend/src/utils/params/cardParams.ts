@@ -1,4 +1,3 @@
-import cassandra from "cassandra-driver";
 
 function findOrDeleteCardParams(id: string) {
     return [id];

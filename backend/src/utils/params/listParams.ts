@@ -1,4 +1,3 @@
-import cassandra from "cassandra-driver";
 
 function selectListByIdParams(id: string) {
     return [id];

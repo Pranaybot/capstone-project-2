@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 const router = Router();
 const listController = new ListController();
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (_req: Request, res: Response) => {
   try {
       const lists = await listController.findAllLists();
       return res.json(lists);
@@ -41,13 +41,19 @@ router.post('/update_list', async (req: Request, res: Response) => {
 
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
-      const listId = req.params.id;
-      await listController.deleteList(listId);
-      return res.json({ message: 'List deleted successfully' });
+    const listId = req.params['id'];
+
+    if (typeof listId !== 'string') {
+      return res.status(400).json({ error: 'Invalid list ID' });
+    }
+
+    await listController.deleteList(listId);
+    return res.json({ message: 'List deleted successfully' });
   } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
+
 
 export default router;
 

@@ -1,4 +1,3 @@
-
 import { Router, Request, Response } from 'express';
 import { ListController } from "../controllers/listController";
 import { CardController } from "../controllers/cardController";
@@ -10,9 +9,13 @@ const cardController = new CardController();
 
 router.post('/:listId/cards', async (req: Request, res: Response) => {
   try {
-    const listId = req.params.listId;
+    const listId = req.params['listId'];
     const { username, title, description, activity } = req.body;
-  
+
+    if (typeof listId !== 'string') {
+      return res.status(400).json({ message: "Invalid list ID" });
+    }
+
     const list = await listController.findList(listId);
     if (!list) {
       return res.status(404).json({ message: "List not found" });
@@ -23,55 +26,62 @@ router.post('/:listId/cards', async (req: Request, res: Response) => {
     const card = await cardController.findCard(cardId);
     list.cards.push(card);
     
-    res.json({ card });
-  } catch(error: any) {
-      return res.status(500).json({ error: error.message });
+    return res.json({ card });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
   }
 });
 
 router.post('/:listId/cards/:cardId', async (req: Request, res: Response) => {
   try {
-    const listId = req.params.listId;
-    const cardId = req.params.cardId;
+    const listId = req.params['listId'];
+    const cardId = req.params['cardId'];
     const { username, title, description, activity } = req.body;
+
+    if (typeof listId !== 'string' || typeof cardId !== 'string') {
+      return res.status(400).json({ message: "Invalid list ID or card ID" });
+    }
 
     const list = await listController.findList(listId);
     if (!list) {
       return res.status(404).json({ message: "List not found" });
     }
-  
+
     await cardController.updateCard(cardId, username, title, description, activity);
     const card = await cardController.findCard(cardId);
     const index = list.cards.findIndex((c: { id: string; }) => c.id === cardId);
-    if(index !== -1) {
+    if (index !== -1) {
       list.cards[index] = card;
     }
     
-    res.json({ card });
-  } catch(error: any) {
+    return res.json({ card });
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 });
 
 router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
   try {
-    const listId = req.params.listId;
-    const cardId = req.params.cardId;
-    
+    const listId = req.params['listId'];
+    const cardId = req.params['cardId'];
+
+    if (typeof listId !== 'string' || typeof cardId !== 'string') {
+      return res.status(400).json({ message: "Invalid list ID or card ID" });
+    }
+
     const list = await listController.findList(listId);
     if (!list) {
       return res.status(404).json({ message: "List not found" });
     }
-  
-    const updatedCards = list.cards.filter((c: any) => (c: { id: string; }) => c.id !== cardId);
+
+    const updatedCards = list.cards.filter((c: { id: string; }) => c.id !== cardId);
     list.cards = updatedCards;
-    await cardController.deleteCard(cardId);    
-    res.json({ message: 'Card deleted successfully' });
-  } catch(error: any) {
+    await cardController.deleteCard(cardId);
+    
+    return res.json({ message: 'Card deleted successfully' });
+  } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
 });
 
-
 export default router;
-

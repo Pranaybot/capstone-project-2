@@ -45,7 +45,8 @@ class CassandraStore extends session.Store {
   
     async destroy(sid: string, callback?: (err?: any) => void): Promise<void> {
       try {
-        await this.client.execute(sessionQueries.DELETE_SESSION, [], { prepare: true });
+        await this.client.execute(sessionQueries.DELETE_SESSION, 
+          sessionParams.deleteSessionDataByIdParams(sid), { prepare: true });
         if (callback) {
           callback(null); // Call the callback with no error if successful
         }
