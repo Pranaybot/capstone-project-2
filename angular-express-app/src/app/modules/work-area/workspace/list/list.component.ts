@@ -28,16 +28,16 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const lists = this.listService.get_all_lists();
-    lists.forEach(list => {
-      this.lists.push(list);
+    this.listService.get_all_lists().subscribe((lists: List[]) => {
+      this.lists = lists;
+  
+      // Only add default lists if the list array is empty
+      if (this.lists.length === 0) {
+        this.addDefaultLists();
+      }
     });
-    
-    // Only add default lists if the list array is empty
-    if (this.lists.length === 0) {
-      this.addDefaultLists();
-    }
   }
+  
 
   addDefaultLists(): void {
     const defaultLists: { name: string, cards: Card[] }[] = [
@@ -72,13 +72,17 @@ export class ListComponent implements OnInit {
 
   addCardToList(listId: string): void {
     if (listId) {
-      this.cardService.add_card(listId, {username: '', title: 'New Card', description: '', activity: ''})
+      this.cardService.add_card(listId, { username: '', title: 'New Card', description: '', activity: '' })
         .subscribe((card: Card) => {
-          const list = this.lists.filter(l => l.id === listId);
-          list.cards.push(card);
+          const list = this.lists.find(l => l.id === listId); // Use `find` instead of `filter`
+          if (list) {
+            list.cards = list.cards || []; // Ensure `cards` is initialized
+            list.cards.push(card);
+          }
         });
     }
   }
+  
 
   addNewList(name: string): void {
     if (this.lists.length < this.maxLists) {

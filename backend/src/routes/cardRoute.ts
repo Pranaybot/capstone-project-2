@@ -42,7 +42,7 @@ router.post('/:listId/cards/:cardId', async (req: Request, res: Response) => {
   
     await cardController.updateCard(cardId, username, title, description, activity);
     const card = await cardController.findCard(cardId);
-    const index = list.cards.finIndex(c => c.id === cardId);
+    const index = list.cards.findIndex((c: { id: string; }) => c.id === cardId);
     if(index !== -1) {
       list.cards[index] = card;
     }
@@ -63,7 +63,7 @@ router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
       return res.status(404).json({ message: "List not found" });
     }
   
-    const updatedCards = list.cards.filter((card: any) => c => c.id !== cardId);
+    const updatedCards = list.cards.filter((c: any) => (c: { id: string; }) => c.id !== cardId);
     list.cards = updatedCards;
     await cardController.deleteCard(cardId);    
     res.json({ message: 'Card deleted successfully' });

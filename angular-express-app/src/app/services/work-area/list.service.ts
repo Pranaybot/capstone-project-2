@@ -1,35 +1,35 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BaseService } from "../base.service"
+import { Observable } from 'rxjs';
+import { List } from '../../shared/models/list';
+import { BaseService } from '../base.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListService extends BaseService {
 
-  constructor(http: HttpClient, private router: Router) {
+  constructor(http: HttpClient) {
     super(http);
   }
 
-  //gets all lists in json format
-  get_all_lists(): {
-    return this.http.get(`${this.apiUrl}/list/`);
+  // Gets all lists
+  get_all_lists(): Observable<List[]> {
+    return this.http.get<List[]>(`${this.apiUrl}/list/`);
   }
 
-  //gets new list in json format
-  add_list(name: string, cards: any) {
-    this.http.post(`${this.apiUrl}/list/add_list`, { name, cards });
+  // Adds a new list
+  add_list(name: string, cards: any[]): Observable<List> {
+    return this.http.post<List>(`${this.apiUrl}/list/add_list`, { name, cards });
   }
 
-  //gets updated list in json format
-  update_list(id: string, name: string) {
-    this.http.post(`${this.apiUrl}/list/update_list`, { id, name });
+  // Updates an existing list
+  update_list(id: string, name: string): Observable<List> {
+    return this.http.post<List>(`${this.apiUrl}/list/update_list`, { id, name });
   }
 
-  //deletes list and passes id to delete function in list component to remove list from this.lists
-  delete_list(id: string) {
-    this.http.delete(`${this.apiUrl}/list/${id}`);
+  // Deletes a list
+  delete_list(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/list/${id}`);
   }
-
 }

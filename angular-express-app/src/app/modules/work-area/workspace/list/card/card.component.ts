@@ -30,9 +30,8 @@ export class CardComponent {
   
 
   saveCard(card: Card, list: List): void {
-    const list = list;
-    if (!card.id) {
-      console.error('Card ID is undefined. Cannot update card.');
+    if (!card.id || !list.id) {
+      console.error('Card ID or List ID is undefined. Cannot update card.');
       return;
     }
   
@@ -42,13 +41,16 @@ export class CardComponent {
     card.description = card.editingDescription ?? card.description;
     card.activity = card.editingActivity ?? card.activity;
   
-    this.cardService.update_card(cardId, card).subscribe((card: Card) => {
-      const index = list.cards.findIndex(c => c.id === card.id);
-      if (index !== -1) {
-        list.cards[index] = card;
+    this.cardService.update_card(list.id, card.id, card).subscribe((updatedCard: Card) => {
+      if (list.cards) {
+        const index = list.cards.findIndex(c => c.id === updatedCard.id);
+        if (index !== -1) {
+          list.cards[index] = updatedCard;
+        }
       }
     });
   }
+  
   
 
   cancelEdit(card: Card): void {
@@ -57,8 +59,11 @@ export class CardComponent {
 
   deleteCard(listId: string, cardId: string): void {
     this.cardService.delete_card(listId, cardId).subscribe(() => {
-      list.cards = list.cards.filter(l => l.id !== listId);
+      if (this.list.cards) {
+        this.list.cards = this.list.cards.filter((l: Card) => l.id !== cardId);
+      }
     });
   }
+  
 }
 
