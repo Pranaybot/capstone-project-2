@@ -15,32 +15,18 @@ export class CardService extends BaseService {
     super(http);
   }
 
-  add_card(listId: string, card: Card): void {
-    this.http.post<void>
-      (`${this.apiUrl}/card/${listId}/cards`, card)
-      .subscribe((res: any) => {
-        if (!res.error) {
-          this.router.navigate(["/list"]);
-        }
-      });
+  //gets new card in json format
+  add_card(listId: string, card: Card) {
+    this.http.post(`${this.apiUrl}/card/${listId}/cards`, card);
   }
 
-  update_card(cardId: string, card: Card): void {
-    this.http.post<void>
-    (`${this.apiUrl}/card/${cardId}`, card).subscribe((res: any) => {
-      if (!res.error) {
-        this.router.navigate(["/list"]);
-      }
-    });
+  //gets updated card in json format
+  update_card(cardId: string, card: Card) {
+    this.http.post(`${this.apiUrl}/card/${cardId}`, card);
   }
 
-  delete_card(listId: string, cardId: string): void {
-    this.http.delete<void>
-    (`${this.apiUrl}/card/${listId}/cards/${cardId}`).
-    subscribe((res: any) => {
-      if (!res.error) {
-        this.router.navigate(["/list"]);
-      }
-    });
+  //deletes card and passes id to delete function in card component to remove card from this.cards
+  delete_card(listId: string, cardId: string) {
+    this.http.delete(`${this.apiUrl}/card/${listId}/cards/${cardId}`);
   }
 }
