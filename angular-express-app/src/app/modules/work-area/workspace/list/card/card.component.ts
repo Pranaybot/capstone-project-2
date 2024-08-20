@@ -43,7 +43,10 @@ export class CardComponent {
     card.activity = card.editingActivity ?? card.activity;
   
     this.cardService.update_card(cardId, card).subscribe((card: Card) => {
-      list.cards = list.cards.filter(c => c.id === card.id);
+      const index = list.cards.findIndex(c => c.id === card.id);
+      if (index !== -1) {
+        list.cards[index] = card;
+      }
     });
   }
   
@@ -53,7 +56,9 @@ export class CardComponent {
   }
 
   deleteCard(listId: string, cardId: string): void {
-    this.cardService.delete_card(listId, cardId);
+    this.cardService.delete_card(listId, cardId).subscribe(() => {
+      list.cards = list.cards.filter(l => l.id !== listId);
+    });
   }
 }
 
