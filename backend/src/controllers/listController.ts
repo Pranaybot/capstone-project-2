@@ -28,7 +28,7 @@ export class ListController {
 
   async createList(id: string, name: string, 
     cards: { cardId: number, username: string, title: string, 
-      description: string, activity: string }[]): Promise<void> {
+      description: string, activity: string }[]): Promise<any | null> {
     try {
         await client.execute(listQueries.ADD_LIST, 
           listParams.createListParams(id, name, cards), { prepare: true });
@@ -42,6 +42,8 @@ export class ListController {
     try {
       await client.execute(listQueries.UPDATE_LIST_BY_ID, 
         listParams.updateListParams(id, name), { prepare: true });
+      const result = await this.findList(id);
+      return result;
     } catch (error) {
       console.error('Error updating list:', error);
       throw new Error('Failed to update list');
