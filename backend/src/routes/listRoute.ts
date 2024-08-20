@@ -30,8 +30,8 @@ router.post('/add_list', async (req: Request, res: Response) => {
 router.post('/update_list', async (req: Request, res: Response) => {
   try {
       const { id, name } = req.body;
-      await listController.updateList(id, name);
-      res.json({ message: 'List updated successfully' });
+      const list = await listController.updateList(id, name);
+      res.json({ list });
   } catch (error: any) {
       return res.status(500).json({ error: error.message });
   }
