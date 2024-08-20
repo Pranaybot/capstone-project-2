@@ -23,7 +23,7 @@ router.post('/:listId/cards', async (req: Request, res: Response) => {
     const card = await cardController.findCard(cardId);
     list.cards.push(card);
     
-    res.json({ list });
+    res.json({ card });
   } catch(error: any) {
       return res.status(500).json({ error: error.message });
   }
@@ -34,8 +34,8 @@ router.post('/:cardId', async (req: Request, res: Response) => {
     const cardId = req.params.cardId;
     const { username, title, description, activity } = req.body;
   
-    await cardController.updateCard(cardId, username, title, description, activity);
-    res.json({ message: 'Card updated successfully' });
+    const card = await cardController.updateCard(cardId, username, title, description, activity);
+    res.json({ card });
   } catch(error: any) {
     return res.status(500).json({ error: error.message });
   }
@@ -54,7 +54,7 @@ router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
     const updatedCards = list.cards.filter((card: any) => card.cardId !== cardId);
     list.cards = updatedCards;
     await cardController.deleteCard(cardId);    
-    res.json({ list });
+    res.json({ message: 'Card deleted successfully' });
   } catch(error: any) {
     return res.status(500).json({ error: error.message });
   }
