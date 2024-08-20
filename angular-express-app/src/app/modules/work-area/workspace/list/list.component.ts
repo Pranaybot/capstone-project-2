@@ -64,7 +64,7 @@ export class ListComponent implements OnInit {
 
   deleteListItem(id: string | undefined): void {
     if (id) {
-      this.listService.delete_list(id).subscribe(( => {
+      this.listService.delete_list(id).subscribe(() => {
         this.lists = this.lists.filter(l => l.id !== id);
       });
     }
