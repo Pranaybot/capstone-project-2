@@ -19,12 +19,12 @@ export class ListService extends BaseService {
 
   //gets new list in json format
   add_list(name: string, cards: any) {
-    this.http.post(`${this.apiUrl}/list/add_list`, { name, cards })
+    this.http.post(`${this.apiUrl}/list/add_list`, { name, cards });
   }
 
   //gets updated list in json format
   update_list(id: string, name: string) {
-    this.http.post(`${this.apiUrl}/list/update_list`, { id, name })
+    this.http.post(`${this.apiUrl}/list/update_list`, { id, name });
   }
 
   //deletes list and passes id to delete function in list component to remove list from this.lists
