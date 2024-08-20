@@ -28,6 +28,11 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const lists = this.listService.get_all_lists();
+    lists.forEach(list => {
+      this.lists.push(list);
+    });
+    
     // Only add default lists if the list array is empty
     if (this.lists.length === 0) {
       this.addDefaultLists();
