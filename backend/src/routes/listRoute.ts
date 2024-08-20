@@ -21,7 +21,7 @@ router.post('/add_list', async (req: Request, res: Response) => {
       const id = uuidv4(); // Generate a new UUID for the list
       const { name, cards } = req.body;
       await listController.createList(id, name, cards);
-      res.json({ message: 'List created successfully' });
+      res.json({ id, name, cards });
   } catch (error: any) {
       return res.status(500).json({ error: error.message });
   }
