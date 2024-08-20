@@ -72,17 +72,18 @@ export class ListComponent implements OnInit {
 
   addCardToList(listId: string): void {
     if (listId) {
-      this.cardService.add_card(
-        listId, 
-        {username: '', title: 'New Card', description: '', activity: ''}
-      )
+      this.cardService.add_card(listId, {username: '', title: 'New Card', description: '', activity: ''})
+        .subscribe((card: Card) => {
+          const list = this.lists.filter(l => l.id === listId);
+          list.cards.push(card);
+        });
     }
   }
 
   addNewList(name: string): void {
     if (this.lists.length < this.maxLists) {
       this.listService.add_list(name, []).subscribe((list: List) => {
-            this.lists.push(list);
+          this.lists.push(list);
       });
     }
   }
