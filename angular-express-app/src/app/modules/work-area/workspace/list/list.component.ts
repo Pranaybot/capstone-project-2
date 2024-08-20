@@ -53,13 +53,20 @@ export class ListComponent implements OnInit {
 
   updateListName(list: List): void {
     if (list && list.id && list.name) {
-      this.listService.update_list(list.id, list.name);
+      this.listService.update_list(list.id, list.name).subscribe((list: List) => {
+        const index = this.lists.findIndex(l => l.id === list.id);
+        if (index !== -1) {
+          this.lists[index] = list;
+        }
+      });
     }
   }
 
   deleteListItem(id: string | undefined): void {
     if (id) {
-      this.listService.delete_list(id);
+      this.listService.delete_list(id).subscribe(( => {
+        this.lists = this.lists.filter(l => l.id !== id);
+      });
     }
   }
 
@@ -74,7 +81,9 @@ export class ListComponent implements OnInit {
 
   addNewList(name: string): void {
     if (this.lists.length < this.maxLists) {
-      this.listService.add_list(name, []);
+      this.listService.add_list(name, []).subscribe((list: List) => {
+            this.lists.push(list);
+      });
     }
   }
 }
