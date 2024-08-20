@@ -29,12 +29,24 @@ router.post('/:listId/cards', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/:cardId', async (req: Request, res: Response) => {
+router.post('/:listId/cards/:cardId', async (req: Request, res: Response) => {
   try {
+    const listId = req.params.listId;
     const cardId = req.params.cardId;
     const { username, title, description, activity } = req.body;
+
+    const list = await listController.findList(listId);
+    if (!list) {
+      return res.status(404).json({ message: "List not found" });
+    }
   
-    const card = await cardController.updateCard(cardId, username, title, description, activity);
+    await cardController.updateCard(cardId, username, title, description, activity);
+    const card = await cardController.findCard(cardId);
+    const index = list.cards.finIndex(c => c.id === cardId);
+    if(index !== -1) {
+      list.cards[index] = card;
+    }
+    
     res.json({ card });
   } catch(error: any) {
     return res.status(500).json({ error: error.message });
@@ -51,7 +63,7 @@ router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
       return res.status(404).json({ message: "List not found" });
     }
   
-    const updatedCards = list.cards.filter((card: any) => card.cardId !== cardId);
+    const updatedCards = list.cards.filter((card: any) => c => c.id !== cardId);
     list.cards = updatedCards;
     await cardController.deleteCard(cardId);    
     res.json({ message: 'Card deleted successfully' });
