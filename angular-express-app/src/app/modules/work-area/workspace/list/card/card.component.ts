@@ -29,7 +29,8 @@ export class CardComponent {
   }
   
 
-  saveCard(card: Card): void {
+  saveCard(card: Card, list: List): void {
+    const list = list;
     if (!card.id) {
       console.error('Card ID is undefined. Cannot update card.');
       return;
@@ -41,7 +42,9 @@ export class CardComponent {
     card.description = card.editingDescription ?? card.description;
     card.activity = card.editingActivity ?? card.activity;
   
-    this.cardService.update_card(card.id, card);
+    this.cardService.update_card(cardId, card).subscribe((card: Card) => {
+      list.cards = list.cards.filter(c => c.id === card.id);
+    });
   }
   
 
