@@ -2,8 +2,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from "../base.service"
-import { List } from '../../shared/models/list';
-import { Observable } from 'rxjs';
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -15,15 +13,15 @@ export class ListService extends BaseService {
     super(http);
   }
 
-  get_all_lists(): Observable<List[]> {
-    return this.http.get<List[]>(`${this.apiUrl}/list/`);
+  get_all_lists(): {
+    return this.http.get(`${this.apiUrl}/list/`);
   }
 
   add_list(name: string, cards: any): void {
     this.http.post<void>(`${this.apiUrl}/list/add_list`, 
     { name, cards }).subscribe((res: any) => {
       if (!res.error) {
-        this.router.navigate(["/list"]);
+        this.router.navigate(["/work_area"]);
       }
     });
   }
@@ -32,7 +30,7 @@ export class ListService extends BaseService {
     this.http.post<void>(`${this.apiUrl}/list/update_list`, 
     { id, name }).subscribe((res: any) => {
       if (!res.error) {
-        this.router.navigate(["/list"]);
+        this.router.navigate(["/work_area"]);
       }
     });
   }
@@ -41,11 +39,9 @@ export class ListService extends BaseService {
     this.http.delete<void>(`${this.apiUrl}/list/${id}`)
     .subscribe((res: any) => {
       if (!res.error) {
-        this.router.navigate(["/list"]);
+        this.router.navigate(["/work_area"]);
       }
     });
   }
 
 }
-
-
