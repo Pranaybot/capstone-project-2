@@ -17,8 +17,11 @@ downloadBundleIfNeeded(bundleUrl).catch(err => {
     console.error('Error downloading secure connect bundle:', err);
 });
 
+// Define the path where the bundle should be saved
+const bundlePath = path.join(__dirname, 'secure-connect-taskerr-db.zip');
+
 const config = {
-    cloud: { secureConnectBundle: path.join(__dirname, 'secure-connect-taskerr-db.zip') },
+    cloud: { secureConnectBundle: bundlePath },
     keyspace: keyspace,
     clientId: clientId,
     clientSecret: clientSecret,
