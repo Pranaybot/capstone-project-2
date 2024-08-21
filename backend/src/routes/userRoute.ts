@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
 import CassandraStore from "../cassandra-session-store";
 import client from '../config/clientConfig';
-import * as bcrypt from 'bcrypt'; // Import bcrypt for password hashing
+import * as bcrypt from 'bcryptjs'; // Import bcrypt for password hashing
 
 const router = Router();
 const userController = new UserController();
