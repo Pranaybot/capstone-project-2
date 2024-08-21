@@ -1,5 +1,5 @@
 
-import * as bcrypt from 'bcrypt'; // Import bcrypt for password hashing
+import * as bcrypt from 'bcryptjs'; // Import bcrypt for password hashing
 import client  from "../config/clientConfig";
 import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 import userQueries from "../utils/queries/user";
