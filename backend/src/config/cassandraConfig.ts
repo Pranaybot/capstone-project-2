@@ -8,7 +8,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 const bundlePath = path.join(__dirname, 'secure-connect-taskerr-db.zip');
 
 const username = process.env["ASTRA_DB_APPLICATION_TOKEN"] || '';
-const password = process.env["ASTRA_DB_PASSWORD"] || 'token_pwd'; // Ensure password is included
+const password = process.env["ASTRA_DB_PASSWORD"] || ''; // Ensure password is included
 const keyspace = process.env["ASTRA_KEYSPACE_NAME"] || '';
 const clientId = process.env["ASTRA_CLIENT_ID"] || '';
 const clientSecret = process.env["ASTRA_CLIENT_SECRET"] || '';
