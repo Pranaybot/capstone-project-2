@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     /* Language and Environment */
-    "target": "es2017",                                  /* Set the JavaScript language version for emitted JavaScript. */
-    "module": "esnext",                                /* Specify what module code is generated. */
+    "target": "ES2020",                                  /* Set the JavaScript language version for emitted JavaScript. */
+    "module": "CommonJS",                                /* Specify what module code is generated. */
     "moduleResolution": "node",                          /* Specify how TypeScript looks up a file from a given module specifier. */
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. */
@@ -46,6 +46,10 @@
     "types": ["node"]
   },
   "include": [
-    "src/**/*.ts", "src/routes/userRoute.js", "src/routes/listRoute.js", "src/routes/cardRoute.js",
-  ]
+    "src/**/*.ts", 
+    "src/routes/userRoute.js", 
+    "src/routes/listRoute.js", 
+    "src/routes/cardRoute.js",
+  ],
+  "exclude": ["node_modules"]
 }

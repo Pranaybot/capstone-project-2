@@ -22,4 +22,4 @@ const config = {
     token: applicationToken["token"]
 };
 
-export default config;
+module.exports = config;

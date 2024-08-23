@@ -1,5 +1,4 @@
-
-export const createListTableQuery = `
+const createListTableQuery = `
   CREATE TABLE IF NOT EXISTS lists (
     id uuid PRIMARY KEY,
     name text,
@@ -7,3 +6,4 @@ export const createListTableQuery = `
   )
 `;
 
+module.exports = { createListTableQuery };

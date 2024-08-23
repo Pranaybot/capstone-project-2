@@ -1,5 +1,4 @@
-
-export const createCardTypeQuery = `
+const createCardTypeQuery = `
   CREATE TYPE IF NOT EXISTS card (
     id uuid,
     username text,
@@ -9,3 +8,4 @@ export const createCardTypeQuery = `
   )
 `;
 
+module.exports = { createCardTypeQuery };
