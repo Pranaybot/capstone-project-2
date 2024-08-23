@@ -19,7 +19,7 @@ function check_passwords(password1: string, password2: string) {
 function do_login(user: any, req: Request, _res: Response) {
     const session = req.session;
     session.userId = user.id;
-    session.password = password;
+    session.isLoggedIn = true;
     console.log('Successfully logged in!');
 
     /*
