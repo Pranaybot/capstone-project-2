@@ -13,7 +13,7 @@ function updateCardParams(cardId: string, username?: string, title?: string,
         return [username, title, description, activity, cardId];
 }
 
-export default {
+module.exports = {
     findOrDeleteCardParams,
     createCardParams,
     updateCardParams

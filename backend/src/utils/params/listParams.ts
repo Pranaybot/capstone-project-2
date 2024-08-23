@@ -18,7 +18,7 @@ function deleteListParams(id: string){
 }
 
 
-export default {
+module.exports = {
     selectListByIdParams,
     createListParams,
     updateListParams,

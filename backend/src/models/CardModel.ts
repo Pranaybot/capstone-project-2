@@ -1,4 +1,4 @@
-const createCardTableQuery = `
+const createTable = `
   CREATE TABLE IF NOT EXISTS cards (
     id uuid PRIMARY KEY,
     username text,
@@ -8,4 +8,4 @@ const createCardTableQuery = `
   )
 `;
 
-module.exports = { createCardTableQuery };
+module.exports = { createTable };

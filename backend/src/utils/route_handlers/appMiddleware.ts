@@ -6,7 +6,7 @@ const cors = require('cors');
 const path = require('path');
 
 
-export function setupMiddleware(app: Application) {
+function setUp(app: Application) {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
@@ -17,3 +17,5 @@ export function setupMiddleware(app: Application) {
     res.sendFile(path.join(__dirname, 'dist/your-angular-app/index.html'));
   });
 }
+
+module.exports = { setUp };

@@ -1,21 +1,22 @@
 //import { createSessionsTableQuery } from "../models/SessionsModel";
-const { createUserTableQuery } = require('../models/UserModel');
-const { createListTableQuery } = require('../models/ListModel');
-const { createCardTableQuery } = require('../models/CardModel');
-const { createCardTypeQuery } = require('../cardType');
+const userModel = require('../models/UserModel');
+const listModel = require('../models/ListModel');
+const cardModel = require('../models/CardModel');
+const cardType = require('../cardType');
 
-const client = require("../config/clientConfig");
+const host = require("../config/clientConfig");
 
-async function initializeDatabase() {
+async function initialize() {
     try {
         // Execute type creation queries first
-        await client.execute(createCardTypeQuery);
+        const client = host.cassClient;
+        await client.execute(cardType.createType);
 
         // Then execute table creation queries
         //await client.execute(createSessionsTableQuery);
-        await client.execute(createUserTableQuery);
-        await client.execute(createListTableQuery);
-        await client.execute(createCardTableQuery);
+        await client.execute(userModel.createQuery);
+        await client.execute(listModel.createTableQuery);
+        await client.execute(cardModel.createTable);
         
         console.log('Database initialized successfully');
     } catch (error) {
@@ -23,4 +24,4 @@ async function initializeDatabase() {
     }
 }
 
-export default initializeDatabase;
+module.exports = { initialize };

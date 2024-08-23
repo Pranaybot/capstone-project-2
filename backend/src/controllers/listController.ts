@@ -1,12 +1,13 @@
 
-const client = require('../config/clientConfig');
+const listCassandra = require('../config/clientConfig');
 const listQueries = require('../utils/queries/list');
 const listParams = require('../utils/params/listParams');
 
-export class ListController {
+class ListController {
 
   async findAllLists(): Promise<any[]> {
     try {
+      const client = listCassandra.cassClient;
       const result = await client.execute(listQueries.SELECT_ALL_LISTS);
       return result.rows; // Return the rows directly
     } catch (error) {
@@ -17,6 +18,7 @@ export class ListController {
 
   async findList(id: string): Promise<any | null> {
     try {
+      const client = listCassandra.cassClient;
       const result = await client.execute(listQueries.SELECT_LIST_BY_ID, 
         listParams.selectListByIdParams(id), { prepare: true });
       return result.rows.length > 0 ? result.rows : null;
@@ -30,6 +32,7 @@ export class ListController {
     cards: { cardId: number, username: string, title: string, 
       description: string, activity: string }[]): Promise<any | null> {
     try {
+        const client = listCassandra.cassClient;
         await client.execute(listQueries.ADD_LIST, 
           listParams.createListParams(id, name, cards), { prepare: true });
     } catch (error) {
@@ -40,6 +43,7 @@ export class ListController {
 
   async updateList(id: string, name: string): Promise<void> {
     try {
+      const client = listCassandra.cassClient;
       await client.execute(listQueries.UPDATE_LIST_BY_ID, 
         listParams.updateListParams(id, name), { prepare: true });
       const result = await this.findList(id);
@@ -52,6 +56,7 @@ export class ListController {
 
   async deleteList(id: string): Promise<void> {
     try {
+      const client = listCassandra.cassClient;
       await client.execute(listQueries.DELETE_LIST_BY_ID, 
         listParams.deleteListParams(id), { prepare: true });
     } catch (error) {
@@ -60,4 +65,6 @@ export class ListController {
     }
   }
 }
+
+module.exports = ListController;
 

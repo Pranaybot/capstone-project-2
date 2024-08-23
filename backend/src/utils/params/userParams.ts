@@ -13,7 +13,7 @@ function updateUserPasswordParams(hashedPassword: string, id:string) {
         return [hashedPassword, id];
 }
 
-export default {
+module.exports = {
     selectUserByUsernameParams,
     signupUserParams,
     updateUserPasswordParams

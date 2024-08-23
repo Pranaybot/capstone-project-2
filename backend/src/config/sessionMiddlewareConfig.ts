@@ -15,7 +15,7 @@ const redisStore = new RedisStore({
 });
 
 // Initialize session storage.
-export function configureSessionMiddlware(app: Application) {
+function configure(app: Application) {
 
     // New Session middleware setup
     app.use(session({
@@ -40,4 +40,6 @@ export function configureSessionMiddlware(app: Application) {
     }))
     */
 }
+
+module.exports = { configure };
   

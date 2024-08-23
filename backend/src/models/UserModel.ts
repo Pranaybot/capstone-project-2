@@ -1,4 +1,4 @@
-const createUserTableQuery = `
+const createQuery = `
   CREATE TABLE IF NOT EXISTS users (
     id uuid PRIMARY KEY,
     firstName text,
@@ -8,4 +8,4 @@ const createUserTableQuery = `
   )
 `;
 
-module.exports = { createUserTableQuery };
+module.exports = createQuery;

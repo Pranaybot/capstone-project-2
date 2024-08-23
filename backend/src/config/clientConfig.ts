@@ -1,8 +1,8 @@
 const cassandra = require('cassandra-driver');
-const config = require('../config/cassandraConfig');
+const cassandraConfig = require('../config/cassandraConfig');
 
 
-const client = new cassandra.Client(config)
+const cassClient = new cassandra.Client(cassandraConfig)
 
-export default client;
+module.exports = { cassClient };
 

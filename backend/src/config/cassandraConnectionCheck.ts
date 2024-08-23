@@ -1,9 +1,9 @@
-const client = require('./clientConfig');
+const cassDB = require('./clientConfig');
 
-async function checkConnection(): Promise<void> {
+async function check(): Promise<void> {
 
     try {
-        await client.connect();
+        await cassDB.cassClient.connect();
         console.log('Cassandra connection successful');
     } catch (error) {
         console.error('Cassandra connection failed:', error);
@@ -11,4 +11,4 @@ async function checkConnection(): Promise<void> {
     }
 }
 
-export default checkConnection;
+module.exports = { check };
