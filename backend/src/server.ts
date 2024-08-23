@@ -1,5 +1,5 @@
 //server.ts
-import express from "express";
+const express = require('express');
 import initializeAndStartServer from "./utils/server_startup"
 
 const app = express();
