@@ -1,12 +1,12 @@
 import { Router, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
-import CassandraStore from "../cassandra-session-store";
-import client from '../config/clientConfig';
+//import CassandraStore from "../cassandra-session-store";
+//import client from '../config/clientConfig';
 import * as bcrypt from 'bcryptjs'; // Import bcrypt for password hashing
 
 const router = Router();
 const userController = new UserController();
-const store = new CassandraStore(client);
+//const store = new CassandraStore(client);
 
 function check_passwords(password1: string, password2: string) {
     if (password1 !== password2) {
@@ -16,7 +16,13 @@ function check_passwords(password1: string, password2: string) {
     }
 }
 
-function do_login(user: any, req: Request, store: CassandraStore) {
+function do_login(user: any, req: Request, _res: Response) {
+    const session = req.session;
+    session.userId = user.id;
+    session.password = password;
+    console.log('Successfully logged in!');
+
+    /*
     req.session.userId = user.id; // Set custom session properties
     req.session.isLoggedIn = true;
 
@@ -28,9 +34,18 @@ function do_login(user: any, req: Request, store: CassandraStore) {
             console.log('Session saved successfully:', req.session);
         }
     });
+    */
 }
 
-async function do_logout(_req: Request, res: Response, store: CassandraStore) {
+async function do_logout(req: Request, res: Response) {
+    try {
+        req.session.destroy;
+        res.status(200).json({ message: 'Session destroyed successfully' });
+    } catch(err) {
+        console.error('Error checking session status:', err);
+        res.status(404).json({ error: 'Session not found' });
+    }
+    /*
     try {
       // Retrieve the session using the session ID
       const session = await store.get();
@@ -45,6 +60,7 @@ async function do_logout(_req: Request, res: Response, store: CassandraStore) {
       console.error('Error checking login status:', err);
       res.status(500).json({ error: 'Server error' });
     }
+    */
 }
 
 router.post('/signup', async (req: Request, res: Response) => {
@@ -60,7 +76,7 @@ router.post('/signup', async (req: Request, res: Response) => {
         const user = await userController.signup(firstName, lastName, username, pwd);
         if (user) {
             //do_login(user, req, store);
-            do_login(user, req, store);
+            do_login(user, req, res);
             return res.status(201).json({ message: 'User created successfully.' });
         } else {
             return res.json({ message: "Cannot find new user" });
@@ -78,7 +94,7 @@ router.post('/login', async (req: Request, res: Response) => {
         const user = await userController.login(username, pwd);
         if (user) {
             //do_login(user, req, store);
-            do_login(user, req, store);
+            do_login(user, req, res);
             return res.json({ message: 'Logged in successfully' })
         } else {
             return res.status(401).json({ message: 'Invalid username or password' })
@@ -121,7 +137,7 @@ router.post('/reset_password', async (req: Request, res: Response) => {
 
 router.get('/logout', (req: Request, res: Response) => {
     //do_logout(req, res, store);
-    do_logout(req, res, store);
+    do_logout(req, res);
 });
 
 export default router;
