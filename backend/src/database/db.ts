@@ -1,4 +1,4 @@
-import { createSessionsTableQuery } from "../models/SessionsModel";
+//import { createSessionsTableQuery } from "../models/SessionsModel";
 import { createUserTableQuery } from "../models/UserModel";
 import { createListTableQuery } from "../models/ListModel";
 import { createCardTableQuery } from "../models/CardModel";
@@ -12,7 +12,7 @@ async function initializeDatabase() {
         await client.execute(createCardTypeQuery);
 
         // Then execute table creation queries
-        await client.execute(createSessionsTableQuery);
+        //await client.execute(createSessionsTableQuery);
         await client.execute(createUserTableQuery);
         await client.execute(createListTableQuery);
         await client.execute(createCardTableQuery);
