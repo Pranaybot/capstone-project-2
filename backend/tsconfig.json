@@ -43,6 +43,7 @@
     /* Interop Constraints */
     "isolatedModules": true,                            /* Ensure that each file can be safely transpiled without relying on other imports. */
     "typeRoots": ["node_modules/@types"],
+    "types": ["node"]
   },
   "include": [
     "src/**/*.ts", 
