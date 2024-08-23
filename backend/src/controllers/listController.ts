@@ -1,7 +1,7 @@
 
-import client from "../config/clientConfig";
-import listQueries from "../utils/queries/list";
-import listParams from "../utils/params/listParams";
+const client = require('../config/clientConfig');
+const listQueries = require('../utils/queries/list');
+const listParams = require('../utils/params/listParams');
 
 export class ListController {
 

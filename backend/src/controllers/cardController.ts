@@ -1,7 +1,7 @@
 
-import client  from "../config/clientConfig";
-import cardQueries from "../utils/queries/card";
-import cardParams from "../utils/params/cardParams";
+const client = require('../config/clientConfig');
+const cardQueries = require('../utils/queries/card');
+const cardParams = require('../utils/params/cardParams');
 
 export class CardController {
 

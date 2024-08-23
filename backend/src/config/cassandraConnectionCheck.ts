@@ -1,4 +1,4 @@
-import client from "./clientConfig";
+const client = require('./clientConfig');
 
 async function checkConnection(): Promise<void> {
 

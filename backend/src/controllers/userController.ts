@@ -1,9 +1,9 @@
 
-import * as bcrypt from 'bcryptjs'; // Import bcrypt for password hashing
-import client  from "../config/clientConfig";
-import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
-import userQueries from "../utils/queries/user";
-import userParams from "../utils/params/userParams";
+const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing
+const client = require('../config/clientConfig');
+const { v4: uuidv4 } = require('uuid'); // Import UUID generator
+const userQueries = require('../utils/queries/user');
+const userParams = require('../utils/params/userParams');
 
 export class UserController {
 

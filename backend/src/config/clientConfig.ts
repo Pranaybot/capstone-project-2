@@ -1,8 +1,8 @@
+const cassandra = require('cassandra-driver');
+const config = require('../config/cassandraConfig');
 
-import casssandra from "cassandra-driver";
-import config from "../config/cassandraConfig";
 
-const client = new casssandra.Client(config)
+const client = new cassandra.Client(config)
 
 export default client;
 

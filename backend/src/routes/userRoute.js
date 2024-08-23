@@ -1,22 +1,18 @@
-import { Router, Request, Response } from 'express';
-import { UserController } from '../controllers/userController';
-//import CassandraStore from "../cassandra-session-store";
-//import client from '../config/clientConfig';
-import * as bcrypt from 'bcryptjs'; // Import bcrypt for password hashing
+const { Router } = require('express');
+const { UserController } = require('../controllers/userController');
+// const CassandraStore = require("../cassandra-session-store");
+// const client = require('../config/clientConfig');
+const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing
 
 const router = Router();
 const userController = new UserController();
-//const store = new CassandraStore(client);
+// const store = new CassandraStore(client);
 
-function check_passwords(password1: string, password2: string) {
-    if (password1 !== password2) {
-        return false;
-    } else {
-        return true;
-    }
+function checkPasswords(password1, password2) {
+    return password1 === password2;
 }
 
-function do_login(user: any, req: Request, _res: Response) {
+function doLogin(user, req, res) {
     const session = req.session;
     session.userId = user.id;
     session.isLoggedIn = true;
@@ -37,11 +33,11 @@ function do_login(user: any, req: Request, _res: Response) {
     */
 }
 
-async function do_logout(req: Request, res: Response) {
+async function doLogout(req, res) {
     try {
-        req.session.destroy;
+        req.session.destroy();
         res.status(200).json({ message: 'Session destroyed successfully' });
-    } catch(err) {
+    } catch (err) {
         console.error('Error checking session status:', err);
         res.status(404).json({ error: 'Session not found' });
     }
@@ -63,8 +59,7 @@ async function do_logout(req: Request, res: Response) {
     */
 }
 
-router.post('/signup', async (req: Request, res: Response) => {
-
+router.post('/signup', async (req, res) => {
     const { firstName, lastName, username, pwd } = req.body; // Note: Matching formControlName
 
     try {
@@ -75,55 +70,52 @@ router.post('/signup', async (req: Request, res: Response) => {
         
         const user = await userController.signup(firstName, lastName, username, pwd);
         if (user) {
-            //do_login(user, req, store);
-            do_login(user, req, res);
+            // doLogin(user, req, store);
+            doLogin(user, req, res);
             return res.status(201).json({ message: 'User created successfully.' });
         } else {
             return res.json({ message: "Cannot find new user" });
         }
     } catch (error) {
-        return res.status(500).json({ messsage: 'Server error' });
+        return res.status(500).json({ message: 'Server error' });
     }
 });
 
-router.post('/login', async (req: Request, res: Response) => {
-
+router.post('/login', async (req, res) => {
     const { username, pwd } = req.body;
 
     try {
         const user = await userController.login(username, pwd);
         if (user) {
-            //do_login(user, req, store);
-            do_login(user, req, res);
-            return res.json({ message: 'Logged in successfully' })
+            // doLogin(user, req, store);
+            doLogin(user, req, res);
+            return res.json({ message: 'Logged in successfully' });
         } else {
-            return res.status(401).json({ message: 'Invalid username or password' })
+            return res.status(401).json({ message: 'Invalid username or password' });
         }
     } catch (error) {
-        return res.status(500).json({ messsage: 'Server error' });
+        return res.status(500).json({ message: 'Server error' });
     }
 });
 
-router.post('/reset_password', async (req: Request, res: Response) => {
-
+router.post('/reset_password', async (req, res) => {
     const { username, old_pwd, new_pwd, new_pwd_match } = req.body;
 
     try {
-        const currUser = await userController.findUserByEmail(username)
+        const currUser = await userController.findUserByEmail(username);
         if (currUser) {
-            
             const isPasswordValid = await bcrypt.compare(old_pwd, currUser.password);
 
             if (isPasswordValid) {
-                 if(check_passwords(new_pwd, new_pwd_match)){
+                if (checkPasswords(new_pwd, new_pwd_match)) {
                     const hashedPassword = await bcrypt.hash(new_pwd, 10);
                     const currUserId = currUser.id.toString();
 
                     await userController.updateUserPassword(hashedPassword, currUserId);
                     return res.json({ message: "The password updated successfully" });
-                 } else {
-                    return res.json({ message: "The passwords don't match"});
-                 }
+                } else {
+                    return res.json({ message: "The passwords don't match" });
+                }
             } else {
                 return res.json({ message: "The old password you entered is invalid" });
             }
@@ -131,13 +123,13 @@ router.post('/reset_password', async (req: Request, res: Response) => {
             return res.json({ message: "User does not exist" });
         }
     } catch (error) {
-        return res.status(500).json({ messsage: 'Server error' });
+        return res.status(500).json({ message: 'Server error' });
     }
 });
 
-router.get('/logout', (req: Request, res: Response) => {
-    //do_logout(req, res, store);
-    do_logout(req, res);
+router.get('/logout', (req, res) => {
+    // doLogout(req, res, store);
+    doLogout(req, res);
 });
 
-export default router;
+module.exports = router;

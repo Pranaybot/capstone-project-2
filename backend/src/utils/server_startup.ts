@@ -1,9 +1,9 @@
 import { Application } from "express";
-import { setupMiddleware } from "../utils/route_handlers/appMiddleware";
-import { setupDbRoutes } from '../utils/route_handlers/dbRoutes';
-import { startServer } from "../config/serverConfig";
-import { configureSessionMiddlware } from "../config/sessionMiddlewareConfig";
-import checkConnection from "../config/cassandraConnectionCheck";
+const { setupMiddleware } = require('../utils/route_handlers/appMiddleware');
+const { setupDbRoutes } = require('../utils/route_handlers/dbRoutes');
+const { startServer } = require('../config/serverConfig');
+const { configureSessionMiddleware } = require('../config/sessionMiddlewareConfig');
+const checkConnection = require('../config/cassandraConnectionCheck');
 
 // Function to initialize and start the server
 async function initializeAndStartServer(app: Application) {
@@ -15,7 +15,7 @@ async function initializeAndStartServer(app: Application) {
       setupMiddleware(app);
   
       // Configure session middleware settings
-      configureSessionMiddlware(app);
+      configureSessionMiddleware(app);
   
       // Setup routes that require database access
       setupDbRoutes(app);

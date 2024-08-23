@@ -1,13 +1,13 @@
-import { Router, Request, Response } from 'express';
-import { ListController } from "../controllers/listController";
-import { CardController } from "../controllers/cardController";
-import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
+const { Router } = require('express');
+const { ListController } = require('../controllers/listController');
+const { CardController } = require('../controllers/cardController');
+const { v4: uuidv4 } = require('uuid'); // Import UUID generator
 
 const router = Router();
 const listController = new ListController();
 const cardController = new CardController();
 
-router.post('/:listId/cards', async (req: Request, res: Response) => {
+router.post('/:listId/cards', async (req, res) => {
   try {
     const listId = req.params['listId'];
     const { username, title, description, activity } = req.body;
@@ -27,12 +27,12 @@ router.post('/:listId/cards', async (req: Request, res: Response) => {
     list.cards.push(card);
     
     return res.json({ card });
-  } catch (error: any) {
+  } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
 
-router.post('/:listId/cards/:cardId', async (req: Request, res: Response) => {
+router.post('/:listId/cards/:cardId', async (req, res) => {
   try {
     const listId = req.params['listId'];
     const cardId = req.params['cardId'];
@@ -49,18 +49,18 @@ router.post('/:listId/cards/:cardId', async (req: Request, res: Response) => {
 
     await cardController.updateCard(cardId, username, title, description, activity);
     const card = await cardController.findCard(cardId);
-    const index = list.cards.findIndex((c: { id: string; }) => c.id === cardId);
+    const index = list.cards.findIndex(c => c.id === cardId);
     if (index !== -1) {
       list.cards[index] = card;
     }
     
     return res.json({ card });
-  } catch (error: any) {
+  } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
 
-router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
+router.delete('/:listId/cards/:cardId', async (req, res) => {
   try {
     const listId = req.params['listId'];
     const cardId = req.params['cardId'];
@@ -74,14 +74,14 @@ router.delete('/:listId/cards/:cardId', async (req: Request, res: Response) => {
       return res.status(404).json({ message: "List not found" });
     }
 
-    const updatedCards = list.cards.filter((c: { id: string; }) => c.id !== cardId);
+    const updatedCards = list.cards.filter(c => c.id !== cardId);
     list.cards = updatedCards;
     await cardController.deleteCard(cardId);
     
     return res.json({ message: 'Card deleted successfully' });
-  } catch (error: any) {
+  } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
 
-export default router;
+module.exports = router;

@@ -1,11 +1,11 @@
 import { Application } from 'express';
-import session from 'express-session';
-import { createClient } from 'redis';
-import RedisStore from 'connect-redis';
+const session = require('express-session');
+const { createClient } = require('redis');
+const RedisStore = require('connect-redis')(session);
 
 // Initialize client.
 const redisClient = await createClient()
-  .on('error', err => console.log('Redis Client Error', err))
+  .on('error', (err: any) => console.log('Redis Client Error', err))
   .connect();
 ;
 

@@ -46,6 +46,6 @@
     "types": ["node"]
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*.ts", "src/routes/userRoute.js", "src/routes/listRoute.js", "src/routes/cardRoute.js",
   ]
 }

@@ -1,10 +1,11 @@
 
 // dbRoutes.ts
 import { Application } from 'express';
-import initializeDatabase from '../../database/db';
-import userRoute from '../../routes/userRoute';
-import listRoute from '../../routes/listRoute';
-import cardRoute from '../../routes/cardRoute';
+const initializeDatabase = require('../../database/db');
+const userRoute = require('../../routes/userRoute');
+const listRoute = require('../../routes/listRoute');
+const cardRoute = require('../../routes/cardRoute');
+
 
 export function setupDbRoutes(app: Application) {
   initializeDatabase()
