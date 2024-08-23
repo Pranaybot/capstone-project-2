@@ -1,3 +1,4 @@
+/*
 import session from 'express-session';
 import { Client } from 'cassandra-driver';
 import sessionQueries from "./utils/queries/sessonStore";
@@ -56,8 +57,8 @@ class CassandraStore extends session.Store {
         }
       }
     }
-    
-    
+
 }
   
 export default CassandraStore;
+*/
