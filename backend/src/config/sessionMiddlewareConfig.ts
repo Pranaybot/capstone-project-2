@@ -1,6 +1,6 @@
 import { Application } from 'express';
 const session = require('express-session');
-const redis = require('redis');
+import redis from 'redis';
 const client = redis.createClient();
 const redisStore = require('connect-redis')(session);
 
