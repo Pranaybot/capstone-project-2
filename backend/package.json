@@ -24,6 +24,7 @@
     "express-session": "^1.18.0",
     "express-validator": "^7.1.0",
     "fs": "^0.0.1-security",
+    "long": "^5.2.3",
     "redis": "^4.7.0",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.3",
