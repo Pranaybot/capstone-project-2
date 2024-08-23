@@ -51,5 +51,4 @@
     "src/routes/listRoute.js", 
     "src/routes/cardRoute.js",
   ],
-  "exclude": ["node_modules"]
 }
