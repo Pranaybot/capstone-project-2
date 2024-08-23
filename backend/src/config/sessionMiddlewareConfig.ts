@@ -1,15 +1,25 @@
 import { Application } from 'express';
-const session = require('express-session');
-import redis from 'redis';
-const client = redis.createClient();
-const redisStore = require('connect-redis')(session);
+import session from 'express-session';
+import { createClient } from 'redis';
+import RedisStore from 'connect-redis';
 
+// Initialize client.
+const redisClient = await createClient()
+  .on('error', err => console.log('Redis Client Error', err))
+  .connect();
+;
 
+// Initialize store.
+const redisStore = new RedisStore({
+  client: redisClient
+});
+
+// Initialize session storage.
 export function configureSessionMiddlware(app: Application) {
 
     // New Session middleware setup
     app.use(session({
-      store: new redisStore({ client: client }),
+      store: redisStore,
       secret: 'topsecret~!@#$%^&*',
       resave: false,
       saveUninitialized: false,
