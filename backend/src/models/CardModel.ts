@@ -8,4 +8,4 @@ const createTable = `
   )
 `;
 
-module.exports = { createTable };
+module.exports = createTable ;

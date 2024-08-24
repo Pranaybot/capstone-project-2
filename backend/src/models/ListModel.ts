@@ -6,4 +6,4 @@ const createTableQuery = `
   )
 `;
 
-module.exports = { createTableQuery };
+module.exports = createTableQuery;

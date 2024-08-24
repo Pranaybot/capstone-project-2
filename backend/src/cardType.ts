@@ -8,4 +8,4 @@ const createType = `
   )
 `;
 
-module.exports = { createType };
+module.exports = createType ;

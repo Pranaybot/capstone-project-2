@@ -4,5 +4,5 @@ const cassandraConfig = require('../config/cassandraConfig');
 
 const cassClient = new cassandra.Client(cassandraConfig)
 
-module.exports = { cassClient };
+export default cassClient;
 
