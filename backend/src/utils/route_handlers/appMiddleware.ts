@@ -11,11 +11,11 @@ function setUp(app: Application) {
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
   // Serve static files from the Angular app
-  app.use(express.static(path.join(__dirname, 'dist/your-angular-app')));
+  app.use(express.static(path.join(__dirname, 'dist/angular-express-app')));
 
   app.get('*', (_req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/your-angular-app/index.html'));
-  });
+    res.sendFile(path.join(__dirname, 'dist/angular-express-app/browser/index.html'));
+  });  
 }
 
 module.exports = { setUp };

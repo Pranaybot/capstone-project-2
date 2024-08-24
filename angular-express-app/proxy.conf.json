@@ -1,11 +1,11 @@
 {
     "/api": {
-      "target": "http://localhost:3000",
+      "target": "https://capstone-project-2-i62m.onrender.com/",
       "secure": false,
       "changeOrigin": true,
       "pathRewrite": {
         "^/api": ""
       }
     }
-  }
+}
   
