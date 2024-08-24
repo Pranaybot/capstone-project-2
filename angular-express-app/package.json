@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
+    "postinstall": "npm install -g @angular/cli && npm ci",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:angular-express-app": "node dist/angular-express-app/server/server.mjs"
