@@ -1,3 +1,5 @@
+export default {}
+
 import { Application } from "express";
 const middleware = require('../utils/route_handlers/appMiddleware');
 const database = require('../utils/route_handlers/dbRoutes');

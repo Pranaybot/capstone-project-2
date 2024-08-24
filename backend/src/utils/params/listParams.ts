@@ -1,19 +1,21 @@
+// src/userParams.ts
+import { UUID } from "../types";
 
-function selectListByIdParams(id: string) {
+function selectListByIdParams(id: UUID) {
     return [id];
 }
 
-function createListParams(id: string, 
+function createListParams(id: UUID, 
     name: string, cards: { cardId: number, username: string, 
         title: string, description: string, activity: string }[]) {
         return [id, name, cards];
 }
 
-function updateListParams(id: string, name?:string){
+function updateListParams(id: UUID, name?:string){
     return [name, id];
 }
 
-function deleteListParams(id: string){
+function deleteListParams(id: UUID){
     return [id];
 }
 

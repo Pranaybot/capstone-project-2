@@ -4,6 +4,7 @@ const userCassandra = require('../config/clientConfig');
 const { v4: uuidv4 } = require('uuid'); // Import UUID generator
 const userQueries = require('../utils/queries/user');
 const userParams = require('../utils/params/userParams');
+import { UUID } from "../utils/types";
 
 class UserController {
 
@@ -15,7 +16,7 @@ class UserController {
     return result.rows.length > 0 ? result.rows[0] : null;
   }
 
-  async updateUserPassword(hashedPassword: string, id: string): Promise<void> {
+  async updateUserPassword(hashedPassword: string, id: UUID): Promise<void> {
     const client = userCassandra.cassClient;
     // Update the query to use username instead of id
     await client.execute(userQueries.UPDATE_USER_PASSWORD, 
@@ -25,7 +26,6 @@ class UserController {
   async signup(firstName: string, lastName: string, userId: string, 
     password: string): Promise<any | null> {
         const id = uuidv4().toString(); // Generate a new UUID for the user
-        console.log(typeof id);
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const client = userCassandra.cassClient;

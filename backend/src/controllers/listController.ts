@@ -2,6 +2,7 @@
 const listCassandra = require('../config/clientConfig');
 const listQueries = require('../utils/queries/list');
 const listParams = require('../utils/params/listParams');
+import { UUID } from "../utils/types";
 
 class ListController {
 
@@ -16,7 +17,7 @@ class ListController {
     }
   }
 
-  async findList(id: string): Promise<any | null> {
+  async findList(id: UUID): Promise<any | null> {
     try {
       const client = listCassandra.cassClient;
       const result = await client.execute(listQueries.SELECT_LIST_BY_ID, 
@@ -28,7 +29,7 @@ class ListController {
     }
   }
 
-  async createList(id: string, name: string, 
+  async createList(id: UUID, name: string, 
     cards: { cardId: number, username: string, title: string, 
       description: string, activity: string }[]): Promise<any | null> {
     try {
@@ -41,7 +42,7 @@ class ListController {
     }
   }
 
-  async updateList(id: string, name: string): Promise<void> {
+  async updateList(id: UUID, name: string): Promise<void> {
     try {
       const client = listCassandra.cassClient;
       await client.execute(listQueries.UPDATE_LIST_BY_ID, 
@@ -54,7 +55,7 @@ class ListController {
     }
   }
 
-  async deleteList(id: string): Promise<void> {
+  async deleteList(id: UUID): Promise<void> {
     try {
       const client = listCassandra.cassClient;
       await client.execute(listQueries.DELETE_LIST_BY_ID, 
@@ -66,5 +67,5 @@ class ListController {
   }
 }
 
-module.exports = ListController;
+module.exports = { ListController };
 

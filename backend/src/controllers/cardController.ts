@@ -2,10 +2,11 @@
 const cardCassandra = require('../config/clientConfig');
 const cardQueries = require('../utils/queries/card');
 const cardParams = require('../utils/params/cardParams');
+import { UUID } from "../utils/types";
 
 class CardController {
 
-  async findCard(id: string): Promise<any | null> {
+  async findCard(id: UUID): Promise<any | null> {
     try {
         const client = cardCassandra.cassClient;
         const result = await client.execute(cardQueries.SELECT_CARD_BY_ID, 
@@ -17,7 +18,7 @@ class CardController {
     }
   }
   
-  async createCard(id: string, username: string, title: string, 
+  async createCard(id: UUID, username: string, title: string, 
     description: string, activity: string): Promise<void> {
     try {
         const client = cardCassandra.cassClient;
@@ -30,7 +31,7 @@ class CardController {
     }
   }
 
-  async updateCard(cardId: string, username?: string, title?: string, 
+  async updateCard(cardId: UUID, username?: string, title?: string, 
     description?: string, activity?: string): Promise<void> {
     try {
       const client = cardCassandra.cassClient;
@@ -43,7 +44,7 @@ class CardController {
     }
   }
 
-  async deleteCard(id: string): Promise<void> {
+  async deleteCard(id: UUID): Promise<void> {
     try {
       const client = cardCassandra.cassClient;
       await client.execute(cardQueries.DELETE_CARD_BY_ID, 
@@ -55,5 +56,5 @@ class CardController {
   }
 }
 
-module.exports = CardController;
+module.exports = { CardController };
 

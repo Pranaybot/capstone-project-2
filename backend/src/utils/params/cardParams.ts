@@ -1,14 +1,16 @@
+// src/userParams.ts
+import { UUID } from "../types";
 
-function findOrDeleteCardParams(id: string) {
+function findOrDeleteCardParams(id: UUID) {
     return [id];
 }
 
-function createCardParams(cardId: string, username: string, title: string, 
+function createCardParams(cardId: UUID, username: string, title: string, 
     description: string, activity: string) {
         return [cardId, username, title, description, activity];
 }
 
-function updateCardParams(cardId: string, username?: string, title?: string, 
+function updateCardParams(cardId: UUID, username?: string, title?: string, 
     description?: string, activity?: string) {
         return [username, title, description, activity, cardId];
 }
