@@ -3,6 +3,7 @@
 import { Application } from 'express';
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 function setUp(app: Application) {
   app.use(express.json());
@@ -10,11 +11,13 @@ function setUp(app: Application) {
   app.use(cors());
   
   // Serve static files from Angular build directory
-  app.use(express.static('../../../angular-express-app/dist/angular-express-app/browser'));
+  const angularAppPath = path.join(__dirname, 
+    '../../../../angular-express-app/dist/angular-express-app/browser');
+  app.use(express.static(angularAppPath));
 
-  // Define a catch-all route to serve the Angular application
+  // Catch-all route to serve Angular's index.html
   app.get('*', (_req, res) => {
-    res.sendFile('angular-express-app/dist/angular-express-app/browser/index.html');
+    res.sendFile('index.html', { root: angularAppPath });
   });
 }
 

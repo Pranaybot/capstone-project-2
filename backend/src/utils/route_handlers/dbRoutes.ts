@@ -6,7 +6,6 @@ const userRoute = require('../../routes/userRoute');
 const listRoute = require('../../routes/listRoute');
 const cardRoute = require('../../routes/cardRoute');
 
-
 function setupDbRoutes(app: Application) {
   cassandraDb.initialize()
     .then(() => {
