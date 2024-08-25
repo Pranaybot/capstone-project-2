@@ -40,7 +40,8 @@
             "prerender": true,
             "ssr": {
               "entry": "server.ts"
-            }
+            },
+            "baseHref": "https://capstone-project-2-1-o4cb.onrender.com/"
           },
           "configurations": {
             "production": {
@@ -74,9 +75,6 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "proxyConfig": "./proxy.conf.json"
-          },
           "configurations": {
             "production": {
               "buildTarget": "angular-express-app:build:production"
