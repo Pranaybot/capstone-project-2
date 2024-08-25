@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
-    "watch": "ng build --watch --configuration production",
+    "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:angular-express-app": "node dist/angular-express-app/server/server.mjs"
   },
