@@ -14,7 +14,7 @@ function setUp(app: Application) {
 
   // Define a catch-all route to serve the Angular application
   app.get('*', (_req, res) => {
-    res.sendFile('index.html', { root: 'angular-express-app/dist/angular-express-app/browser'});
+    res.sendFile('angular-express-app/dist/angular-express-app/browser/index.html');
   });
 }
 
