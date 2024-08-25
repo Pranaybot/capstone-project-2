@@ -19,6 +19,7 @@ function setUp(app: Application) {
   app.get('*', (_req, res) => {
     res.sendFile('index.html', { root: angularAppPath });
   });
+  console.log('Angular App Path:', angularAppPath);
 }
 
 module.exports = { setUp };
