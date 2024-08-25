@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.prod'; // Adjust the path as necessary
 
 export class BaseService {
-  protected apiUrl: string = environment.apiUrl;
+  protected apiUrl: string = "/api";
 
   constructor(protected http: HttpClient) {}
 
