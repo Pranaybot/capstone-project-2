@@ -3,7 +3,6 @@
 import { Application } from 'express';
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 
 function setUp(app: Application) {
   app.use(express.json());
@@ -15,7 +14,7 @@ function setUp(app: Application) {
 
   // Define a catch-all route to serve the Angular application
   app.get('*', (_req, res) => {
-    res.sendFile('index.html', { root: path.join(__dirname, '../../../angular-express-app/dist/angular-express-app/browser') });
+    res.sendFile('index.html', { root: 'angular-express-app/dist/angular-express-app/browser'});
   });
 }
 
