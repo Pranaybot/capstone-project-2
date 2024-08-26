@@ -10,7 +10,7 @@ to create tasks and move them from the 'Tasks' list to 'In Progress' and
 option to adjust their work accordingly by using up to ten lists in their workspace. 
 Finally, lists in the applicaton hold cards, but lists and cards can be added, updated, or deleted.
 
-You can view the deployed application here: `https://capstone-two-4wnd.onrender.com`
+You can view the deployed application here: `https://capstone-project-2-i62m.onrender.com/`
 
 ## Tech Stack
 
