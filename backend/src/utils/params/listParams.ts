@@ -8,7 +8,7 @@ function selectListByIdParams(id: UUID) {
 function createListParams(id: UUID, 
     name: string, cards: { cardId: number, username: string, 
         title: string, description: string, activity: string }[]) {
-        return [id, name, cards];
+        return { id, name, cards: cards || [] };
 }
 
 function updateListParams(id: UUID, name?:string){

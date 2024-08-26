@@ -1,5 +1,5 @@
 
-const listCassandra = require('../config/clientConfig');
+import cassClient from "../config/clientConfig";
 const listQueries = require('../utils/queries/list');
 const listParams = require('../utils/params/listParams');
 import { UUID } from "../utils/types";
@@ -8,8 +8,7 @@ class ListController {
 
   async findAllLists(): Promise<any[]> {
     try {
-      const client = listCassandra.cassClient;
-      const result = await client.execute(listQueries.SELECT_ALL_LISTS);
+      const result = await cassClient.execute(listQueries.SELECT_ALL_LISTS);
       return result.rows; // Return the rows directly
     } catch (error) {
       console.error('Error fetching lists:', error);
@@ -19,10 +18,9 @@ class ListController {
 
   async findList(id: UUID): Promise<any | null> {
     try {
-      const client = listCassandra.cassClient;
-      const result = await client.execute(listQueries.SELECT_LIST_BY_ID, 
+      const result = await cassClient.execute(listQueries.SELECT_LIST_BY_ID, 
         listParams.selectListByIdParams(id), { prepare: true });
-      return result.rows.length > 0 ? result.rows : null;
+      return result.rows.length > 0 ? result.rows[0] : null;
     } catch (error) {
       console.error('Error fetching list:', error);
       throw new Error('Failed to fetch list');
@@ -31,10 +29,12 @@ class ListController {
 
   async createList(id: UUID, name: string, 
     cards: { cardId: number, username: string, title: string, 
-      description: string, activity: string }[]): Promise<any | null> {
+      description: string, activity: string }[]): Promise<void> {
     try {
-        const client = listCassandra.cassClient;
-        await client.execute(listQueries.ADD_LIST, 
+        // Ensure cards is an empty array if not provided
+        cards = cards.length ? cards : [];
+        
+        await cassClient.execute(listQueries.ADD_LIST, 
           listParams.createListParams(id, name, cards), { prepare: true });
     } catch (error) {
       console.error('Error creating list:', error);
@@ -44,8 +44,7 @@ class ListController {
 
   async updateList(id: UUID, name: string): Promise<void> {
     try {
-      const client = listCassandra.cassClient;
-      await client.execute(listQueries.UPDATE_LIST_BY_ID, 
+      await cassClient.execute(listQueries.UPDATE_LIST_BY_ID, 
         listParams.updateListParams(id, name), { prepare: true });
       const result = await this.findList(id);
       return result;
@@ -57,8 +56,7 @@ class ListController {
 
   async deleteList(id: UUID): Promise<void> {
     try {
-      const client = listCassandra.cassClient;
-      await client.execute(listQueries.DELETE_LIST_BY_ID, 
+      await cassClient.execute(listQueries.DELETE_LIST_BY_ID, 
         listParams.deleteListParams(id), { prepare: true });
     } catch (error) {
       console.error('Error deleting list:', error);

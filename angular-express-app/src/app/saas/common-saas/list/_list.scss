@@ -35,10 +35,14 @@
   top: 8px;
   right: 8px;
   padding: 0;
+  width: 2em; /* Ensure the button size matches the content */
+  height: 1.5em; /* Ensure the height also matches the content */
+  line-height: 1; /* Adjust the line height if necessary */
 }
 
 .delete-list-button:hover {
   color: $error-hover-color;
+  background-color: $background-color;
 }
 
 @media (max-width: 768px) {

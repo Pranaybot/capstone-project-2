@@ -1,4 +1,3 @@
-//import { createSessionsTableQuery } from "../models/SessionsModel";
 const userModel = require('../models/UserModel');
 const listModel = require('../models/ListModel');
 const cardModel = require('../models/CardModel');
@@ -12,7 +11,6 @@ async function initialize() {
         await cassClient.execute(cardType);
 
         // Then execute table creation queries
-        //await client.execute(createSessionsTableQuery);
         await cassClient.execute(userModel);
         await cassClient.execute(listModel);
         await cassClient.execute(cardModel);

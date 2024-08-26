@@ -83,7 +83,7 @@ form which allows a user to change their user password.
    e) If you wish to drop the old keyspace, use this command, `DROP KEYSPACE old_keyspace_name;`. In this case, the keyspace name would be `my_keyspace`.
 
    
-5. You will also notice that the `.env` file has empty credential values for username and pasword. For the application, you can leave this blank. However, if you wish to create credential details, follow these steps:
+4. You will also notice that the `.env` file has empty credential values for username and pasword. For the application, you can leave this blank. However, if you wish to create credential details, follow these steps:
 
    ### Steps
    a) Locate the `cassandra.yaml` file. It is typically located in the `conf` directory of your Cassandra installation like this: `/etc/cassandra/cassandra.yaml`.
@@ -97,6 +97,23 @@ form which allows a user to change their user password.
    g) Optionally, you can grant permissions to the user. One command you could use is this one: `GRANT ALL PERMISSIONS ON KEYSPACE keyspace_name TO username;`
    h) Exit the `cqlsh` instance by typing `exit`; or Ctr+d. In the env file, enter the values you created for username and password.
    i) If you wish to interact with Cassandra directly, use the command here with the username and password you specified: `cqlsh -u username -p password`.
+
+5. In your Command Prompt or Terminal, type the command `cqlsh`. Then, enter
+   `CREATE KEYSPACE my_keyspace` to create the keyspace for Casandra DB to load
+   the tables into.
+6. The `backend` folder has a config directory with a file named  `cassandraConfig.ts`. It
+   can be found by going into the `src` folder first. When you get to the file, replace each
+   of the `const` keywords with variables you created in the `.env` file. For each variable,
+   make sure you assign them the value of `.env` variable assoicated with it using the command
+   `process.env` with square-bracket notation to access the `.env` variable. For instance, 
+   you can declare and initialize a variable like `keyspace` in this manner: `const keyspace = process.env["CASSANDRA_KEYSPACE"] || "my_keyspace"`.
+7. You will need to install another server, `redis`, to be able to manage user information 
+   for signup, login, and resetting password. To do this, type this command, `brew install redis`. Once it is done, run it with the command, `brew services start redis`.
+8. Finally, you need to modify the file, `base.service.ts`. You can find it in the `angular-express-app` directory
+   by using this path, `angular-express-app/src/app/services/base.service.ts`. On the file, remove `.prod` from the
+   end of the path which can be found in the second import. The project has two environment files, `environment.ts`
+   and `environment.prod.ts` which can be found in the `environments` folder under `src`. The files contain important data like apiUrls which are used for development or production. When you remove `.prod` from the second
+   import, you are using the apiUrl from the `environment.ts` file. 
 
 ### D) Project build
 1. From the github repository, go to Code and copy the HTTPS github repository url to your clipboard.
@@ -142,6 +159,8 @@ depend on the old keyspace.
 8. When you enter your credential details for username and password in the `.env` file, you will be connected to Cassandra automatically.
 9. If you want to re-configure the Apache Cassandra to have distributed nodes, you can refer to these links: `docs.datastax.com` and
    `cassandra.apache.org`.
+10. When you run the project locally, you can turn off the servers for Apache Cassandra and redis
+    by using `brew services stop cassandra` or `brew services stop redis`.
 
 ## Future Development
 

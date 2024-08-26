@@ -7,27 +7,39 @@
   min-height: 100vh;
 }
 
-.list-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-  padding: 16px;
-  align-items: start; /* Ensures the "Add Card" button aligns at the top with the lists */
+.container {
+  display: flex;
 }
 
+.list-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Two columns layout */
+  gap: 16px;
+  padding: 16px;
+  align-items: start; /* Ensures alignment at the top */
+}
+
+/* Ensure the "Add List" button takes its place in the grid */
 button.add-list-button {
-  grid-column: span 1;
-  justify-self: start; /* Aligns the "Add New List" button to the left within the grid */
+  grid-column: span 1; /* Makes sure it spans only one column */
+  width: auto;
+  height: 4em;
+  margin-top: 1.3em;
 }
 
 @media (max-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
   .list-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Switch to a single column on smaller screens */
     gap: 8px;
   }
 
   button.add-list-button {
-    width: 100%; /* Ensures the "Add New List" button takes full width on smaller screens */
-    justify-self: stretch;
+    width: auto; /* Ensures the "Add New List" button takes full width on smaller screens */
+    height: 3em;
   }
 }

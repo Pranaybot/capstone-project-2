@@ -10,6 +10,6 @@ export interface Card {
     editingTitle?: string;
     editingDescription?: string;
     editingActivity?: string;
-  }
+}
   
   

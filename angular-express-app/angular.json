@@ -40,8 +40,7 @@
             "prerender": true,
             "ssr": {
               "entry": "server.ts"
-            },
-            "baseHref": "https://capstone-project-2-1-o4cb.onrender.com/"
+            }
           },
           "configurations": {
             "production": {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ListService } from "../../../../services/work-area/list.service";
 import { CardService } from '../../../../services/work-area/card.service';
 import { List } from "../../../../shared/models/list";

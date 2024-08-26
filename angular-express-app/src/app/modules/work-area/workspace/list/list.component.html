@@ -1,5 +1,5 @@
 
-<div>
+<div class="container">
   <div class="list-container">
     <div *ngFor="let list of lists" class="list">
       <input [(ngModel)]="list.name" (keyup.enter)="updateListName(list)" />
@@ -11,6 +11,6 @@
     </div>
   </div>
 
-  <button *ngIf="lists.length < maxLists" (click)="addNewList('New List')">Add List</button>
+  <button class="add-list-button" *ngIf="lists.length < maxLists" (click)="addNewList('New List')">Add List</button>
 </div>
 

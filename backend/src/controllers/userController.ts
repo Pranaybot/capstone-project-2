@@ -1,6 +1,6 @@
 
 const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing
-const userCassandra = require('../config/clientConfig');
+import cassClient from "../config/clientConfig";
 const { v4: uuidv4 } = require('uuid'); // Import UUID generator
 const userQueries = require('../utils/queries/user');
 const userParams = require('../utils/params/userParams');
@@ -9,17 +9,15 @@ import { UUID } from "../utils/types";
 class UserController {
 
   async findUserByEmail(userId: string): Promise<any | null> {
-    const client = userCassandra.cassClient;
-    const result = await client.execute(userQueries.SELECT_USER_BY_USERNAME, 
-      userParams.selectUserByUsernameParams(userId), { prepare: true });
+    const result = await cassClient.execute(userQueries.SELECT_USER_BY_USERNAME, 
+      userParams.selectUserByUsernameParams(userId));
 
     return result.rows.length > 0 ? result.rows[0] : null;
   }
 
   async updateUserPassword(hashedPassword: string, id: UUID): Promise<void> {
-    const client = userCassandra.cassClient;
     // Update the query to use username instead of id
-    await client.execute(userQueries.UPDATE_USER_PASSWORD, 
+    await cassClient.execute(userQueries.UPDATE_USER_PASSWORD, 
     userParams.updateUserPasswordParams(hashedPassword, id), {prepare: true});
   }
 
@@ -28,8 +26,7 @@ class UserController {
         const id = uuidv4().toString(); // Generate a new UUID for the user
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const client = userCassandra.cassClient;
-        await client.execute(userQueries.INSERT_USER, 
+        await cassClient.execute(userQueries.INSERT_USER, 
           userParams.signupUserParams(id, firstName, lastName, 
             userId, hashedPassword), { prepare: true });
 

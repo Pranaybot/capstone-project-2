@@ -35,14 +35,6 @@ function configure(app: Application) {
     }
   }));
   
-  /* Original Session middleware setup
-  app.use(session({
-      secret: 'a4g_gdfg-$5',
-      resave: false,
-      saveUninitialized: false,
-      cookie: { secure: false } // Set to true if using HTTPS
-  }));
-  */
 }
 
 module.exports = { configure };
