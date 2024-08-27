@@ -19,7 +19,7 @@ function setupDbRoutes(app: Application) {
 
       app.get('*', (_req: Request, res: Response) => {
         res.sendFile(path.join(__dirname, 
-          '../../../angular-dist/angular-express-app/browser/index.html'))
+          '../../../angular-dist/angular-express-app/browser/browser/index.html'))
       });
     
     })
