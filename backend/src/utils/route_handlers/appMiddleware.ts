@@ -13,7 +13,7 @@ function setUp(app: Application) {
   app.use(express.static(path.join(__dirname, 
     '../../../angular-dist/angular-express-app/browser/browser')));
 
-  app.get('/', (_req: Request, res: Response) => {
+  app.get('*', (_req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, 
       '../../../angular-dist/angular-express-app/browser/browser/index.html'))
   });
