@@ -108,7 +108,9 @@ form which allows a user to change their user password.
    `process.env` with square-bracket notation to access the `.env` variable. For instance, 
    you can declare and initialize a variable like `keyspace` in this manner: `const keyspace = process.env["CASSANDRA_KEYSPACE"] || "my_keyspace"`.
 7. You will need to install another server, `redis`, to be able to manage user information 
-   for signup, login, and resetting password. To do this, type this command, `brew install redis`. Once it is done, run it with the command, `brew services start redis`.
+   for signup, login, and resetting password. To do this, type this command, `brew install redis`. Then, in your env file, create two key-value pairs, `REDIS_SESSION_SECRET` with 
+   a value like a password and another one `REDIS_NODE_ENV` set to development. Also go to
+   a file for session middleware configuration which can be found in the config folder under the `src` directory in the backend folder and clear the arguments for `createClient` so it contains an opening parathesis and closing paranthesis. Once this setup is done, run the redis server with the command, `brew services start redis`.
 8. Finally, you need to modify the file, `base.service.ts`. You can find it in the `angular-express-app` directory
    by using this path, `angular-express-app/src/app/services/base.service.ts`. On the file, remove `.prod` from the
    end of the path which can be found in the second import. The project has two environment files, `environment.ts`
