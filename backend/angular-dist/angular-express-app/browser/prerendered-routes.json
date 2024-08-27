@@ -1,8 +1,0 @@
-{
-  "routes": [
-    "/",
-    "/login_signup",
-    "/reset_password",
-    "/work_area"
-  ]
-}
