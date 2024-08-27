@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: '/'
+    apiUrl: 'https://capstone-project-2-i62m.onrender.com'
 };
   

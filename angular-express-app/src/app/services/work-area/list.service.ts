@@ -15,7 +15,7 @@ export class ListService extends BaseService {
 
   // Gets all lists
   get_all_lists(): Observable<List[]> {
-    return this.http.get<List[]>(`${this.apiUrl}/list`);
+    return this.http.get<List[]>(`${this.apiUrl}/list/`);
   }
 
   // Adds a new list
