@@ -1,10 +1,10 @@
 
-const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing
+import bcrypt from 'bcryptjs'; // Import bcrypt for password hashing
 import cassClient from "../config/clientConfig";
-const { v4: uuidv4 } = require('uuid'); // Import UUID generator
-const userQueries = require('../utils/queries/user');
-const userParams = require('../utils/params/userParams');
-import { UUID } from "../utils/types";
+import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
+import userQueries from '../utils/queries/user';
+import userParams from '../utils/params/userParams';
+import UUID from "../utils/types";
 
 class UserController {
 
@@ -59,4 +59,4 @@ class UserController {
 
 }
 
-module.exports = { UserController };
+export default UserController;
