@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import UserController from '../controllers/userController';
 import bcrypt from 'bcryptjs';
+import 'session_variables';
 
 const router = Router();
 const userController = new UserController();

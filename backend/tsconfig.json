@@ -46,9 +46,7 @@
     "types": ["node"]
   },
   "include": [
+    "src/session_variables.ts",  // or the appropriate path
     "src/**/*.ts", 
-    "src/routes/userRoute.js", 
-    "src/routes/listRoute.js", 
-    "src/routes/cardRoute.js",
   ],
 }
