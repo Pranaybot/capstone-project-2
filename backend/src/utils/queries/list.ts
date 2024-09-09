@@ -5,8 +5,7 @@ const ADD_LIST = `INSERT INTO lists (id, name, cards) VALUES (?, ?, ?)`;
 const UPDATE_LIST_BY_ID = `UPDATE lists SET name = ? WHERE id = ?`;
 const DELETE_LIST_BY_ID = `DELETE FROM lists WHERE id = ?`;
 
-
-module.exports = {
+export default {
     SELECT_ALL_LISTS,
     SELECT_LIST_BY_ID,
     ADD_LIST,
