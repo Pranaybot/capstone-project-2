@@ -1,2 +1,4 @@
 // src/types.ts
-export type UUID = string;
+type UUID = string;
+
+export default UUID;
