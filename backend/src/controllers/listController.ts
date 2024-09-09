@@ -1,8 +1,8 @@
 
 import cassClient from "../config/clientConfig";
-const listQueries = require('../utils/queries/list');
-const listParams = require('../utils/params/listParams');
-import { UUID } from "../utils/types";
+import listQueries from '../utils/queries/list';
+import listParams from '../utils/params/listParams';
+import UUID from "../utils/types";
 
 class ListController {
 
@@ -65,5 +65,5 @@ class ListController {
   }
 }
 
-module.exports = { ListController };
+export default ListController;
 
