@@ -11,4 +11,4 @@ async function check(): Promise<void> {
     }
 }
 
-module.exports = { check };
+export default check;
