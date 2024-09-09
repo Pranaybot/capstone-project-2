@@ -1,5 +1,5 @@
 // src/userParams.ts
-import { UUID } from "../types";
+import UUID from "../types";
 
 function selectUserByUsernameParams(userId: string) {
     return [userId];
@@ -15,7 +15,7 @@ function updateUserPasswordParams(hashedPassword: string, id:UUID) {
         return [hashedPassword, id];
 }
 
-module.exports = {
+export default {
     selectUserByUsernameParams,
     signupUserParams,
     updateUserPasswordParams,
