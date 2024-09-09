@@ -8,5 +8,5 @@ function start(app: Application) {
   });
 }
 
-module.exports = { start };
+export default start;
 
