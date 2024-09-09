@@ -1,5 +1,5 @@
 // src/userParams.ts
-import { UUID } from "../types";
+import UUID from "../types";
 
 function selectListByIdParams(id: UUID) {
     return [id];
@@ -19,8 +19,7 @@ function deleteListParams(id: UUID){
     return [id];
 }
 
-
-module.exports = {
+export default {
     selectListByIdParams,
     createListParams,
     updateListParams,
