@@ -1,7 +1,7 @@
-const userModel = require('../models/UserModel');
-const listModel = require('../models/ListModel');
-const cardModel = require('../models/CardModel');
-const cardType = require('../cardType');
+import userModel from '../models/UserModel';
+import listModel from '../models/ListModel';
+import cardModel from '../models/CardModel';
+import cardType from '../cardType';
 
 import cassClient from "../config/clientConfig";
 
@@ -21,4 +21,4 @@ async function initialize() {
     }
 }
 
-module.exports = { initialize };
+export default initialize ;
