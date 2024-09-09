@@ -1,5 +1,5 @@
-const dotenv = require('dotenv');
-const path = require('path');
+import dotenv from 'dotenv';
+import path from 'path';
 
 // Configure dotenv to load environment variables from the .env file
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
@@ -23,4 +23,5 @@ const config = {
     token: applicationToken["token"]
 };
 
-module.exports = config;
+export default config;
+
