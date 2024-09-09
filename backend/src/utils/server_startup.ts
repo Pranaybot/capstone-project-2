@@ -1,33 +1,31 @@
-export default {}
-
 import { Application } from "express";
-const middleware = require('../utils/route_handlers/appMiddleware');
-const database = require('../utils/route_handlers/dbRoutes');
-const expressServer = require('../config/serverConfig');
-const sessionMiddleware  = require('../config/sessionMiddlewareConfig');
-const connection = require('../config/cassandraConnectionCheck');
+import middlewareSetup from '../utils/route_handlers/appMiddleware';
+import databaseRoutesSetup from '../utils/route_handlers/dbRoutes';
+import expressServerStart from '../config/serverConfig';
+import sessionMiddlewareConfigure from '../config/sessionMiddlewareConfig';
+import checkConnection from '../config/cassandraConnectionCheck';
 
 // Function to initialize and start the server
 async function initializeAndStartServer(app: Application) {
     try {
       // Check Cassandra connection
-      await connection.check();
+      await checkConnection();
   
       // Setup general middleware
-      middleware.setUp(app);
+      middlewareSetup(app);
   
       // Configure session middleware settings
-      sessionMiddleware.configure(app);
+      sessionMiddlewareConfigure(app);
   
       // Setup routes that require database access
-      database.setupDbRoutes(app);
+      databaseRoutesSetup(app);
   
       // Start the server
-      expressServer.start(app);
+      expressServerStart(app);
     } catch (error) {
       console.error('Failed to initialize application:', error);
       process.exit(1); // Exit the process if initialization fails
     }
 }
 
-module.exports = { initializeAndStartServer } ;
+export default initializeAndStartServer;
