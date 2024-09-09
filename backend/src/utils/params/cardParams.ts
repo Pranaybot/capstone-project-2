@@ -1,5 +1,5 @@
 // src/userParams.ts
-import { UUID } from "../types";
+import UUID from "../types";
 
 function findOrDeleteCardParams(id: UUID) {
     return [id];
@@ -15,7 +15,7 @@ function updateCardParams(cardId: UUID, username?: string, title?: string,
         return [username, title, description, activity, cardId];
 }
 
-module.exports = {
+export default {
     findOrDeleteCardParams,
     createCardParams,
     updateCardParams
