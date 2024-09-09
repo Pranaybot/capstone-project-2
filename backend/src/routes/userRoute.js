@@ -1,41 +1,55 @@
-const { Router } = require('express');
-const { UserController } = require('../controllers/userController');
-
-const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing
+import { Router, Request, Response } from 'express';
+import UserController from '../controllers/userController';
+import bcrypt from 'bcryptjs';
 
 const router = Router();
 const userController = new UserController();
 
-function checkPasswords(password1, password2) {
+// Helper function to compare passwords
+function checkPasswords(password1: string, password2: string): boolean {
     return password1 === password2;
 }
 
-function doLogin(user, req, res) {
+// Helper function to handle login process
+function doLogin(user: any, req: Request, _res: Response): void {
     const session = req.session;
-    session.userId = user.id;
-    session.isLoggedIn = true;
-    console.log('Successfully logged in!');
-}
-
-async function doLogout(req, res) {
-    try {
-        req.session.destroy();
-        res.status(200).json({ message: 'Session destroyed successfully' });
-    } catch (err) {
-        console.error('Error checking session status:', err);
-        res.status(404).json({ error: 'Session not found' });
+    if (session) {
+        session.userId = user.id;
+        session.isLoggedIn = true;
+        console.log('Successfully logged in!');
     }
 }
 
-router.post('/signup', async (req, res) => {
-    const { firstName, lastName, username, pwd } = req.body; 
+// Helper function to handle logout process
+async function doLogout(req: Request, res: Response): Promise<void> {
+    try {
+        if (req.session) {
+            await new Promise((resolve, reject) => {
+                req.session.destroy(err => {
+                    if (err) reject(err);
+                    else resolve(true);
+                });
+            });
+            res.status(200).json({ message: 'Session destroyed successfully' });
+        } else {
+            res.status(404).json({ error: 'Session not found' });
+        }
+    } catch (err) {
+        console.error('Error checking session status:', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
+
+// Route for user signup
+router.post('/signup', async (req: Request, res: Response) => {
+    const { firstName, lastName, username, pwd } = req.body;
 
     try {
         const currUser = await userController.findUserByEmail(username);
         if (currUser) {
             return res.status(409).json({ message: 'User already exists with this email.' });
         }
-        
+
         const user = await userController.signup(firstName, lastName, username, pwd);
         if (user) {
             doLogin(user, req, res);
@@ -48,7 +62,8 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
+// Route for user login
+router.post('/login', async (req: Request, res: Response) => {
     const { username, pwd } = req.body;
 
     try {
@@ -64,7 +79,8 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/reset_password', async (req, res) => {
+// Route for resetting password
+router.post('/reset_password', async (req: Request, res: Response) => {
     const { username, old_pwd, new_pwd, new_pwd_match } = req.body;
 
     try {
@@ -93,9 +109,9 @@ router.post('/reset_password', async (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
-    // doLogout(req, res, store);
+// Route for user logout
+router.get('/logout', (req: Request, res: Response) => {
     doLogout(req, res);
 });
 
-module.exports = router;
+export default router;
