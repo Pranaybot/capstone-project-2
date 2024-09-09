@@ -1,5 +1,5 @@
-const cassandra = require('cassandra-driver');
-const cassandraConfig = require('../config/cassandraConfig');
+import cassandra from 'cassandra-driver';
+import cassandraConfig from '../config/cassandraConfig';
 
 
 const cassClient = new cassandra.Client(cassandraConfig)
