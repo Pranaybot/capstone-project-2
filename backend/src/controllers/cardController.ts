@@ -1,8 +1,8 @@
 
 import cassClient from "../config/clientConfig";
-const cardQueries = require('../utils/queries/card');
-const cardParams = require('../utils/params/cardParams');
-import { UUID } from "../utils/types";
+import cardQueries from '../utils/queries/card';
+import cardParams from '../utils/params/cardParams';
+import UUID from "../utils/types";
 
 class CardController {
 
@@ -52,5 +52,5 @@ class CardController {
   }
 }
 
-module.exports = { CardController };
+export default CardController;
 
