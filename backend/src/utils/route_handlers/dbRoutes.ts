@@ -1,14 +1,14 @@
 
 // dbRoutes.ts
 import { Application, Request, Response } from 'express';
-const cassandraDb = require('../../database/db');
-const userRoute = require('../../routes/userRoute');
-const listRoute = require('../../routes/listRoute');
-const cardRoute = require('../../routes/cardRoute');
-const path = require('path');
+import cassandraInitialize from '../../database/db';
+import userRoute from '../../routes/userRoute';
+import listRoute from '../../routes/listRoute';
+import cardRoute from '../../routes/cardRoute';
+import path from 'path';
 
 function setupDbRoutes(app: Application) {
-  cassandraDb.initialize()
+  cassandraInitialize()
     .then(() => {
       console.log("Cassandra DB initialized");
 
@@ -28,4 +28,4 @@ function setupDbRoutes(app: Application) {
     });
 }
 
-module.exports = { setupDbRoutes };
+export default setupDbRoutes;
