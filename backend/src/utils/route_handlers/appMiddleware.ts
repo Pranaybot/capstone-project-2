@@ -1,9 +1,9 @@
 
 // appMiddleware.ts
 import { Application, Request, Response } from 'express';
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
 
 function setUp(app: Application) {
   app.use(express.json());
@@ -32,4 +32,4 @@ function setUp(app: Application) {
   });
 }
 
-module.exports = { setUp };
+export default setUp;
