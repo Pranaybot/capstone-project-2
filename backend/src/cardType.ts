@@ -8,4 +8,4 @@ const createType = `
   )
 `;
 
-module.exports = createType ;
+export default createType ;
