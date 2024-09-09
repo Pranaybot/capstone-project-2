@@ -1,7 +1,7 @@
 import { Application } from 'express';
 import RedisStore from "connect-redis";
-const session = require('express-session');
-const { createClient } = require('redis');
+import session from 'express-session';
+import { createClient, RedisClientOptions } from 'redis';
 
 // Function to initialize Redis client and store
 function initializeRedisStore() {
@@ -10,9 +10,9 @@ function initializeRedisStore() {
     password: process.env["REDIS_PASSWORD"],
     socket: {
         host: process.env["REDIS_HOST"],
-        port: process.env["REDIS_PORT"]
+        port: process.env["REDIS_PORT"] ? parseInt(process.env["REDIS_PORT"], 10) : undefined,
     }
-});
+  } as RedisClientOptions);
 
 
   redisClient.connect().catch((error: any) => {
@@ -36,7 +36,7 @@ function configure(app: Application) {
   // Session middleware setup with environment-based configuration
   app.use(session({
     store: redisStore,
-    secret: process.env['REDIS_SESSION_SECRET'], // Use environment variable for session secret
+    secret: process.env['REDIS_SESSION_SECRET'] || '', // Use environment variable for session secret
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -48,4 +48,5 @@ function configure(app: Application) {
   }));
 }
 
-module.exports = { configure };
+export default configure;
+
