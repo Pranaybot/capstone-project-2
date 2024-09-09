@@ -8,4 +8,4 @@ const createQuery = `
   )
 `;
 
-module.exports = createQuery;
+export default createQuery;
