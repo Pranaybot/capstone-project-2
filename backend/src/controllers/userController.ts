@@ -24,7 +24,10 @@ class UserController {
   async signup(firstName: string, lastName: string, userId: string, 
     password: string): Promise<any | null> {
         const id = uuidv4().toString(); // Generate a new UUID for the user
-        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Get salt rounds from environment variable
+        const saltRounds = parseInt(process.env["BCRYPT_SALT_ROUNDS"] || '10', 10);
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         await cassClient.execute(userQueries.INSERT_USER, 
           userParams.signupUserParams(id, firstName, lastName, 

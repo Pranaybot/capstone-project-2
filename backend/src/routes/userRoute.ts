@@ -91,7 +91,9 @@ router.post('/reset_password', async (req: Request, res: Response) => {
 
             if (isPasswordValid) {
                 if (checkPasswords(new_pwd, new_pwd_match)) {
-                    const hashedPassword = await bcrypt.hash(new_pwd, 10);
+                      // Fetch the number of salt rounds from environment variables
+                    const saltRounds = parseInt(process.env["BCRYPT_SALT_ROUNDS"] || '10', 10);
+                    const hashedPassword = await bcrypt.hash(new_pwd, saltRounds);
                     const currUserId = currUser.id.toString();
 
                     await userController.updateUserPassword(hashedPassword, currUserId);
