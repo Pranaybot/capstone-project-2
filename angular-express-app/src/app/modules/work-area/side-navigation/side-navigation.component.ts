@@ -1,4 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-navigation',
@@ -11,8 +13,12 @@ export class SideNavigationComponent {
   @Output() userClick = new EventEmitter<void>();
   @Output() settingsClick = new EventEmitter<void>();
 
+  constructor(http: HttpClient, private router: Router) {
+    super(http);
+  }
+
   onDashboardClick() {
-    this.dashboardClick.emit();
+    this.router.navigate(['/']);
   }
   
   onUserClick() {
