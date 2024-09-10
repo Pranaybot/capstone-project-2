@@ -81,7 +81,6 @@ export class UserService extends BaseService {
       next: () => {
         this.isLoggedInSubject.next(false);
         this.isHomeSubject.next(true);
-        this.router.navigate(['/']); // Navigate to home page on logout
       },
       error: (err: any) => {
         console.error('Accont could not be deleted', err);
