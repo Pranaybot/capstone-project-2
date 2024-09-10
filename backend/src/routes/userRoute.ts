@@ -1,10 +1,14 @@
 import { Router, Request, Response } from 'express';
 import UserController from '../controllers/userController';
+import ListController from '../controllers/listController';
+import CardController from '../controllers/cardController';
 import bcrypt from 'bcryptjs';
 import '../utils/session_variables';
 
 const router = Router();
 const userController = new UserController();
+const listController = new ListController();
+const cardController = new CardController();
 
 // Helper function to compare passwords
 function checkPasswords(password1: string, password2: string): boolean {
@@ -112,16 +116,19 @@ router.post('/reset_password', async (req: Request, res: Response) => {
     }
 });
 
-router.delete('/delete_account', (req: Request, res: Response) => {
+router.delete('/delete_account', async (req: Request, res: Response) => {
     const session_user_id = req.session.id;
 
     try{
+        doLogout(req, res);
+        await cardController.deleteCards();
+        await listController.deleteLists();
         await userController.deleteAccount(session_user_id);
-        return res.json({ message: 'Account successfully deleted' });
+        return res.json({ message: 'User account and information successfully deleted' });
     } catch (error) {
-        return res.json({ message: 'Unable to delete account' });
+        return res.json({ message: 'Unable to delete user account or information' });
     }
-}
+});
 
 // Route for user logout
 router.get('/logout', (req: Request, res: Response) => {

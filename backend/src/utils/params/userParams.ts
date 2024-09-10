@@ -23,4 +23,5 @@ export default {
     selectUserByUsernameParams,
     signupUserParams,
     updateUserPasswordParams,
+    deleteUserAccountParams
 };

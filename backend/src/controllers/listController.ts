@@ -60,6 +60,11 @@ class ListController {
       throw new Error('Failed to delete list');
     }
   }
+
+  async deleteLists(): Promise<void> {
+    await cassClient.execute(listQueries.DELETE_USER_LISTS);
+  }
+
 }
 
 export default ListController;

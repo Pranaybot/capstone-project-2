@@ -5,11 +5,13 @@ const ADD_CARD = `INSERT INTO cards (id, username, title,
 const UPDATE_CARD_BY_ID = `UPDATE cards SET username = ?, title = ?, 
         description = ?, activity = ? WHERE id = ?`;
 const DELETE_CARD_BY_ID = `DELETE FROM cards WHERE id = ?`;
+const DELETE_USER_CARDS = `TRUNCATE cards`;
 
 export default {
     SELECT_CARD_BY_ID,
     ADD_CARD,
     UPDATE_CARD_BY_ID,
-    DELETE_CARD_BY_ID
+    DELETE_CARD_BY_ID,
+    DELETE_USER_CARDS
 };
 

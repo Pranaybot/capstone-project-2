@@ -52,6 +52,11 @@ class CardController {
       throw new Error('Failed to delete card');
     }
   }
+
+  async deleteCards(): Promise<void> {
+    await cassClient.execute(cardQueries.DELETE_USER_CARDS);
+  }
+  
 }
 
 export default CardController;
