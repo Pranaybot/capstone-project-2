@@ -26,7 +26,7 @@ export class ResetPasswordHandler {
         this.authHandlerService.handleResetPasswordSuccess();
       },
       error: (errorResponse: any) => {
-        this.authHandlerService.handleResetPasswordError(errorResponse);
+        this.authHandlerService.handleAuthError(errorResponse);
       }
     });
   }
