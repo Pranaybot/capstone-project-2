@@ -40,11 +40,7 @@ export class ListComponent implements OnInit {
   
 
   addDefaultLists(): void {
-    const defaultLists: { name: string, cards: Card[] }[] = [
-      { name: 'To Do', cards: [] },
-      { name: 'In Progress', cards: [] },
-      { name: 'Done', cards: [] }
-    ];
+    const defaultLists: { name: string }[] = [{ name: 'To Do'}, { name: 'In Progress'}, { name: 'Done'}];
 
     defaultLists.forEach(list => {
       this.addNewList(list.name);
@@ -86,7 +82,7 @@ export class ListComponent implements OnInit {
 
   addNewList(name: string): void {
     if (this.lists.length < this.maxLists) {
-      this.listService.add_list(name, []).subscribe((list: List) => {
+      this.listService.add_list(name, '', 'New Card', '', '').subscribe((list: List) => {
           this.lists.push(list);
       });
     }
