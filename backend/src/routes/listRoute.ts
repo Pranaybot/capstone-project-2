@@ -17,10 +17,12 @@ router.get('/', async (_req: Request, res: Response) => {
 // Handle form submission and validation
 router.post('/add_list', async (req: Request, res: Response) => {
   try {
-    const id = uuidv4(); // Generate a new UUID for the list
-    const { name, cards } = req.body;
-    await listController.createList(id, name, cards);
-    return res.json({ id, name, cards });
+    const listId = uuidv4();
+    const cardId = uuidv4(); // Generate a new UUID for the list
+    const { name, username, title, description, activity } = req.body;
+    const cards = await cardController.createCard(cardId, username, title, description, activity);
+    await listController.createList(id, name, [cards]);
+    return res.json({ id, name, [cards] });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
