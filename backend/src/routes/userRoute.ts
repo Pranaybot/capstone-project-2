@@ -112,6 +112,17 @@ router.post('/reset_password', async (req: Request, res: Response) => {
     }
 });
 
+router.delete('/delete_account', (req: Request, res: Response) => {
+    const session_user_id = req.session.id;
+
+    try{
+        await userController.delete(session_user_id);
+        return res.json({ message: 'Account successfully deleted' });
+    } catch (error) {
+        return res.json({ message: 'Unable to delete account' });
+    }
+}
+
 // Route for user logout
 router.get('/logout', (req: Request, res: Response) => {
     doLogout(req, res);
