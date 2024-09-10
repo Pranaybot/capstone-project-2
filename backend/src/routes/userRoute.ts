@@ -116,7 +116,7 @@ router.delete('/delete_account', (req: Request, res: Response) => {
     const session_user_id = req.session.id;
 
     try{
-        await userController.delete(session_user_id);
+        await userController.deleteAccount(session_user_id);
         return res.json({ message: 'Account successfully deleted' });
     } catch (error) {
         return res.json({ message: 'Unable to delete account' });
