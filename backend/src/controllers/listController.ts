@@ -29,11 +29,8 @@ class ListController {
 
   async createList(id: UUID, name: string, 
     cards: { cardId: number, username: string, title: string, 
-      description: string, activity: string }[]): Promise<void> {
+      description: string, activity: string }[]): Promise<any | null> {
     try {
-        // Ensure cards is an empty array if not provided
-        cards = cards.length ? cards : [];
-        
         await cassClient.execute(listQueries.ADD_LIST, 
           listParams.createListParams(id, name, cards), { prepare: true });
     } catch (error) {
