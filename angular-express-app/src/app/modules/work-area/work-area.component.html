@@ -1,6 +1,9 @@
 <!-- src/app/work-area/work-area.component.html -->
 <div class="work-area">
-  <app-side-navigation (settingsClick)="openSettingsModal()"></app-side-navigation>
+  <app-side-navigation 
+    (settingsClick)="openSettingsModal()"
+    (userClick)="openUserModal()">
+  </app-side-navigation>
   <app-workspace #workspace></app-workspace>
   <div class="settings-modal" *ngIf="isSettingsModalOpen">
     <h3>Change Workspace Background</h3>
@@ -21,8 +24,8 @@
     <button class="close-btn" (click)="closeSettingsModal()">Close</button>
   </div>
   <div class="user-modal" *ngIf="isUserModalOpen">
-    <a *ngIf="isUserModalOpen" href="/login_signup">Create a New Account &#9998;</a>
-    <a *ngIf="isUserModalOpen" href="/reset_password">Reset Your Password &#10007;</a>
-    <a *ngIf="isUserModalOpen" (click)="deleteAccount()">Delete Your Account &#9988;</a>  
+    <a href="/login_signup">Create a New Account <span class="html-symbol">&#9998;</span></a>
+    <a href="/reset_password">Reset Your Password <span class="html-symbol">&#10007;</span></a>
+    <a (click)="deleteAccount()">Delete Your Account <span class="html-symbol">&#9988;</span></a>  
   </div>
 </div>

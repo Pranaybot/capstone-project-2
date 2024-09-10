@@ -1,11 +1,9 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
-import { DeleteAccountHandler } from '../../../../shared/handlers/delete-account-handler';
+import { DeleteAccountHandler } from '../../shared/handlers/delete-account-handler';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../services/settings/theme.service';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-work-area',
@@ -26,10 +24,10 @@ export class WorkAreaComponent implements AfterViewInit{
 
   @ViewChild(WorkspaceComponent) workspaceComponent!: WorkspaceComponent;
 
-  constructor(http: HttpClient, private router: Router, 
-              private themeService: ThemeService, private deleteAccountHandler: DeleteAccountHandler) {
-      super(http);
-  }
+  constructor(
+    private themeService: ThemeService, 
+    private deleteAccountHandler: DeleteAccountHandler
+  ) { }
 
   ngOnInit() {
     // Load saved background color and theme
