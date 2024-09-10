@@ -1,8 +1,11 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
+import { DeleteAccountHandler } from '../../../../shared/handlers/delete-account-handler';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../services/settings/theme.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-work-area',
@@ -23,7 +26,10 @@ export class WorkAreaComponent implements AfterViewInit{
 
   @ViewChild(WorkspaceComponent) workspaceComponent!: WorkspaceComponent;
 
-  constructor(private themeService: ThemeService) {}
+  constructor(http: HttpClient, private router: Router, 
+              private themeService: ThemeService, private deleteAccountHandler: DeleteAccountHandler) {
+      super(http);
+  }
 
   ngOnInit() {
     // Load saved background color and theme
@@ -53,6 +59,12 @@ export class WorkAreaComponent implements AfterViewInit{
 
   closeUserModal() {
     this.isUserModalOpen = false;
+  }
+
+  deleteAccount() {
+    if (confirm("Do you want to delete your account?")) {
+      this.deleteAccountHandler.handleDelete();
+    } 
   }
 
   openSettingsModal() {
