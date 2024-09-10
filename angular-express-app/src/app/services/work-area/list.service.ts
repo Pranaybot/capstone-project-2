@@ -19,8 +19,8 @@ export class ListService extends BaseService {
   }
 
   // Adds a new list
-  add_list(name: string, cards: any[]): Observable<List> {
-    return this.http.post<List>(`${this.apiUrl}/list/add_list`, { name, cards });
+  add_list(name: string, username: string, title: string, description: string, activity: string): Observable<List> {
+    return this.http.post<List>(`${this.apiUrl}/list/add_list`, { name, username, title, description, activity });
   }
 
   // Updates an existing list
