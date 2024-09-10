@@ -15,6 +15,10 @@ function updateUserPasswordParams(hashedPassword: string, id:UUID) {
         return [hashedPassword, id];
 }
 
+function deleteUserAccountParams(id: UUID) {
+    return [id];
+}
+
 export default {
     selectUserByUsernameParams,
     signupUserParams,
