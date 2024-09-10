@@ -18,11 +18,13 @@ class CardController {
   }
   
   async createCard(id: UUID, username: string, title: string, 
-    description: string, activity: string): Promise<void> {
+    description: string, activity: string): Promise<any | null> {
     try {
         await cassClient.execute(cardQueries.ADD_CARD, 
           cardParams.createCardParams(id, username, title, 
             description, activity), { prepare: true });
+        const result = await this.findCard(id);
+        return result;
     } catch (error) {
       console.error('Error creating card:', error);
       throw new Error('Failed to create card');
