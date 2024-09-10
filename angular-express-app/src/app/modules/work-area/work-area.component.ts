@@ -17,6 +17,8 @@ import { ThemeService } from '../../services/settings/theme.service';
 })
 export class WorkAreaComponent implements AfterViewInit{
   isSettingsModalOpen = false;
+  isDashboardModalOpen = false;
+  isUserModalOpen = false;
   colors = ['#bb86fc', '#ff8a5c', '#a0e4f2', '#f5f5f5', '#ffcf6c'];
   currentTheme: string = 'light';
 
@@ -44,6 +46,22 @@ export class WorkAreaComponent implements AfterViewInit{
     if (savedColor) {
       this.workspaceComponent.changeBackgroundColor(savedColor);
     }
+  }
+
+  openDashboardsModal() {
+    this.isDashboardModalOpen = true;
+  }
+
+  closeDashboardModal() {
+    this.isDashboardModalOpen = false;
+  }
+
+  openUserModal() {
+    this.isUserModalOpen = true;
+  }
+
+  closeUserModal() {
+    this.isUserModalOpen = false;
   }
 
   openSettingsModal() {
