@@ -20,7 +20,9 @@
     </div>
     <button class="close-btn" (click)="closeSettingsModal()">Close</button>
   </div>
-  <a *ngIf="isUserModalOpen" href="/login_signup"></a>
-  <a *ngIf="isUserModalOpen" href="/reset_password"></a>
-  <a *ngIf="isUserModalOpen" href="/"></a>
+  <div class="user-modal" *ngIf="isUserModalOpen">
+    <a *ngIf="isUserModalOpen" href="/login_signup">Create a New Account &#9998;</a>
+    <a *ngIf="isUserModalOpen" href="/reset_password">Reset Your Password &#10007;</a>
+    <a *ngIf="isUserModalOpen" onclick="deleteAccount()">Delete Your Account &#9988;</a>  
+  </div>
 </div>
