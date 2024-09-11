@@ -40,10 +40,16 @@ export class ListComponent implements OnInit {
   
 
   addDefaultLists(): void {
-    const defaultLists: { name: string }[] = [{ name: 'To Do'}, { name: 'In Progress'}, { name: 'Done'}];
+    const defaultLists: { name: string, username: string, title: string, 
+      description: string, activity: string }[] = [
+      { name: 'To Do', username: '', title: 'New Card', description: '', activity: ''}, 
+      { name: 'In Progress', username: '', title: 'New Card', description: '', activity: ''}, 
+      { name: 'Done', username: '', title: 'New Card', description: '', activity: ''}
+    ];
 
     defaultLists.forEach(list => {
-      this.addNewList(list.name);
+      this.addNewList(list.name, list.username, list.title, 
+        list.activity, list.description);
     });
   }
 
@@ -80,9 +86,9 @@ export class ListComponent implements OnInit {
   }
   
 
-  addNewList(name: string): void {
+  addNewList(name: string, username: string, title: string, description: string, activity: string): void {
     if (this.lists.length < this.maxLists) {
-      this.listService.add_list(name, '', 'New Card', '', '').subscribe((list: List) => {
+      this.listService.add_list(name, username, title, description, activity).subscribe((list: List) => {
           this.lists.push(list);
       });
     }
