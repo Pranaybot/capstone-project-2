@@ -9,8 +9,8 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService extends BaseService {
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  private isHomeSubject = new BehaviorSubject<boolean>(true);
+  public isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  public isHomeSubject = new BehaviorSubject<boolean>(true);
 
   constructor(http: HttpClient, private router: Router) {
     super(http);
@@ -76,16 +76,8 @@ export class UserService extends BaseService {
     });
   }
 
-  delete_account(): void {
-    this.http.delete(`${this.apiUrl}/user/delete_account`).subscribe({
-      next: () => {
-        this.isLoggedInSubject.next(false);
-        this.isHomeSubject.next(true);
-      },
-      error: (err: any) => {
-        console.error('Accont could not be deleted', err);
-      }
-    });   
+  delete_account(): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/user/delete_account`);
   }
 
   // Methods to update the UI states

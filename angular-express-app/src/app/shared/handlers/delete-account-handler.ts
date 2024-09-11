@@ -16,6 +16,10 @@ export class DeleteAccountHandler {
     this.userService.delete_account().subscribe({
       next: () => {
         this.authHandlerService.handleDeleteAccountSuccess();
+
+        // Set the subjects to reflect the logged-out state
+        this.userService.isLoggedInSubject.next(false); // Update login status
+        this.userService.isHomeSubject.next(true);     // Navigate to home
       },
       error: (errorResponse: any) => {
         this.authHandlerService.handleAuthError(errorResponse);
