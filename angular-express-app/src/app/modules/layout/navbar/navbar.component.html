@@ -6,8 +6,8 @@
     <nav class="other-nav-content">
       <a class="nav-links">About</a>
       <a class="nav-links" id="second-nav-link">Contact</a>
-      <a *ngIf="(this.themeservice.isLoggedIn$ | async ) === false 
-      && (this.themeservice.isHome$ | async) === true" href="/login_signup">Login</a>
+      <a *ngIf="(this.themeservice.isLoggedIn$| async ) === false 
+      && (this.themeservice.isHome$| async) === true" href="/login_signup">Login</a>
       <a *ngIf="(this.themeservice.isLoggedIn$ | async) === true
       && (this.themeservice.isHome$ | async) === false" (click)="onLogout()" class="logout-button">Logout</a>
     </nav>

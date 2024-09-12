@@ -20,9 +20,9 @@ export class DeleteAccountHandler {
         this.authHandlerService.handleDeleteAccountSuccess();
 
         // Set the subjects to reflect the logged-out state
-        this.themseService.setLoggedInState(false); // Update login status
+        this.themeService.setLoggedInState(false); // Update login status
         this.themeService.setHomeState(true);     // Navigate to home
-        this.themeService.deleteUserId('userId'); // Remove user ID from cookie on logout
+        this.themeService.deleteUserId(); // Remove user ID from cookie on logout
       },
       error: (errorResponse: any) => {
         this.authHandlerService.handleAuthError(errorResponse);

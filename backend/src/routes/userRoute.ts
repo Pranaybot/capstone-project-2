@@ -3,7 +3,6 @@ import UserController from '../controllers/userController';
 import ListController from '../controllers/listController';
 import CardController from '../controllers/cardController';
 import bcrypt from 'bcryptjs';
-import UUID from "../../utilstypes";
 
 const router = Router();
 const userController = new UserController();

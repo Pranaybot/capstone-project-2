@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/forms/user.service';
-import { ThemeService } from '../services/settings/theme.service';
+import { ThemeService } from '../../../services/settings/theme.service';
 
 @Component({
   selector: 'app-navbar',

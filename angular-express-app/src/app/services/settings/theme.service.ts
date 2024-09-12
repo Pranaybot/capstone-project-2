@@ -1,12 +1,17 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CookieService } from "ngx-cookie-service";
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
   private isBrowser: boolean;
+
+  // Subjects to hold the logged-in state and home state
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  private isHomeSubject = new BehaviorSubject<boolean>(false);
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -36,25 +41,26 @@ export class ThemeService {
     return this.isBrowser ? this.cookieService.get('workspaceBackgroundColor') : null;
   }
 
-   // Methods to update the UI states
   setLoggedInState(isLoggedIn: boolean) {
     if (this.isBrowser) {
-      this.cookieService.set('isLoggedIn', isLoggedIn);
+      this.cookieService.set('isLoggedIn', String(isLoggedIn));
+      this.isLoggedInSubject.next(isLoggedIn); // Update the BehaviorSubject
     }
   }
 
-  get isLoggedIn$(): boolean | null {
-    return this.isBrowser ? this.cookieService.get('isLoggedIn') : null;
+  get isLoggedIn$(): Observable<boolean> {
+    return this.isLoggedInSubject.asObservable(); // Return as observable
   }
 
   setHomeState(isHome: boolean) {
     if (this.isBrowser) {
-      this.cookieService.set('isHome', isHome);
-    }	
+      this.cookieService.set('isHome', String(isHome));
+      this.isHomeSubject.next(isHome); // Update the BehaviorSubject
+    }
   }
-  
-  get isHome$(): boolean | null {
-    return this.isBrowser ? this.cookieService.get('isHome') : null;
+
+  get isHome$(): Observable<boolean> {
+    return this.isHomeSubject.asObservable(); // Return as observable
   }
 
   setUserId(id: string) {
