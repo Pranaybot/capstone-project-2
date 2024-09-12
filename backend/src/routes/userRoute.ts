@@ -3,6 +3,7 @@ import UserController from '../controllers/userController';
 import ListController from '../controllers/listController';
 import CardController from '../controllers/cardController';
 import bcrypt from 'bcryptjs';
+import UUID from "../../utilstypes";
 
 const router = Router();
 const userController = new UserController();
@@ -84,12 +85,12 @@ router.post('/reset_password', async (req: Request, res: Response) => {
 });
 
 router.delete('/delete_account', async (req: Request, res: Response) => {
-    const session_user_id = req.session.id;
+    const { userId } = req.body;
 
     try{
         await cardController.deleteCards();
         await listController.deleteLists();
-        await userController.deleteAccount(session_user_id);
+        await userController.deleteAccount(userId);
         return res.json({ message: 'User account and information successfully deleted' });
     } catch (error) {
         return res.json({ message: 'Unable to delete user account or information' });
