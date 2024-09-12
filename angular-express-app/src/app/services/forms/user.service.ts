@@ -69,7 +69,8 @@ export class UserService extends BaseService {
   }
 
   delete_account(): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/user/delete_account`);
+    const userId = this.themeService.userId();
+    return this.http.delete<void>(`${this.apiUrl}/user/delete_account`, {userId} );
   }
 
 }
