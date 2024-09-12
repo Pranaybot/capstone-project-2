@@ -21,6 +21,7 @@ export class UserService extends BaseService {
         tap(() => {
           this.themeService.setLoggedInState(true); // User is logged in after signup
           this.themeService.setHomeState(false); // Set isHome based on your logic
+          this.themeService.setUserId('userId', response.userId); // Store user ID in cookie
         }),
         catchError((err: any) => {
           console.error('Signup failed', err);
@@ -44,6 +45,7 @@ export class UserService extends BaseService {
         tap(() => {
           this.themeService.setLoggedInState(true); // User is logged in after signup
           this.themeService.setHomeState(false); // Set isHome based on your logic
+          this.themeService.setUserId('userId', response.userId); // Store user ID in cookie
         }),
         catchError((err: any) => {
           console.error('Login failed', err);
@@ -57,6 +59,7 @@ export class UserService extends BaseService {
       next: () => {
           this.themeService.setLoggedInState(false); // User is logged in after signup
           this.themeService.setHomeState(true); // Set isHome based on your logic
+          this.themeService.deleteUserId('userId'); // Remove user ID from cookie on logout
         this.router.navigate(['/']); // Navigate to home page on logout
       },
       error: (err: any) => {
