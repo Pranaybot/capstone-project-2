@@ -20,8 +20,8 @@ export class DeleteAccountHandler {
         this.authHandlerService.handleDeleteAccountSuccess();
 
         // Set the subjects to reflect the logged-out state
-        this.themseService.isLoggedIn$.next(false); // Update login status
-        this.userService.isHome$.next(true);     // Navigate to home
+        this.themseService.setLoggedInState(false); // Update login status
+        this.themeService.setHomeState(true);     // Navigate to home
       },
       error: (errorResponse: any) => {
         this.authHandlerService.handleAuthError(errorResponse);
