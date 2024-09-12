@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/forms/user.service';
+import { ThemeService } from '../services/settings/theme.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ import { UserService } from '../../../services/forms/user.service';
 })
 export class NavbarComponent {
 
-  constructor(public userservice: UserService) {}
+  constructor(public userservice: UserService, public themeservice: ThemeService) {}
 
   onLogout() {
     this.userservice.logout();
