@@ -57,13 +57,13 @@ export class ThemeService {
     return this.isBrowser ? this.cookieService.get('isHome') : null;
   }
 
-  setUserId(id: UUID) {
+  setUserId(id: string) {
     if (this.isBrowser) {
       this.cookieService.set('userId', id); // Store user ID in cookie
     }
   }
 
-  get userId(): UUID | null {
+  get userId(): string | null {
     return this.isBrowser ? this.cookieService.get('userId') : null;
   }
 
