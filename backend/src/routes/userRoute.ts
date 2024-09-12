@@ -26,7 +26,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 
         const user = await userController.signup(firstName, lastName, username, pwd);
         if (user) {
-            return res.status(201).json({ message: 'User created successfully.' });
+            return res.status(201).json({ message: 'User created successfully.', userId: user.id});
         } else {
             return res.json({ message: "Cannot find new user" });
         }
@@ -42,7 +42,7 @@ router.post('/login', async (req: Request, res: Response) => {
     try {
         const user = await userController.login(username, pwd);
         if (user) {
-            return res.json({ message: 'Logged in successfully' });
+            return res.json({ message: 'Logged in successfully', userId: user.id });
         } else {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
