@@ -35,4 +35,26 @@ export class ThemeService {
   getSavedBackgroundColor(): string | null {
     return this.isBrowser ? this.cookieService.get('workspaceBackgroundColor') : null;
   }
+
+   // Methods to update the UI states
+  setLoggedInState(isLoggedIn: boolean) {
+    if (this.isBrowser) {
+      this.cookieService.set('isLoggedIn', isLoggedIn);
+    }
+  }
+
+  setHomeState(isHome: boolean) {
+    if (this.isBrowser) {
+      this.cookieService.set('isHome', isHome);
+    }	
+  }
+
+  get isLoggedIn$(): boolean | null {
+    return this.isBrowser ? this.cookieService.get('isLoggedIn') : null;
+  }
+
+  get isHome$(): boolean | null {
+    return this.isBrowser ? this.cookieService.get('isHome') : null;
+  }
+  
 }
