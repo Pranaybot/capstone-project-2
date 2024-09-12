@@ -2,28 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends BaseService {
-  public isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  public isHomeSubject = new BehaviorSubject<boolean>(true);
 
   constructor(http: HttpClient, private router: Router) {
     super(http);
-  }
-
-  // Observable for components to subscribe to for isLoggedIn state
-  get isLoggedIn$(): Observable<boolean> {
-    return this.isLoggedInSubject.asObservable();
-  }
-
-  // Observable for components to subscribe to for isHome state
-  get isHome$(): Observable<boolean> {
-    return this.isHomeSubject.asObservable();
   }
 
   signup(signupData: any): Observable<any> {
@@ -80,12 +68,4 @@ export class UserService extends BaseService {
     return this.http.delete<void>(`${this.apiUrl}/user/delete_account`);
   }
 
-  // Methods to update the UI states
-  setLoggedInState(isLoggedIn: boolean): void {
-    this.isLoggedInSubject.next(isLoggedIn);
-  }
-
-  setHomeState(isHome: boolean): void {
-    this.isHomeSubject.next(isHome);
-  }
 }
