@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserService } from '../../services/forms/user.service';
 import { AuthHandlerService } from './auth-handler';
+import { ThemeService } from '../../services/settings/theme.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ export class DeleteAccountHandler {
 
   constructor(
     private userService: UserService,
-    private authHandlerService: AuthHandlerService
+    private authHandlerService: AuthHandlerService,
+    public themeService: ThemeService
   ) {}
 
   handleDelete(): void {
@@ -18,8 +20,8 @@ export class DeleteAccountHandler {
         this.authHandlerService.handleDeleteAccountSuccess();
 
         // Set the subjects to reflect the logged-out state
-        this.userService.isLoggedInSubject.next(false); // Update login status
-        this.userService.isHomeSubject.next(true);     // Navigate to home
+        this.themseService.isLoggedIn$.next(false); // Update login status
+        this.userService.isHome$.next(true);     // Navigate to home
       },
       error: (errorResponse: any) => {
         this.authHandlerService.handleAuthError(errorResponse);
