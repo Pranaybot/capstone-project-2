@@ -15,36 +15,6 @@ function checkPasswords(password1: string, password2: string): boolean {
     return password1 === password2;
 }
 
-// Helper function to handle login process
-function doLogin(user: any, req: Request, _res: Response): void {
-    const session = req.session;
-    if (session) {
-        session.userId = user.id;
-        session.isLoggedIn = true;
-        console.log('Successfully logged in!');
-    }
-}
-
-// Helper function to handle logout process
-async function doLogout(req: Request, res: Response): Promise<void> {
-    try {
-        if (req.session) {
-            await new Promise((resolve, reject) => {
-                req.session.destroy(err => {
-                    if (err) reject(err);
-                    else resolve(true);
-                });
-            });
-            res.status(200).json({ message: 'Session destroyed successfully' });
-        } else {
-            res.status(404).json({ error: 'Session not found' });
-        }
-    } catch (err) {
-        console.error('Error checking session status:', err);
-        res.status(500).json({ error: 'Server error' });
-    }
-}
-
 // Route for user signup
 router.post('/signup', async (req: Request, res: Response) => {
     const { firstName, lastName, username, pwd } = req.body;
@@ -57,7 +27,6 @@ router.post('/signup', async (req: Request, res: Response) => {
 
         const user = await userController.signup(firstName, lastName, username, pwd);
         if (user) {
-            doLogin(user, req, res);
             return res.status(201).json({ message: 'User created successfully.' });
         } else {
             return res.json({ message: "Cannot find new user" });
@@ -74,7 +43,6 @@ router.post('/login', async (req: Request, res: Response) => {
     try {
         const user = await userController.login(username, pwd);
         if (user) {
-            doLogin(user, req, res);
             return res.json({ message: 'Logged in successfully' });
         } else {
             return res.status(401).json({ message: 'Invalid username or password' });
@@ -120,7 +88,6 @@ router.delete('/delete_account', async (req: Request, res: Response) => {
     const session_user_id = req.session.id;
 
     try{
-        doLogout(req, res);
         await cardController.deleteCards();
         await listController.deleteLists();
         await userController.deleteAccount(session_user_id);
@@ -131,8 +98,8 @@ router.delete('/delete_account', async (req: Request, res: Response) => {
 });
 
 // Route for user logout
-router.get('/logout', (req: Request, res: Response) => {
-    doLogout(req, res);
+router.get('/logout', (_req: Request, res: Response) => {
+    res.status(200).json({ message: 'Logged out successfully!' });
 });
 
 export default router;
