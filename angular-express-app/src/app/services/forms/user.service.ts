@@ -19,8 +19,8 @@ export class UserService extends BaseService {
     return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' })
       .pipe(
         tap(() => {
-          this.themeService.isLoggedIn$.next(true); // User is logged in after signup
-          this.themeService.isHome$.next(false); // Set isHome based on your logic
+          this.themeService.setLoggedInState(true); // User is logged in after signup
+          this.themeService.setHomeState(false); // Set isHome based on your logic
         }),
         catchError((err: any) => {
           console.error('Signup failed', err);
@@ -42,8 +42,8 @@ export class UserService extends BaseService {
     return this.http.post(`${this.apiUrl}/user/login`, loginData, { responseType: 'json' })
       .pipe(
         tap(() => {
-          this.themeService.isLoggedIn$.next(true); // User is logged in after signup
-          this.themeService.isHome$.next(false); // Set isHome based on your logic
+          this.themeService.setLoggedInState(true); // User is logged in after signup
+          this.themeService.setHomeState(false); // Set isHome based on your logic
         }),
         catchError((err: any) => {
           console.error('Login failed', err);
@@ -55,8 +55,8 @@ export class UserService extends BaseService {
   logout(): void {
     this.http.get(`${this.apiUrl}/user/logout`).subscribe({
       next: () => {
-          this.themeService.isLoggedIn$.next(false); // User is logged in after signup
-          this.themeService.isHome$.next(true); // Set isHome based on your logic
+          this.themeService.setLoggedInState(false); // User is logged in after signup
+          this.themeService.setHomeState(true); // Set isHome based on your logic
         this.router.navigate(['/']); // Navigate to home page on logout
       },
       error: (err: any) => {
