@@ -4,6 +4,7 @@ import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { ThemeService } from '../services/settings/theme.service';
 
 @Injectable({
   providedIn: 'root'
