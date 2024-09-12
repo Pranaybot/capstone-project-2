@@ -43,18 +43,34 @@ export class ThemeService {
     }
   }
 
+  get isLoggedIn$(): boolean | null {
+    return this.isBrowser ? this.cookieService.get('isLoggedIn') : null;
+  }
+
   setHomeState(isHome: boolean) {
     if (this.isBrowser) {
       this.cookieService.set('isHome', isHome);
     }	
   }
-
-  get isLoggedIn$(): boolean | null {
-    return this.isBrowser ? this.cookieService.get('isLoggedIn') : null;
-  }
-
+  
   get isHome$(): boolean | null {
     return this.isBrowser ? this.cookieService.get('isHome') : null;
+  }
+
+  setUserId(id: UUID) {
+    if (this.isBrowser) {
+      this.cookieService.set('userId', id); // Store user ID in cookie
+    }
+  }
+
+  get userId(): UUID | null {
+    return this.isBrowser ? this.cookieService.get('userId') : null;
+  }
+
+  deleteUserId(): void {
+    if (this.isBrowser) {
+      this.cookieService.delete('userId'); // Remove user ID from cookie on logout
+    }
   }
   
 }
