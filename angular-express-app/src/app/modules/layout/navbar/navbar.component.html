@@ -6,9 +6,9 @@
     <nav class="other-nav-content">
       <a class="nav-links">About</a>
       <a class="nav-links" id="second-nav-link">Contact</a>
-      <a *ngIf="!isLoggedIn && isHome" href="/login_signup">Login</a>
+      <a *ngIf="!this.isLoggedIn && this.isHome" href="/login_signup">Login</a>
       <!-- Display Logout link if user is logged in and is not on home page -->
-      <a *ngIf="isLoggedIn && !isHome" (click)="onLogout()" class="logout-button">Logout</a>
+      <a *ngIf="this.isLoggedIn && !this.isHome" (click)="onLogout()" class="logout-button">Logout</a>
     </nav>
 </div>
   
