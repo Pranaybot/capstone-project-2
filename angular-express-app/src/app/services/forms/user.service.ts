@@ -15,6 +15,11 @@ export class UserService extends BaseService {
     super(http);
   }
 
+  ngOnInit() {
+    this.themeService.setLoggedInState(false); // Sets logged-in state based on cookies
+    this.themeService.setHomeState(true); // Default to home state
+  }
+
   signup(signupData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' })
       .pipe(

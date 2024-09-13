@@ -12,9 +12,9 @@ import { ThemeService } from '../../../services/settings/theme.service';
 })
 export class NavbarComponent {
 
-  constructor(public userservice: UserService, public themeservice: ThemeService) {}
+  constructor(public userService: UserService, public themeService: ThemeService) {}
 
   onLogout() {
-    this.userservice.logout();
+    this.userService.logout();
   }
 }
