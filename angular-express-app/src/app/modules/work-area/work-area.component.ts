@@ -16,9 +16,10 @@ import { ThemeService } from '../../services/settings/theme.service';
   templateUrl: './work-area.component.html',
   styleUrls: ['./work-area.component.scss']
 })
-export class WorkAreaComponent implements AfterViewInit{
+export class WorkAreaComponent implements AfterViewInit {
   isSettingsModalOpen = false;
   isUserModalOpen = false;
+  isConfirmationModalOpen = false; // New property for confirmation modal
   colors = ['#bb86fc', '#ff8a5c', '#a0e4f2', '#f5f5f5', '#ffcf6c'];
   currentTheme: string = 'light';
 
@@ -30,7 +31,6 @@ export class WorkAreaComponent implements AfterViewInit{
   ) { }
 
   ngOnInit() {
-    // Load saved background color and theme
     const savedColor = this.themeService.getSavedBackgroundColor();
     if (savedColor && this.workspaceComponent) {
       this.workspaceComponent.changeBackgroundColor(savedColor);
@@ -44,7 +44,6 @@ export class WorkAreaComponent implements AfterViewInit{
   }
 
   ngAfterViewInit() {
-    // Retrieve the stored background color and apply it
     const savedColor = this.themeService.getSavedBackgroundColor();
     if (savedColor) {
       this.workspaceComponent.changeBackgroundColor(savedColor);
@@ -59,10 +58,19 @@ export class WorkAreaComponent implements AfterViewInit{
     this.isUserModalOpen = false;
   }
 
+  // Open confirmation modal
+  confirmDeleteAccount() {
+    this.isConfirmationModalOpen = true;
+  }
+
+  // Close confirmation modal
+  closeConfirmationModal() {
+    this.isConfirmationModalOpen = false;
+  }
+
   deleteAccount() {
-    if (confirm("Do you want to delete your account?")) {
-      this.deleteAccountHandler.handleDelete();
-    } 
+    this.closeConfirmationModal(); // Close the modal first
+    this.deleteAccountHandler.handleDelete();
   }
 
   openSettingsModal() {
@@ -87,5 +95,4 @@ export class WorkAreaComponent implements AfterViewInit{
     this.currentTheme = theme;
     this.themeService.applyTheme(theme);
   }
-
 }

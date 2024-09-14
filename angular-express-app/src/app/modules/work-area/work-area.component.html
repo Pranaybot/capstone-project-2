@@ -5,6 +5,8 @@
     (userClick)="openUserModal()">
   </app-side-navigation>
   <app-workspace #workspace></app-workspace>
+
+  <!-- Settings Modal -->
   <div class="settings-modal" *ngIf="isSettingsModalOpen">
     <h3>Change Workspace Background</h3>
     <div class="color-options">
@@ -23,10 +25,21 @@
     </div>
     <button class="close-btn" (click)="closeSettingsModal()">Close</button>
   </div>
+
+  <!-- User Modal -->
   <div class="user-modal" *ngIf="isUserModalOpen">
-    <a href="/login_signup">Create a New Account <span class="html-symbol">&#9998;</span></a>
-    <a href="/reset_password">Reset Your Password <span class="html-symbol">&#10007;</span></a>
-    <a (click)="deleteAccount()" id="last-option">Delete Your Account <span class="html-symbol">&#9988;</span></a>  
+    <a href="/login_signup">Create a New Account <span class="html-symbol">✎</span></a>
+    <a href="/reset_password">Reset Your Password <span class="html-symbol">✗</span></a>
+    <a (click)="confirmDeleteAccount()" id="last-option">Delete Your Account <span class="html-symbol">✄</span></a>  
     <button class="close-btn" (click)="closeUserModal()">Close</button>
+  </div>
+
+  <!-- Confirmation Modal for Deleting Account -->
+  <div class="confirmation-modal" *ngIf="isConfirmationModalOpen">
+    <div class="confirmation-content">
+      <h3>Do you want to delete your account?</h3>
+      <button (click)="deleteAccount()">Yes</button>
+      <button (click)="closeConfirmationModal()">No</button>
+    </div>
   </div>
 </div>
