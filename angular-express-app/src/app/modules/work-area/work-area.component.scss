@@ -72,6 +72,8 @@
     border-radius: 8px;
     z-index: 1000;
     text-align: center;
+    width: 400px; // Set the width of the user modal here
+    max-width: 90%; // Ensure it doesn't overflow on smaller screens
 
     a {
       display: block;
@@ -96,6 +98,10 @@
         font-size: 1.2em;      // Adjust the size of the symbols
         vertical-align: middle; // Ensure symbols are aligned with text
         margin-left: 5px;       // Add some spacing between the text and the symbol
+
+        #last-option {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -133,7 +139,7 @@
     }
 
     .settings-modal, .user-modal {
-      width: 90%;
+      width: 90%; // Allows user-modal to be responsive as well
       left: 50%;
       transform: translateX(-50%);
     }
