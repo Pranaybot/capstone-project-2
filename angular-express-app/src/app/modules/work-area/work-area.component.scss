@@ -98,12 +98,12 @@
         font-size: 1.2em;      // Adjust the size of the symbols
         vertical-align: middle; // Ensure symbols are aligned with text
         margin-left: 5px;       // Add some spacing between the text and the symbol
-
-        #last-option {
-          cursor: pointer;
-        }
       }
     }
+  }
+
+  #last-option {
+    cursor: pointer;
   }
 
   @supports (display: grid) {
