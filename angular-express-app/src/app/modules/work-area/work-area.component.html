@@ -1,4 +1,3 @@
-<!-- src/app/work-area/work-area.component.html -->
 <div class="work-area">
   <app-side-navigation 
     (settingsClick)="openSettingsModal()"
@@ -6,40 +5,7 @@
   </app-side-navigation>
   <app-workspace #workspace></app-workspace>
 
-  <!-- Settings Modal -->
-  <div class="settings-modal" *ngIf="isSettingsModalOpen">
-    <h3>Change Workspace Background</h3>
-    <div class="color-options">
-      <button class="color-btn" *ngFor="let color of colors" [style.background]="color" (click)="changeBackgroundColor(color)"></button>
-    </div>
-    <h3>Toggle Theme</h3>
-    <div class="theme-toggle">
-      <label>
-        <input type="radio" name="theme" value="light" (change)="changeTheme('light')" [checked]="currentTheme === 'light'">
-        Light
-      </label>
-      <label>
-        <input type="radio" name="theme" value="dark" (change)="changeTheme('dark')" [checked]="currentTheme === 'dark'">
-        Dark
-      </label>
-    </div>
-    <button class="close-btn" (click)="closeSettingsModal()">Close</button>
-  </div>
-
-  <!-- User Modal -->
-  <div class="user-modal" *ngIf="isUserModalOpen">
-    <a href="/login_signup">Create a New Account <span class="html-symbol">✎</span></a>
-    <a href="/reset_password">Reset Your Password <span class="html-symbol">✗</span></a>
-    <a (click)="confirmDeleteAccount()" id="last-option">Delete Your Account <span class="html-symbol">✄</span></a>  
-    <button class="close-btn" (click)="closeUserModal()">Close</button>
-  </div>
-
-  <!-- Confirmation Modal for Deleting Account -->
-  <div class="confirmation-modal" *ngIf="isConfirmationModalOpen">
-    <div class="confirmation-content">
-      <h3>Do you want to delete your account?</h3>
-      <button (click)="deleteAccount()">Yes</button>
-      <button (click)="closeConfirmationModal()">No</button>
-    </div>
-  </div>
+  <app-settings-modal *ngIf="isSettingsModalOpen" (close)="closeSettingsModal()"
+    (backgroundColorChange)="onBackgroundColorChange($event)">></app-settings-modal>
+  <app-user-modal *ngIf="isUserModalOpen" (close)="closeUserModal()"></app-user-modal>
 </div>

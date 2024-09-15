@@ -1,0 +1,9 @@
+<div *ngIf="!showConfirmation">
+  <a href="/login_signup">Create a New Account <span class="html-symbol">✎</span></a>
+  <a href="/reset_password">Reset Your Password <span class="html-symbol">✗</span></a>
+  <a (click)="confirmDeleteAccount()" id="last-option">Delete Your Account <span class="html-symbol">✄</span></a>
+  <button class="close-btn" (click)="closeUserModal()">Close</button>
+</div>
+
+<app-confirmation-modal *ngIf="showConfirmation" (confirm)="onConfirmDelete()" 
+  (cancel)="onCancelDelete()"></app-confirmation-modal>
