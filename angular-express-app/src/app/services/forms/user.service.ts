@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ThemeService } from '../../services/settings/theme.service';
 
@@ -20,18 +20,38 @@ export class UserService extends BaseService {
     super(http);
   }
 
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined';
+  }
+
   signup(signupData: any) {
     return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
-          localStorage.setItem('isLoggedIn', 'true'); // Store the login state
-          localStorage.setItem('userId', response.userId); // Store userId if needed
+          if (this.isBrowser()) {
+            localStorage.setItem('isLoggedIn', 'true'); // Store the login state
+            localStorage.setItem('userId', response.userId); // Store userId
+          }
           this.router.navigate(['/work_area']);
         }),
         catchError((err: any) => {
           const errorMessage = err?.error?.message || 'An unexpected error occurred. Please try again later.';
           this.snackBar.open(errorMessage, 'Close', { duration: 3000 });
-          return of(null);
+          return of(null); // Handle the error
+        })
+      )
+      .subscribe(); // Ensure you subscribe to execute the observable
+  }
+
+  resetPassword(resetPasswordData: any) {
+    return this.http.patch(`${this.apiUrl}/user/reset_password`, resetPasswordData, { responseType: 'json' })
+      .pipe(
+        tap(() => {
+          this.router.navigate(['/login_signup']);
+        }),
+        catchError((err: any) => {
+          console.error('Reset Password failed', err);
+          return throwError(() => err); // Updated to a factory function
         })
       )
       .subscribe();
@@ -41,14 +61,16 @@ export class UserService extends BaseService {
     return this.http.post(`${this.apiUrl}/user/login`, loginData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
-          localStorage.setItem('isLoggedIn', 'true'); // Store the login state
-          localStorage.setItem('userId', response.userId); // Store userId if needed
+          if (this.isBrowser()) {
+            localStorage.setItem('isLoggedIn', 'true'); // Store the login state
+            localStorage.setItem('userId', response.userId); // Store userId
+          }
           this.router.navigate(['/work_area']);
         }),
         catchError((err: any) => {
           const errorMessage = err?.error?.message || 'An unexpected error occurred. Please try again later.';
           this.snackBar.open(errorMessage, 'Close', { duration: 3000 });
-          return of(null);
+          return of(null); // Handle the error
         })
       )
       .subscribe();
@@ -57,8 +79,10 @@ export class UserService extends BaseService {
   logout(): void {
     this.http.get(`${this.apiUrl}/user/logout`).subscribe({
       next: () => {
-        localStorage.removeItem('isLoggedIn'); // Remove the login state
-        localStorage.removeItem('userId'); // Optionally clear userId
+        if (this.isBrowser()) {
+          localStorage.removeItem('isLoggedIn'); // Clear the login state
+          localStorage.removeItem('userId'); // Optionally clear userId
+        }
         this.router.navigate(['/']); // Navigate to home page on logout
       },
       error: (err: any) => {
@@ -68,27 +92,33 @@ export class UserService extends BaseService {
   }
 
   delete_account(): void {
-    const currUserId = localStorage.getItem('userId');
-    this.http.delete(`${this.apiUrl}/user/delete_account`, {
-      body: { currUserId }, // Use the userId from localStorage
-      observe: 'response' // This will return the full response in the Observable
-    }).subscribe({
-      next: () => {
-        localStorage.removeItem('isLoggedIn'); // Remove the login state
-        localStorage.removeItem('userId'); // Optionally clear userId
-        this.router.navigate(['/']); // Navigate to home page on logout
-      },
-      error: (err: any) => {
-        console.error('Failed to delete account', err);
-      }
-    });
+    const currUserId = this.isBrowser() ? localStorage.getItem('userId') : null; // Get userId from localStorage
+    if (currUserId) {
+      this.http.delete(`${this.apiUrl}/user/delete_account`, {
+        body: { currUserId }, // Assuming userId should be sent as a parameter in the request body
+        observe: 'response' // This will return the full response in the Observable
+      }).subscribe({
+        next: () => {
+          if (this.isBrowser()) {
+            localStorage.removeItem('isLoggedIn'); // Clear the login state
+            localStorage.removeItem('userId'); // Optionally clear userId
+          }
+          this.router.navigate(['/']); // Navigate to home page on delete account
+        },
+        error: (err: any) => {
+          console.error('Failed to delete account', err);
+        }
+      });
+    } else {
+      console.warn("User ID not available, cannot delete account.");
+    }
   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('isLoggedIn') === 'true';
+    return this.isBrowser() ? localStorage.getItem('isLoggedIn') === 'true' : false;
   }
 
   getUserId(): string | null {
-    return localStorage.getItem('userId');
+    return this.isBrowser() ? localStorage.getItem('userId') : null;
   }
 }
