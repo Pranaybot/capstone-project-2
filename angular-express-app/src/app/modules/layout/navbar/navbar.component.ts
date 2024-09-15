@@ -13,6 +13,10 @@ export class NavbarComponent {
 
   constructor(public userService: UserService) {}
 
+  isLoggedIn(): boolean {
+    return this.userService.isLoggedIn();
+  }
+
   onLogout() {
     this.userService.logout();
   }
