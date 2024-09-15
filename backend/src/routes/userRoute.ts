@@ -84,12 +84,12 @@ router.post('/reset_password', async (req: Request, res: Response) => {
 });
 
 router.delete('/delete_account', async (req: Request, res: Response) => {
-    const { userId } = req.body;
+    const { currUserId } = req.body;
 
     try{
         await cardController.deleteCards();
         await listController.deleteLists();
-        await userController.deleteAccount(userId);
+        await userController.deleteAccount(currUserId);
         return res.json({ message: 'User account and information successfully deleted' });
     } catch (error) {
         return res.json({ message: 'Unable to delete user account or information' });

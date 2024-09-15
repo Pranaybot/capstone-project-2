@@ -21,9 +21,9 @@ class UserController {
     userParams.updateUserPasswordParams(hashedPassword, id), {prepare: true});
   }
 
-  async deleteAccount(id: UUID): Promise<void> {
+  async deleteAccount(currUserId: UUID): Promise<void> {
     await cassClient.execute(userQueries.DELETE_USER_ACCOUNT, 
-    userParams.deleteUserAccountParams(id));
+    userParams.deleteUserAccountParams(currUserId));
   }
 
   async signup(firstName: string, lastName: string, userId: string, 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserService } from '../../services/forms/user.service';
 import { FormGroup } from '@angular/forms';
-import { AuthHandlerService } from './auth-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,6 @@ export class SignupHandler {
 
   constructor(
     private userService: UserService,
-    private authHandlerService: AuthHandlerService
   ) {}
 
   handleSignup(signupForm: FormGroup): void {
@@ -21,13 +19,6 @@ export class SignupHandler {
       pwd: signupForm.get('pwd')?.value
     };
 
-    this.userService.signup(signupData).subscribe({
-      next: () => {
-        this.authHandlerService.handleAuthSuccess();
-      },
-      error: (errorResponse: any) => {
-        this.authHandlerService.handleAuthError(errorResponse);
-      }
-    });
+    this.userService.signup(signupData);
   }
 }
