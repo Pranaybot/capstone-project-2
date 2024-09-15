@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
+import { BehaviorSubject, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ThemeService } from '../../services/settings/theme.service';
 
@@ -11,6 +11,12 @@ import { ThemeService } from '../../services/settings/theme.service';
   providedIn: 'root'
 })
 export class UserService extends BaseService {
+  private loggedInStatus: BehaviorSubject<boolean>;
+
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined';
+  }
+
   constructor(
     http: HttpClient,
     private router: Router,
@@ -18,10 +24,16 @@ export class UserService extends BaseService {
     private snackBar: MatSnackBar
   ) {
     super(http);
+    this.loggedInStatus = new BehaviorSubject<boolean>(this.isLoggedIn()); // Initialize with current login state
   }
 
-  private isBrowser(): boolean {
-    return typeof window !== 'undefined';
+  // Use this to get the login state observable
+  get loggedInStatus$() {
+    return this.loggedInStatus.asObservable();
+  }
+
+  isLoggedIn(): boolean {
+    return this.isBrowser() ? localStorage.getItem('isLoggedIn') === 'true' : false;
   }
 
   signup(signupData: any) {
@@ -31,6 +43,7 @@ export class UserService extends BaseService {
           if (this.isBrowser()) {
             localStorage.setItem('isLoggedIn', 'true'); // Store the login state
             localStorage.setItem('userId', response.userId); // Store userId
+            this.loggedInStatus.next(true); // Notify listeners
           }
           this.router.navigate(['/work_area']);
         }),
@@ -64,6 +77,7 @@ export class UserService extends BaseService {
           if (this.isBrowser()) {
             localStorage.setItem('isLoggedIn', 'true'); // Store the login state
             localStorage.setItem('userId', response.userId); // Store userId
+            this.loggedInStatus.next(true); // Notify listeners
           }
           this.router.navigate(['/work_area']);
         }),
@@ -82,6 +96,7 @@ export class UserService extends BaseService {
         if (this.isBrowser()) {
           localStorage.removeItem('isLoggedIn'); // Clear the login state
           localStorage.removeItem('userId'); // Optionally clear userId
+          this.loggedInStatus.next(false); // Notify listeners
         }
         this.router.navigate(['/']); // Navigate to home page on logout
       },
@@ -102,6 +117,7 @@ export class UserService extends BaseService {
           if (this.isBrowser()) {
             localStorage.removeItem('isLoggedIn'); // Clear the login state
             localStorage.removeItem('userId'); // Optionally clear userId
+            this.loggedInStatus.next(false); // Notify listeners
           }
           this.router.navigate(['/']); // Navigate to home page on delete account
         },
@@ -112,10 +128,6 @@ export class UserService extends BaseService {
     } else {
       console.warn("User ID not available, cannot delete account.");
     }
-  }
-
-  isLoggedIn(): boolean {
-    return this.isBrowser() ? localStorage.getItem('isLoggedIn') === 'true' : false;
   }
 
   getUserId(): string | null {
