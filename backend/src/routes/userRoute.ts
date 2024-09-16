@@ -3,7 +3,6 @@ import UserController from '../controllers/userController';
 import ListController from '../controllers/listController';
 import CardController from '../controllers/cardController';
 import bcrypt from 'bcryptjs';
-import '../utils/session_variables';
 import { passwordCheck, loginUser, logoutUser } from "../utils/helpers/user_route_helpers";
 
 const router = Router();

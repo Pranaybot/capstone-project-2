@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import '../utils/session_variables';
+import '../session_variables'
 
 // Helper function to compare passwords
 function checkPasswords(password1: string, password2: string): boolean {
