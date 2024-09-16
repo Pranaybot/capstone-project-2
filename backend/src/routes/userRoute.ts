@@ -3,16 +3,13 @@ import UserController from '../controllers/userController';
 import ListController from '../controllers/listController';
 import CardController from '../controllers/cardController';
 import bcrypt from 'bcryptjs';
+import '../utils/session_variables';
+import { passwordCheck, loginUser, logoutUser } from "../utils/helpers/user_route_helpers";
 
 const router = Router();
 const userController = new UserController();
 const listController = new ListController();
 const cardController = new CardController();
-
-// Helper function to compare passwords
-function checkPasswords(password1: string, password2: string): boolean {
-    return password1 === password2;
-}
 
 // Route for user signup
 router.post('/signup', async (req: Request, res: Response) => {
@@ -26,6 +23,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 
         const user = await userController.signup(firstName, lastName, username, pwd);
         if (user) {
+            loginUser(currUser, req, res);
             return res.status(201).json({ message: 'User created successfully.', userId: user.id});
         } else {
             return res.json({ message: "Cannot find new user" });
@@ -42,6 +40,7 @@ router.post('/login', async (req: Request, res: Response) => {
     try {
         const user = await userController.login(username, pwd);
         if (user) {
+            loginUser(user, req, res);
             return res.json({ message: 'Logged in successfully', userId: user.id });
         } else {
             return res.status(401).json({ message: 'Invalid username or password' });
@@ -61,7 +60,7 @@ router.post('/reset_password', async (req: Request, res: Response) => {
             const isPasswordValid = await bcrypt.compare(old_pwd, currUser.password);
 
             if (isPasswordValid) {
-                if (checkPasswords(new_pwd, new_pwd_match)) {
+                if (passwordCheck(new_pwd, new_pwd_match)) {
                       // Fetch the number of salt rounds from environment variables
                     const saltRounds = parseInt(process.env["BCRYPT_SALT_ROUNDS"] || '10', 10);
                     const hashedPassword = await bcrypt.hash(new_pwd, saltRounds);
@@ -97,8 +96,18 @@ router.delete('/delete_account', async (req: Request, res: Response) => {
 });
 
 // Route for user logout
-router.get('/logout', (_req: Request, res: Response) => {
+router.get('/logout', (req: Request, res: Response) => {
+    logoutUser(req, res);
     res.status(200).json({ message: 'Logged out successfully!' });
 });
+
+router.get('/check-auth', (req: Request, res: Response) => {
+    try {
+      res.json({ isAuthenticated: !!req.session.userId });
+    } catch (error) {
+      console.error('Error in check-auth route:', error);
+      res.status(500).json({ isAuthenticated: false, error: 'Internal server error' });
+    }
+  });
 
 export default router;

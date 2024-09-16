@@ -3,6 +3,7 @@ import middlewareSetup from '../utils/route_handlers/appMiddleware';
 import databaseRoutesSetup from '../utils/route_handlers/dbRoutes';
 import expressServerStart from '../config/serverConfig';
 import checkConnection from '../config/cassandraConnectionCheck';
+import sessionMiddlewareConfigure from '../config/sessionMiddlewareConfig';
 
 // Function to initialize and start the server
 async function initializeAndStartServer(app: Application) {
@@ -15,6 +16,9 @@ async function initializeAndStartServer(app: Application) {
   
       // Setup routes that require database access
       databaseRoutesSetup(app);
+
+      // Configure session middleware settings
+      sessionMiddlewareConfigure(app);
   
       // Start the server
       expressServerStart(app);

@@ -4,16 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, retry } from 'rxjs/operators';
 import { ThemeService } from '../../services/settings/theme.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends BaseService {
-  private loggedInStatus: BehaviorSubject<boolean>;
-  private homeStatus: BehaviorSubject<boolean>;
-  
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
   private isBrowser(): boolean {
     return typeof window !== 'undefined';
   }
@@ -25,35 +25,7 @@ export class UserService extends BaseService {
     private snackBar: MatSnackBar
   ) {
     super(http);
-    this.loggedInStatus = new BehaviorSubject<boolean>(false); // Initializes with false
-    this.homeStatus = new BehaviorSubject<boolean>(true); // Initializes with true
-  }
-
-  // Use this to get the login state observable
-  get loggedInStatus$() {
-    return this.loggedInStatus.asObservable();
-  }
-
-  // Method to get current loggedIn status
-  getCurrentLoggedInStatus(): boolean {
-    return this.loggedInStatus.getValue(); // Returns the current value of the BehaviorSubject
-  }
-
-  get homeStatus$() {
-    return this.homeStatus.asObservable();
-  }
-
-  // Method to get current loggedIn status
-  getHomeStatus(): boolean {
-    return this.loggedInStatus.getValue(); // Returns the current value of the BehaviorSubject
-  }
-  
-  isLoggedIn(): boolean {
-    return this.isBrowser() ? localStorage.getItem('isLoggedIn') === 'true' : false;
-  }
-
-  isHome(): boolean {
-    return this.isBrowser() ? localStorage.getItem('isHome') === 'true' : false;
+    this.checkAuthStatus();
   }
 
   signup(signupData: any) {
@@ -61,11 +33,8 @@ export class UserService extends BaseService {
       .pipe(
         tap((response: any) => {
           if (this.isBrowser()) {
-            localStorage.setItem('isLoggedIn', 'true'); // Store the login state
-            localStorage.setItem('isHome', 'false'); // Store the login state
             localStorage.setItem('userId', response.userId); // Store userId
-            this.loggedInStatus.next(true); // Notify listeners
-            this.homeStatus.next(false);
+            this.isAuthenticatedSubject.next(true);
           }
           this.router.navigate(['/work_area']);
         }),
@@ -97,11 +66,8 @@ export class UserService extends BaseService {
       .pipe(
         tap((response: any) => {
           if (this.isBrowser()) {
-            localStorage.setItem('isLoggedIn', 'true'); // Store the login state
-            localStorage.setItem('isHome', 'false'); // Store the login state
             localStorage.setItem('userId', response.userId); // Store userId
-            this.loggedInStatus.next(true); // Notify listeners
-            this.homeStatus.next(false);
+            this.isAuthenticatedSubject.next(true);
           }
           this.router.navigate(['/work_area']);
         }),
@@ -118,11 +84,8 @@ export class UserService extends BaseService {
     this.http.get(`${this.apiUrl}/user/logout`).subscribe({
       next: () => {
         if (this.isBrowser()) {
-          localStorage.removeItem('isLoggedIn'); // Clear the login state
-          localStorage.removeItem('isHome'); 
           localStorage.removeItem('userId'); // Optionally clear userId
-          this.loggedInStatus.next(false); // Notify listeners
-          this.homeStatus.next(true);
+          this.isAuthenticatedSubject.next(false);
         }
         this.router.navigate(['/']); // Navigate to home page on logout
       },
@@ -134,6 +97,7 @@ export class UserService extends BaseService {
 
   delete_account(): void {
     const currUserId = this.isBrowser() ? localStorage.getItem('userId') : null; // Get userId from localStorage
+
     if (currUserId) {
       this.http.delete(`${this.apiUrl}/user/delete_account`, {
         body: { currUserId }, // Assuming userId should be sent as a parameter in the request body
@@ -141,11 +105,8 @@ export class UserService extends BaseService {
       }).subscribe({
         next: () => {
           if (this.isBrowser()) {
-            localStorage.removeItem('isLoggedIn'); // Clear the login state
-            localStorage.removeItem('isHome'); // Store the login state
             localStorage.removeItem('userId'); // Optionally clear userId
-            this.loggedInStatus.next(false); // Notify listeners
-            this.homeStatus.next(true);
+            this.isAuthenticatedSubject.next(false);
           }
           this.router.navigate(['/']); // Navigate to home page on delete account
         },
@@ -158,7 +119,17 @@ export class UserService extends BaseService {
     }
   }
 
-  getUserId(): string | null {
-    return this.isBrowser() ? localStorage.getItem('userId') : null;
+  checkAuthStatus(): void {
+    this.http.get<{ isAuthenticated: boolean }>(`${this.apiUrl}/user/check-auth`)
+      .pipe(
+        retry(3), // Retry up to 3 times
+        tap(response => this.isAuthenticatedSubject.next(response.isAuthenticated)),
+        catchError(error => {
+          console.error('Error checking auth status:', error);
+          this.isAuthenticatedSubject.next(false);
+          return of({ isAuthenticated: false });
+        })
+      )
+      .subscribe();
   }
 }
