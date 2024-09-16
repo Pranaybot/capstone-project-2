@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
-import { SettingsModalComponent } from '../modals/settings-modal/settings-modal.component';
-import { UserModalComponent } from '../modals/user-modal/user-modal.component';
-import { ConfirmationModalComponent } from '../modals/confirmation-modal/confirmation-modal.component';
+import { SettingsModalComponent } from './settings-modal/settings-modal.component';
+import { UserModalComponent } from './user-modal/user-modal.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-work-area',
