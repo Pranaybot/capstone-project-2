@@ -13,7 +13,7 @@ import { ThemeService } from '../../services/settings/theme.service';
 export class UserService extends BaseService {
   private loggedInStatus: BehaviorSubject<boolean>;
   private homeStatus: BehaviorSubject<boolean>;
-
+  
   private isBrowser(): boolean {
     return typeof window !== 'undefined';
   }
@@ -27,6 +27,8 @@ export class UserService extends BaseService {
     super(http);
     this.loggedInStatus = new BehaviorSubject<boolean>(this.isLoggedIn()); // Initialize with current login state
     this.homeStatus = new BehaviorSubject<boolean>(this.isHome()); // Initialize with current login state
+    this.loggedInStatus = new BehaviorSubject<boolean>(false); // Initializes with false
+    this.homeStatus = new BehaviorSubject<boolean>(true); // Initializes with true
   }
 
   // Use this to get the login state observable
@@ -34,9 +36,20 @@ export class UserService extends BaseService {
     return this.loggedInStatus.asObservable();
   }
 
+  // Method to get current loggedIn status
+  getCurrentLoggedInStatus(): boolean {
+    return this.loggedInStatus.getValue(); // Returns the current value of the BehaviorSubject
+  }
+
   get homeStatus$() {
     return this.homeStatus.asObservable();
   }
+
+  // Method to get current loggedIn status
+  getHomeStatus(): boolean {
+    return this.loggedInStatus.getValue(); // Returns the current value of the BehaviorSubject
+  }
+  
 
   isLoggedIn(): boolean {
     return this.isBrowser() ? localStorage.getItem('isLoggedIn') === 'true' : false;
@@ -55,6 +68,7 @@ export class UserService extends BaseService {
             localStorage.setItem('isHome', 'false'); // Store the login state
             localStorage.setItem('userId', response.userId); // Store userId
             this.loggedInStatus.next(true); // Notify listeners
+            this.homeStatus.next(false);
           }
           this.router.navigate(['/work_area']);
         }),
@@ -90,6 +104,7 @@ export class UserService extends BaseService {
             localStorage.setItem('isHome', 'false'); // Store the login state
             localStorage.setItem('userId', response.userId); // Store userId
             this.loggedInStatus.next(true); // Notify listeners
+            this.homeStatus.next(false);
           }
           this.router.navigate(['/work_area']);
         }),
@@ -110,6 +125,7 @@ export class UserService extends BaseService {
           localStorage.removeItem('isHome'); 
           localStorage.removeItem('userId'); // Optionally clear userId
           this.loggedInStatus.next(false); // Notify listeners
+          this.homeStatus.next(true);
         }
         this.router.navigate(['/']); // Navigate to home page on logout
       },
@@ -132,6 +148,7 @@ export class UserService extends BaseService {
             localStorage.removeItem('isHome'); // Store the login state
             localStorage.removeItem('userId'); // Optionally clear userId
             this.loggedInStatus.next(false); // Notify listeners
+            this.homeStatus.next(true);
           }
           this.router.navigate(['/']); // Navigate to home page on delete account
         },

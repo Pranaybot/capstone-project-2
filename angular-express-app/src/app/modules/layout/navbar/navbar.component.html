@@ -6,8 +6,8 @@
     <nav class="other-nav-content">
       <a class="nav-links">About</a>
       <a class="nav-links" id="second-nav-link">Contact</a>
-      <a *ngIf="!isLoggedIn && isHome" href="/login_signup">Login</a>
-      <a *ngIf="isLoggedIn && !isHome" (click)="onLogout()" class="logout-button">Logout</a>
+      <a *ngIf="!isLoggedIn" href="/login_signup">Login</a>
+      <a *ngIf="isLoggedIn" (click)="onLogout()" class="logout-button">Logout</a>
     </nav>
 </div>
   

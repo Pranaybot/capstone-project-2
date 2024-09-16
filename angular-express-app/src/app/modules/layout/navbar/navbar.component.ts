@@ -13,12 +13,16 @@ import { Subscription } from 'rxjs';
 export class NavbarComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false; // Track login state
   isHome: boolean = true;
-  private subscriptions: Subscription = new Subscription(); // Manage subscriptions effectively
+  private subscriptions: Subscription = new Subscription(); // Manage subscription
 
   constructor(public userService: UserService) { }
 
   ngOnInit() {
     // Subscribe to loggedInStatus$
+    // Get the current logged-in status once
+    this.isLoggedIn = this.userService.getCurrentLoggedInStatus();
+    this.isHome = this.userService.getHomeStatus();
+
     this.subscriptions.add(
       this.userService.loggedInStatus$.subscribe(loggedIn => {
         this.isLoggedIn = loggedIn; // Update based on user's authentication state
