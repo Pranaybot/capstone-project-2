@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  isLoggedIn: boolean = false; // Track login state
-  isHome: boolean = true;
+  isLoggedIn!: boolean; // Track login state
+  isHome!: boolean;
   private subscriptions: Subscription = new Subscription(); // Manage subscription
 
   constructor(public userService: UserService) { }
