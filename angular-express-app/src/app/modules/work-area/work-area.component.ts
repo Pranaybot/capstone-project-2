@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { SideNavigationComponent } from './side-navigation/side-navigation.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
-import { SettingsModalComponent } from './settings-modal/settings-modal.component';
-import { UserModalComponent } from './user-modal/user-modal.component';
-import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { DeleteAccountHandler } from '../../shared/handlers/delete-account-handler';
+import { CommonModule } from '@angular/common';
+import { ThemeService } from '../../services/settings/theme.service';
 
 @Component({
   selector: 'app-work-area',
@@ -11,27 +12,44 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
   imports: [
     SideNavigationComponent,
     WorkspaceComponent,
-    SettingsModalComponent,
-    UserModalComponent,
-    ConfirmationModalComponent
+    CommonModule
   ],
   templateUrl: './work-area.component.html',
   styleUrls: ['./work-area.component.scss']
 })
-export class WorkAreaComponent {
+export class WorkAreaComponent implements AfterViewInit{
   isSettingsModalOpen = false;
   isUserModalOpen = false;
-  // Inside WorkAreaComponent Class
-  backgroundColor: string = '#f1f2f6'; // Default background color
+  colors = ['#bb86fc', '#ff8a5c', '#a0e4f2', '#f5f5f5', '#ffcf6c'];
+  currentTheme: string = 'light';
 
   @ViewChild(WorkspaceComponent) workspaceComponent!: WorkspaceComponent;
 
-  openSettingsModal() {
-    this.isSettingsModalOpen = true;
+  constructor(
+    private themeService: ThemeService, 
+    private deleteAccountHandler: DeleteAccountHandler
+  ) { }
+
+  ngOnInit() {
+    // Load saved background color and theme
+    const savedColor = this.themeService.getSavedBackgroundColor();
+    if (savedColor && this.workspaceComponent) {
+      this.workspaceComponent.changeBackgroundColor(savedColor);
+    }
+
+    const savedTheme = this.themeService.getSavedTheme();
+    if (savedTheme) {
+      this.currentTheme = savedTheme;
+      this.themeService.applyTheme(savedTheme);
+    }
   }
 
-  closeSettingsModal() {
-    this.isSettingsModalOpen = false;
+  ngAfterViewInit() {
+    // Retrieve the stored background color and apply it
+    const savedColor = this.themeService.getSavedBackgroundColor();
+    if (savedColor) {
+      this.workspaceComponent.changeBackgroundColor(savedColor);
+    }
   }
 
   openUserModal() {
@@ -42,12 +60,33 @@ export class WorkAreaComponent {
     this.isUserModalOpen = false;
   }
 
-  // Listen for background color changes and update workspace
-  onBackgroundColorChange(color: string) {
-    this.backgroundColor = color;
-    if(this.workspaceComponent) {
+  deleteAccount() {
+    if (confirm("Do you want to delete your account?")) {
+      this.deleteAccountHandler.handleDelete();
+    } 
+  }
+
+  openSettingsModal() {
+    this.isSettingsModalOpen = true;
+  }
+
+  closeSettingsModal() {
+    this.isSettingsModalOpen = false;
+  }
+
+  changeBackgroundColor(color: string) {
+    if (this.workspaceComponent) {
       this.workspaceComponent.changeBackgroundColor(color);
+      this.themeService.applyBackgroundColor(color);
+      this.closeSettingsModal();
+    } else {
+      console.error('WorkspaceComponent is not available.');
     }
+  }
+
+  changeTheme(theme: string) {
+    this.currentTheme = theme;
+    this.themeService.applyTheme(theme);
   }
 
 }
