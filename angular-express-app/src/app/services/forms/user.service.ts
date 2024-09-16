@@ -25,8 +25,6 @@ export class UserService extends BaseService {
     private snackBar: MatSnackBar
   ) {
     super(http);
-    this.loggedInStatus = new BehaviorSubject<boolean>(this.isLoggedIn()); // Initialize with current login state
-    this.homeStatus = new BehaviorSubject<boolean>(this.isHome()); // Initialize with current login state
     this.loggedInStatus = new BehaviorSubject<boolean>(false); // Initializes with false
     this.homeStatus = new BehaviorSubject<boolean>(true); // Initializes with true
   }
@@ -50,7 +48,6 @@ export class UserService extends BaseService {
     return this.loggedInStatus.getValue(); // Returns the current value of the BehaviorSubject
   }
   
-
   isLoggedIn(): boolean {
     return this.isBrowser() ? localStorage.getItem('isLoggedIn') === 'true' : false;
   }
