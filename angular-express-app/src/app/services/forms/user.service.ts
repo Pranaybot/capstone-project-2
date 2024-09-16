@@ -12,6 +12,7 @@ import { ThemeService } from '../../services/settings/theme.service';
 })
 export class UserService extends BaseService {
   private loggedInStatus: BehaviorSubject<boolean>;
+  private homeStatus: BehaviorSubject<boolean>;
 
   private isBrowser(): boolean {
     return typeof window !== 'undefined';
@@ -25,6 +26,7 @@ export class UserService extends BaseService {
   ) {
     super(http);
     this.loggedInStatus = new BehaviorSubject<boolean>(this.isLoggedIn()); // Initialize with current login state
+    this.homeStatus = new BehaviorSubject<boolean>(this.isHome()); // Initialize with current login state
   }
 
   // Use this to get the login state observable
@@ -32,8 +34,16 @@ export class UserService extends BaseService {
     return this.loggedInStatus.asObservable();
   }
 
+  get homeStatus$() {
+    return this.homeStatus.asObservable();
+  }
+
   isLoggedIn(): boolean {
     return this.isBrowser() ? localStorage.getItem('isLoggedIn') === 'true' : false;
+  }
+
+  isHome(): boolean {
+    return this.isBrowser() ? localStorage.getItem('isHome') === 'true' : false;
   }
 
   signup(signupData: any) {
@@ -42,6 +52,7 @@ export class UserService extends BaseService {
         tap((response: any) => {
           if (this.isBrowser()) {
             localStorage.setItem('isLoggedIn', 'true'); // Store the login state
+            localStorage.setItem('isHome', 'false'); // Store the login state
             localStorage.setItem('userId', response.userId); // Store userId
             this.loggedInStatus.next(true); // Notify listeners
           }
@@ -76,6 +87,7 @@ export class UserService extends BaseService {
         tap((response: any) => {
           if (this.isBrowser()) {
             localStorage.setItem('isLoggedIn', 'true'); // Store the login state
+            localStorage.setItem('isHome', 'false'); // Store the login state
             localStorage.setItem('userId', response.userId); // Store userId
             this.loggedInStatus.next(true); // Notify listeners
           }
@@ -95,6 +107,7 @@ export class UserService extends BaseService {
       next: () => {
         if (this.isBrowser()) {
           localStorage.removeItem('isLoggedIn'); // Clear the login state
+          localStorage.removeItem('isHome'); 
           localStorage.removeItem('userId'); // Optionally clear userId
           this.loggedInStatus.next(false); // Notify listeners
         }
@@ -116,6 +129,7 @@ export class UserService extends BaseService {
         next: () => {
           if (this.isBrowser()) {
             localStorage.removeItem('isLoggedIn'); // Clear the login state
+            localStorage.removeItem('isHome'); // Store the login state
             localStorage.removeItem('userId'); // Optionally clear userId
             this.loggedInStatus.next(false); // Notify listeners
           }

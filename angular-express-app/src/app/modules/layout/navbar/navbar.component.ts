@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/forms/user.service';
 import { Subscription } from 'rxjs';
@@ -10,20 +10,31 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false; // Track login state
-  private subscription!: Subscription;
+  isHome: boolean = true;
+  private subscriptions: Subscription = new Subscription(); // Manage subscriptions effectively
 
   constructor(public userService: UserService) { }
 
   ngOnInit() {
-    this.subscription = this.userService.loggedInStatus$.subscribe(loggedIn => {
-      this.isLoggedIn = loggedIn; // Update based on user's authentication state
-    });
+    // Subscribe to loggedInStatus$
+    this.subscriptions.add(
+      this.userService.loggedInStatus$.subscribe(loggedIn => {
+        this.isLoggedIn = loggedIn; // Update based on user's authentication state
+      })
+    );
+
+    // Subscribe to homeStatus$
+    this.subscriptions.add(
+      this.userService.homeStatus$.subscribe(home => {
+        this.isHome = home; // Update based on home status
+      })
+    );
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe(); // Clean up subscription
+    this.subscriptions.unsubscribe(); // Clean up all subscriptions
   }
 
   onLogout() {
