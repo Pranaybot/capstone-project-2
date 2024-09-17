@@ -11,11 +11,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  isAuthenticated$: Observable<boolean>;
 
-  constructor(public userService: UserService) {
-    this.isAuthenticated$ = this.userService.isAuthenticated$;
-  }
+  constructor(public userService: UserService) {}
 
   onLogout() {
     this.userService.logout();

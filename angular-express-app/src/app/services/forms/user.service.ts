@@ -11,30 +11,28 @@ import { ThemeService } from '../../services/settings/theme.service';
   providedIn: 'root'
 })
 export class UserService extends BaseService {
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  isLoggedIn: boolean = false;
+  isHome: boolean = true;
 
   private isBrowser(): boolean {
     return typeof window !== 'undefined';
   }
 
   constructor(
-    http: HttpClient,
-    private router: Router,
-    public themeService: ThemeService,
-    private snackBar: MatSnackBar
+    http: HttpClient, private router: Router,
+    public themeService: ThemeService, private snackBar: MatSnackBar
   ) {
     super(http);
-    this.checkAuthStatus();
   }
 
   signup(signupData: any) {
+    this.isLoggedIn = true;
+    this.isHome = false;
     return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
           if (this.isBrowser()) {
             localStorage.setItem('userId', response.userId); // Store userId
-            this.isAuthenticatedSubject.next(true);
           }
           this.router.navigate(['/work_area']);
         }),
@@ -62,12 +60,13 @@ export class UserService extends BaseService {
   }
 
   login(loginData: any) {
+    this.isLoggedIn = true;
+    this.isHome = false;
     return this.http.post(`${this.apiUrl}/user/login`, loginData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
           if (this.isBrowser()) {
             localStorage.setItem('userId', response.userId); // Store userId
-            this.isAuthenticatedSubject.next(true);
           }
           this.router.navigate(['/work_area']);
         }),
@@ -81,11 +80,12 @@ export class UserService extends BaseService {
   }
 
   logout(): void {
+    this.isLoggedIn = false;
+    this.isHome = true;
     this.http.get(`${this.apiUrl}/user/logout`).subscribe({
       next: () => {
         if (this.isBrowser()) {
           localStorage.removeItem('userId'); // Optionally clear userId
-          this.isAuthenticatedSubject.next(false);
         }
         this.router.navigate(['/']); // Navigate to home page on logout
       },
@@ -105,8 +105,9 @@ export class UserService extends BaseService {
       }).subscribe({
         next: () => {
           if (this.isBrowser()) {
+            this.isLoggedIn = false;
+            this.isHome = true;
             localStorage.removeItem('userId'); // Optionally clear userId
-            this.isAuthenticatedSubject.next(false);
           }
           this.router.navigate(['/']); // Navigate to home page on delete account
         },
@@ -119,17 +120,4 @@ export class UserService extends BaseService {
     }
   }
 
-  checkAuthStatus(): void {
-    this.http.get<{ isAuthenticated: boolean }>(`${this.apiUrl}/user/check-auth`)
-      .pipe(
-        retry(3), // Retry up to 3 times
-        tap(response => this.isAuthenticatedSubject.next(response.isAuthenticated)),
-        catchError(error => {
-          console.error('Error checking auth status:', error);
-          this.isAuthenticatedSubject.next(false);
-          return of({ isAuthenticated: false });
-        })
-      )
-      .subscribe();
-  }
 }
