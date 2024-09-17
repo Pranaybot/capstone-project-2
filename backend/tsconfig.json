@@ -46,7 +46,6 @@
     "types": ["node"]
   },
   "include": [
-    "src/utils/session_variables.ts",  // or the appropriate path
     "src/**/*.ts", 
   ],
 }
