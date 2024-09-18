@@ -16,7 +16,7 @@ export const routes: Routes = [
       ]
     },
     {
-      path: 'auth',
+      path: '',
       component: CustomComponent,
       children: [
         { path: 'login_signup', component: LoginSignupComponent },

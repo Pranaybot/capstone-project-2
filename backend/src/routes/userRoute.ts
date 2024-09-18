@@ -52,7 +52,7 @@ router.post('/login', async (req: Request, res: Response) => {
 });
 
 // Route for resetting password
-router.post('/auth/reset_password', async (req: Request, res: Response) => {
+router.post('/reset_password', async (req: Request, res: Response) => {
     const { username, old_pwd, new_pwd, new_pwd_match } = req.body;
 
     try {

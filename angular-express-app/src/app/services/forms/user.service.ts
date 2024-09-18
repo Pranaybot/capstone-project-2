@@ -1,149 +1,126 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../base.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, tap, retry } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { ThemeService } from '../../services/settings/theme.service';
-import { AuthService } from '@auth0/auth0-angular';
-import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends BaseService {
+  isLoggedIn: boolean = false;
+  isHome: boolean = true;
+
   private isBrowser(): boolean {
     return typeof window !== 'undefined';
   }
 
-  private isServer(): boolean {
-    return !this.isBrowser();
-  }
-
   constructor(
-    http: HttpClient, 
+    http: HttpClient,
     private router: Router,
-    public themeService: ThemeService, 
-    private snackBar: MatSnackBar,
-    public auth: AuthService, 
-    @Inject(DOCUMENT) public document: Document,
+    public themeService: ThemeService,
+    private snackBar: MatSnackBar
   ) {
     super(http);
   }
 
-  signup(signupData: any): Observable<any> {
+  signup(signupData: any) {
     return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
-          if (!this.isServer()) {
-            if (this.isBrowser()) {
-              localStorage.setItem('userId', response.userId);
-            }
-            this.auth.loginWithRedirect();
+          if (this.isBrowser()) {
+            localStorage.setItem('userId', response.userId); // Store userId
           }
+          this.isLoggedIn = true;
+          this.isHome = false;
+          this.router.navigate(['/work_area']);
         }),
         catchError((err: any) => {
           const errorMessage = err?.error?.message || 'An unexpected error occurred. Please try again later.';
           this.snackBar.open(errorMessage, 'Close', { duration: 3000 });
-          return of(null);
+          return of(null); // Handle the error
         })
-      );
+      )
+      .subscribe(); // Ensure you subscribe to execute the observable
   }
 
-  resetPassword(resetPasswordData: any): Observable<Object> {
-    return this.http.patch(`${this.apiUrl}/user/auth/reset_password`, resetPasswordData, { responseType: 'json' })
+  resetPassword(resetPasswordData: any) {
+    return this.http.patch(`${this.apiUrl}/user/reset_password`, resetPasswordData, { responseType: 'json' })
       .pipe(
         tap(() => {
-          if (!this.isServer()) {
-            this.router.navigate(['/auth/login_signup']);
-          }
+          this.router.navigate(['/login_signup']);
         }),
         catchError((err: any) => {
           console.error('Reset Password failed', err);
-          return throwError(() => err);
+          return throwError(() => err); // Updated to a factory function
         })
-      );
+      )
+      .subscribe();
   }
 
-  login(loginData: any): Observable<any> {
+  login(loginData: any) {
     return this.http.post(`${this.apiUrl}/user/login`, loginData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
-          if (!this.isServer()) {
-            if (this.isBrowser()) {
-              localStorage.setItem('userId', response.userId);
-            }
-            this.auth.loginWithRedirect();
+          if (this.isBrowser()) {
+            this.isLoggedIn = true;
+            this.isHome = false;
+            localStorage.setItem('userId', response.userId); // Store userId
           }
+          this.router.navigate(['/work_area']);
         }),
         catchError((err: any) => {
           const errorMessage = err?.error?.message || 'An unexpected error occurred. Please try again later.';
           this.snackBar.open(errorMessage, 'Close', { duration: 3000 });
-          return of(null);
+          return of(null); // Handle the error
         })
-      );
+      )
+      .subscribe();
   }
 
-  logout(): Promise<void> {
-    return new Promise((resolve) => {
-      if (!this.isServer()) {
-        this.http.get(`${this.apiUrl}/user/logout`).subscribe({
-          next: () => {
-            if (this.isBrowser()) {
-              localStorage.removeItem('userId');
-            }
-            this.auth.logout({ 
-              logoutParams: {
-                returnTo: this.document.location.origin 
-              }
-            });
-            resolve();
-          },
-          error: (err: any) => {
-            console.error('Logout failed', err);
-            resolve();
-          }
-        });
-      } else {
-        resolve();
-      }
-    });
-  }
-
-  delete_account(): Promise<void> {
-    return new Promise((resolve) => {
-      if (!this.isServer()) {
-        const currUserId = this.isBrowser() ? localStorage.getItem('userId') : null;
-
-        if (currUserId) {
-          this.http.delete(`${this.apiUrl}/user/delete_account`, {
-            body: { currUserId },
-            observe: 'response'
-          }).subscribe({
-            next: () => {
-              if (this.isBrowser()) {
-                localStorage.removeItem('userId');
-              }
-              this.auth.logout({ 
-                logoutParams: {
-                  returnTo: this.document.location.origin 
-                }
-              });
-              resolve();
-            },
-            error: (err: any) => {
-              console.error('Failed to delete account', err);
-              resolve();
-            }
-          });
-        } else {
-          console.warn("User ID not available, cannot delete account.");
-          resolve();
+  logout(): void {
+    this.http.get(`${this.apiUrl}/user/logout`).subscribe({
+      next: () => {
+        if (this.isBrowser()) {
+          localStorage.removeItem('userId'); // Optionally clear userId
         }
-      } else {
-        resolve();
+        this.isLoggedIn = false;
+        this.isHome = true;
+        this.router.navigate(['/']); // Navigate to home page on logout
+      },
+      error: (err: any) => {
+        console.error('Logout failed', err);
       }
     });
   }
+
+  delete_account(): void {
+    const currUserId = this.isBrowser() ? localStorage.getItem('userId') : null; // Get userId from localStorage
+
+    if (currUserId) {
+      this.http.delete(`${this.apiUrl}/user/delete_account`, {
+        body: { currUserId }, // Assuming userId should be sent as a parameter in the request body
+        observe: 'response' // This will return the full response in the Observable
+      }).subscribe({
+        next: () => {
+          if (this.isBrowser()) {
+            this.isLoggedIn = false;
+            this.isHome = true;
+            localStorage.removeItem('userId'); // Optionally clear userId
+          }
+          this.router.navigate(['/']); // Navigate to home page on delete account
+        },
+        error: (err: any) => {
+          console.error('Failed to delete account', err);
+        }
+      });
+    } else {
+      console.warn("User ID not available, cannot delete account.");
+    }
+  }
+
 }
+
