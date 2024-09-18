@@ -6,13 +6,12 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, of, throwError } from 'rxjs';
 import { catchError, tap, retry } from 'rxjs/operators';
 import { ThemeService } from '../../services/settings/theme.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends BaseService {
-  isLoggedIn: boolean = false;
-  isHome: boolean = true;
 
   private isBrowser(): boolean {
     return typeof window !== 'undefined';
@@ -20,21 +19,20 @@ export class UserService extends BaseService {
 
   constructor(
     http: HttpClient, private router: Router,
-    public themeService: ThemeService, private snackBar: MatSnackBar
+    public themeService: ThemeService, private snackBar: MatSnackBar,
+    private auth: AuthService
   ) {
     super(http);
   }
 
   signup(signupData: any) {
-    this.isLoggedIn = true;
-    this.isHome = false;
     return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
           if (this.isBrowser()) {
             localStorage.setItem('userId', response.userId); // Store userId
           }
-          this.router.navigate(['/work_area']);
+          this.auth.loginWithRedirect();
         }),
         catchError((err: any) => {
           const errorMessage = err?.error?.message || 'An unexpected error occurred. Please try again later.';
@@ -60,17 +58,13 @@ export class UserService extends BaseService {
   }
 
   login(loginData: any) {
-    this.isLoggedIn = true;
-    this.isHome = false;
     return this.http.post(`${this.apiUrl}/user/login`, loginData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
           if (this.isBrowser()) {
-            this.isLoggedIn = true;
-            this.isHome = false;
             localStorage.setItem('userId', response.userId); // Store userId
           }
-          this.router.navigate(['/work_area']);
+          this.auth.loginWithRedirect();
         }),
         catchError((err: any) => {
           const errorMessage = err?.error?.message || 'An unexpected error occurred. Please try again later.';
@@ -82,14 +76,16 @@ export class UserService extends BaseService {
   }
 
   logout(): void {
-    this.isLoggedIn = false;
-    this.isHome = true;
     this.http.get(`${this.apiUrl}/user/logout`).subscribe({
       next: () => {
         if (this.isBrowser()) {
           localStorage.removeItem('userId'); // Optionally clear userId
         }
-        this.router.navigate(['/']); // Navigate to home page on logout
+        this.auth.logout({ 
+          logoutParams: {
+            returnTo: this.document.location.origin 
+          }
+        });
       },
       error: (err: any) => {
         console.error('Logout failed', err);
@@ -107,11 +103,13 @@ export class UserService extends BaseService {
       }).subscribe({
         next: () => {
           if (this.isBrowser()) {
-            this.isLoggedIn = false;
-            this.isHome = true;
             localStorage.removeItem('userId'); // Optionally clear userId
           }
-          this.router.navigate(['/']); // Navigate to home page on delete account
+          this.auth.logout({ 
+            logoutParams: {
+              returnTo: this.document.location.origin 
+            }
+          });
         },
         error: (err: any) => {
           console.error('Failed to delete account', err);
