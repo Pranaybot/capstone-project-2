@@ -5,6 +5,7 @@ import { WorkspaceComponent } from './workspace/workspace.component';
 import { DeleteAccountHandler } from '../../shared/handlers/delete-account-handler';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../services/settings/theme.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-work-area',
@@ -27,7 +28,8 @@ export class WorkAreaComponent implements AfterViewInit{
 
   constructor(
     private themeService: ThemeService, 
-    private deleteAccountHandler: DeleteAccountHandler
+    private deleteAccountHandler: DeleteAccountHandler,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
