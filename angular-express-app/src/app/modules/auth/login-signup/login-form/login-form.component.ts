@@ -39,6 +39,6 @@ export class LoginFormComponent implements OnInit {
   }
 
   onForgot() {
-    this.router.navigate(['/reset_password']);
+    this.router.navigate(['/auth/reset_password']);
   }
 }
