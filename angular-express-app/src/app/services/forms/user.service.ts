@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../base.service';
@@ -7,6 +7,7 @@ import { BehaviorSubject, of, throwError } from 'rxjs';
 import { catchError, tap, retry } from 'rxjs/operators';
 import { ThemeService } from '../../services/settings/theme.service';
 import { AuthService } from '@auth0/auth0-angular';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class UserService extends BaseService {
   constructor(
     http: HttpClient, private router: Router,
     public themeService: ThemeService, private snackBar: MatSnackBar,
-    public auth: AuthService
+    public auth: AuthService, @Inject(DOCUMENT) public document: Document,
   ) {
     super(http);
   }
