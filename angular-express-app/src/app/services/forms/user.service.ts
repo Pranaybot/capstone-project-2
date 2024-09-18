@@ -26,12 +26,12 @@ export class UserService extends BaseService {
   }
 
   signup(signupData: any) {
-    this.isLoggedIn = true;
-    this.isHome = false;
     return this.http.post(`${this.apiUrl}/user/signup`, signupData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
           if (this.isBrowser()) {
+            this.isLoggedIn = true;
+            this.isHome = false;
             localStorage.setItem('userId', response.userId); // Store userId
           }
           this.router.navigate(['/work_area']);
@@ -60,12 +60,12 @@ export class UserService extends BaseService {
   }
 
   login(loginData: any) {
-    this.isLoggedIn = true;
-    this.isHome = false;
     return this.http.post(`${this.apiUrl}/user/login`, loginData, { responseType: 'json' })
       .pipe(
         tap((response: any) => {
           if (this.isBrowser()) {
+            this.isLoggedIn = true;
+            this.isHome = false;
             localStorage.setItem('userId', response.userId); // Store userId
           }
           this.router.navigate(['/work_area']);
@@ -80,11 +80,11 @@ export class UserService extends BaseService {
   }
 
   logout(): void {
-    this.isLoggedIn = false;
-    this.isHome = true;
     this.http.get(`${this.apiUrl}/user/logout`).subscribe({
       next: () => {
         if (this.isBrowser()) {
+          this.isLoggedIn = false;
+          this.isHome = true;
           localStorage.removeItem('userId'); // Optionally clear userId
         }
         this.router.navigate(['/']); // Navigate to home page on logout
