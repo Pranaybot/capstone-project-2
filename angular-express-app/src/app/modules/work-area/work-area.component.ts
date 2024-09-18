@@ -6,6 +6,7 @@ import { DeleteAccountHandler } from '../../shared/handlers/delete-account-handl
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../services/settings/theme.service';
 import { AuthService } from '@auth0/auth0-angular';
+import { LoadingComponent } from '../auth/loading/loading.component;
 
 @Component({
   selector: 'app-work-area',
@@ -13,6 +14,7 @@ import { AuthService } from '@auth0/auth0-angular';
   imports: [
     SideNavigationComponent,
     WorkspaceComponent,
+    LoadingComponent,
     CommonModule
   ],
   templateUrl: './work-area.component.html',
