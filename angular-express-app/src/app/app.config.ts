@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideAuth0 } from '@auth0/auth0-angular';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -14,6 +15,13 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withFetch()), 
     provideAnimationsAsync(),
-    CookieService
+    CookieService,
+    provideAuth0({
+      domain: 'dev-346vw7zcsjxpe8gn.us.auth0.com',
+      clientId: 'aMBf6b1MQnYWY2iyRA1LMF83QdjiE2ph',
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    }),
   ]
 };
