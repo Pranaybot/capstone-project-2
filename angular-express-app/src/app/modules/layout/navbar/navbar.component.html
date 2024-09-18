@@ -6,11 +6,7 @@
   <nav class="other-nav-content">
     <a class="nav-links">About</a>
     <a class="nav-links" id="second-nav-link">Contact</a>
-    <ng-container *ngIf="!this.userService.isLoggedIn && this.userService.isHome; else logoutButton">
-      <a href="/login_signup">Login</a>
-    </ng-container>
-    <ng-template #logoutButton>
-      <a (click)="onLogout()" class="logout-button">Logout</a>
-    </ng-template>
+    <a *ngIf="(auth.isAuthenticated$ | async) === false" href="/login_signup">Login</a>
+    <a *ngIf="(auth.isAuthenticated$ | async) === true" (click)="onLogout()" class="logout-button">Logout</a>
   </nav>
 </div>
