@@ -1,38 +1,31 @@
-<!-- src/app/work-area/work-area.component.html -->
-<div class="container" *ngIf="auth.isLoading$ | async; else loaded">
-  <app-loading></app-loading>
-</div>
-
-<ng-template #loaded>
-  <div class="work-area">
-    <app-side-navigation 
-      (settingsClick)="openSettingsModal()"
-      (userClick)="openUserModal()">
-    </app-side-navigation>
-    <app-workspace #workspace></app-workspace>
-    <div class="settings-modal" *ngIf="isSettingsModalOpen">
-      <h3>Change Workspace Background</h3>
-      <div class="color-options">
-        <button class="color-btn" *ngFor="let color of colors" [style.background]="color" (click)="changeBackgroundColor(color)"></button>
-      </div>
-      <h3>Toggle Theme</h3>
-      <div class="theme-toggle">
-        <label>
-          <input type="radio" name="theme" value="light" (change)="changeTheme('light')" [checked]="currentTheme === 'light'">
-          Light
-        </label>
-        <label>
-          <input type="radio" name="theme" value="dark" (change)="changeTheme('dark')" [checked]="currentTheme === 'dark'">
-          Dark
-        </label>
-      </div>
-      <button class="close-btn" (click)="closeSettingsModal()">Close</button>
+<div class="work-area">
+  <app-side-navigation 
+    (settingsClick)="openSettingsModal()"
+    (userClick)="openUserModal()">
+  </app-side-navigation>
+  <app-workspace #workspace></app-workspace>
+  <div class="settings-modal" *ngIf="isSettingsModalOpen">
+    <h3>Change Workspace Background</h3>
+    <div class="color-options">
+      <button class="color-btn" *ngFor="let color of colors" [style.background]="color" (click)="changeBackgroundColor(color)"></button>
     </div>
-    <div class="user-modal" *ngIf="isUserModalOpen">
-      <a href="/login_signup">Create a New Account <span class="html-symbol">&#9998;</span></a>
-      <a href="/reset_password">Reset Your Password <span class="html-symbol">&#10007;</span></a>
-      <a (click)="deleteAccount()" id="last-option">Delete Your Account <span class="html-symbol">&#9988;</span></a>  
-      <button class="close-btn" (click)="closeUserModal()">Close</button>
+    <h3>Toggle Theme</h3>
+    <div class="theme-toggle">
+      <label>
+        <input type="radio" name="theme" value="light" (change)="changeTheme('light')" [checked]="currentTheme === 'light'">
+        Light
+      </label>
+      <label>
+        <input type="radio" name="theme" value="dark" (change)="changeTheme('dark')" [checked]="currentTheme === 'dark'">
+        Dark
+      </label>
     </div>
+    <button class="close-btn" (click)="closeSettingsModal()">Close</button>
   </div>
-</ng-template>
+  <div class="user-modal" *ngIf="isUserModalOpen">
+    <a href="/login_signup">Create a New Account <span class="html-symbol">&#9998;</span></a>
+    <a href="/reset_password">Reset Your Password <span class="html-symbol">&#10007;</span></a>
+    <a (click)="deleteAccount()" id="last-option">Delete Your Account <span class="html-symbol">&#9988;</span></a>  
+    <button class="close-btn" (click)="closeUserModal()">Close</button>
+  </div>
+</div>
