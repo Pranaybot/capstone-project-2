@@ -17,8 +17,8 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     CookieService,
     provideAuth0({
-      domain: 'dev-346vw7zcsjxpe8gn.us.auth0.com',
-      clientId: 'aMBf6b1MQnYWY2iyRA1LMF83QdjiE2ph',
+      "domain": "dev-346vw7zcsjxpe8gn.us.auth0.com",
+      "clientId": "Js5CZN5XF6IEb9H49UOwgLOQyojZlN8R",
       authorizationParams: {
         redirect_uri: window.location.origin
       }
