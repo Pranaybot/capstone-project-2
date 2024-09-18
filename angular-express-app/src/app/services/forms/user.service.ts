@@ -20,7 +20,7 @@ export class UserService extends BaseService {
   constructor(
     http: HttpClient, private router: Router,
     public themeService: ThemeService, private snackBar: MatSnackBar,
-    private auth: AuthService
+    public auth: AuthService
   ) {
     super(http);
   }
