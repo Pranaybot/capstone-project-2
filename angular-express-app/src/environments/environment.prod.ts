@@ -1,4 +1,3 @@
-import { domain, clientId } from '../../auth_conifg.json';
 
 export const environment = {
     production: true,
