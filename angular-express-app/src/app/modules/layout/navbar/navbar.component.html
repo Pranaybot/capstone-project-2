@@ -7,6 +7,6 @@
     <a class="nav-links">About</a>
     <a class="nav-links" id="second-nav-link">Contact</a>
     <a *ngIf="(auth.isAuthenticated$ | async) === false" href="/login_signup">Login</a>
-    <a *ngIf="(auth.isAuthenticated$ | async) === true" (click)="onLogout()" class="logout-button">Logout</a>
+    <a *ngIf="auth.isAuthenticated$ | async" (click)="onLogout()" class="logout-button">Logout</a>
   </nav>
 </div>
