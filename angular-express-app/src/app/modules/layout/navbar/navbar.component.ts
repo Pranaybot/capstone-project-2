@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class NavbarComponent {
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, public auth: AuthService) {}
 
   onLogout() {
     this.userService.logout();
