@@ -7,7 +7,7 @@
 
       <app-card *ngFor="let card of list.cards" [list]="list" [card]="card"></app-card>
 
-      <button (click)="addCardToList(list)">Add Card</button>
+      <button (click)="addCardToList(list.id!)">Add Card</button>
     </div>
   </div>
 

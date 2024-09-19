@@ -76,20 +76,17 @@ export class ListComponent implements OnInit {
     });
   }
 
-  addCardToList(list: List): void {
-
-    if (!list.id) {
-      console.error('List ID is undefined. Cannot delete card.');
-      return;
+  addCardToList(listId: string): void {
+    if (listId) {
+      this.cardService.add_card(listId, { username: '', title: 'New Card', description: '', activity: '' })
+        .subscribe((card: Card) => {
+          const list = this.lists.find(l => l.id === listId); // Use `find` instead of `filter`
+          if (list) {
+            list.cards = list.cards || []; // Ensure `cards` is initialized
+            list.cards.push(card);
+          }
+        });
     }
-
-    this.cardService.add_card(list.id, { username: '', title: 'New Card', description: '', activity: '' })
-      .subscribe((card: Card) => {
-        const list = this.lists.find(l => l.id === list.id); // Use `find` instead of `filter`
-        if (list) {
-          list.cards.push(card);
-        }
-      });
   }
   
 
