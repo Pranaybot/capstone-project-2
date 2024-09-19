@@ -6,7 +6,7 @@
     <p><strong>Activity:</strong> {{ card.activity }}</p>
     <div class="button-container">
       <button (click)="editCard(card)">Update Card</button>
-      <button (click)="deleteCard(list!, card!)">Delete Card</button>
+      <button *ngIf="list && card" (click)="deleteCard(list!, card!)">Delete Card</button>
     </div>
   </div>
 
