@@ -59,8 +59,14 @@ export class CardComponent {
     card.isEditing = false;
   }
 
-  deleteCard(listId: string, cardId: string): void {
-    this.cardService.delete_card(listId, cardId).subscribe(() => {
+  deleteCard(list: List, card: Card): void {
+
+    if (!card.id || !list.id) {
+      console.error('Card ID or List ID is undefined. Cannot update card.');
+      return;
+    }
+  
+    this.cardService.delete_card(list.id, card.id).subscribe(() => {
       if (this.list.cards) {
         this.list.cards = this.list.cards.filter((c: Card) => c.id !== cardId);
       }
