@@ -64,25 +64,32 @@ export class ListComponent implements OnInit {
     }
   }
 
-  deleteListItem(id: string | undefined): void {
-    if (id) {
-      this.listService.delete_list(id).subscribe(() => {
-        this.lists = this.lists.filter(l => l.id !== id);
-      });
+  deleteListItem(list: List): void {
+
+    if (!list.id) {
+      console.error('List ID is undefined. Cannot delete card.');
+      return;
     }
+  
+    this.listService.delete_list(list.id).subscribe(() => {
+      this.lists = this.lists.filter(l => l.id !== list.id);
+    });
   }
 
-  addCardToList(listId: string): void {
-    if (listId) {
-      this.cardService.add_card(listId, { username: '', title: 'New Card', description: '', activity: '' })
-        .subscribe((card: Card) => {
-          const list = this.lists.find(l => l.id === listId); // Use `find` instead of `filter`
-          if (list) {
-            list.cards = list.cards || []; // Ensure `cards` is initialized
-            list.cards.push(card);
-          }
-        });
+  addCardToList(list: List): void {
+
+    if (!list.id) {
+      console.error('List ID is undefined. Cannot delete card.');
+      return;
     }
+
+    this.cardService.add_card(list.id, { username: '', title: 'New Card', description: '', activity: '' })
+      .subscribe((card: Card) => {
+        const list = this.lists.find(l => l.id === list.id); // Use `find` instead of `filter`
+        if (list) {
+          list.cards.push(card);
+        }
+      });
   }
   
 
