@@ -1,20 +1,35 @@
+<div class="card-container">
+  <div *ngIf="!card.isEditing" class="view-section">
+    <p><strong>Username:</strong> {{ card.username }}</p>
+    <p><strong>Title:</strong> {{ card.title }}</p>
+    <p><strong>Description:</strong> {{ card.description }}</p>
+    <p><strong>Activity:</strong> {{ card.activity }}</p>
+    <div class="button-container">
+      <button (click)="editCard(card)">Update Card</button>
+      <button *ngIf="list.id && card.id" (click)="deleteCard(list.id!, card.id!)">Delete Card</button>
+    </div>
+  </div>
 
-<div *ngIf="!card.isEditing" class="view-section">
-  <p><strong>Username:</strong> {{ card.username }}</p>
-  <p><strong>Title:</strong> {{ card.title }}</p>
-  <p><strong>Description:</strong> {{ card.description }}</p>
-  <p><strong>Activity:</strong> {{ card.activity }}</p>
-  <button (click)="editCard(card)">Update Card</button>
+  <div *ngIf="card.isEditing" class="edit-section">
+    <form (ngSubmit)="saveCard(card, list!)">
+      <div>
+        <label for="editingUsername">Username:</label>
+        <input type="text" id="editingUsername" [(ngModel)]="card.editingUsername" name="editingUsername" required>
+      </div>
+      <div>
+        <label for="editingTitle">Title:</label>
+        <input type="text" id="editingTitle" [(ngModel)]="card.editingTitle" name="editingTitle" required>
+      </div>
+      <div>
+        <label for="editingDescription">Description:</label>
+        <textarea id="editingDescription" [(ngModel)]="card.editingDescription" name="editingDescription" required></textarea>
+      </div>
+      <div>
+        <label for="editingActivity">Activity:</label>
+        <input type="text" id="editingActivity" [(ngModel)]="card.editingActivity" name="editingActivity" required>
+      </div>
+      <button type="submit">Save</button>
+      <button type="button" (click)="cancelEdit(card)">Cancel</button>
+    </form>
+  </div>
 </div>
-
-<div *ngIf="card.isEditing" class="edit-section">
-  <p><strong>Username:</strong> {{ card.editingUsername }}></p>
-  <p><strong>Title:</strong> {{ card.editingTitle }}</p>
-  <p><strong>Description:</strong> {{ card.editingDescription }}</p>
-  <p><strong>Activity:</strong> {{ card.editingActivity }}</p>
-  <button (click)="saveCard(card, list!)">Save</button>
-  <button (click)="cancelEdit(card)">Cancel</button>
-</div>
-
-<button *ngIf="list.id && card.id && !card.isEditing" (click)="deleteCard(list.id!, card.id!)">Delete Card</button>
-

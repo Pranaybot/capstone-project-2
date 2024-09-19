@@ -1,4 +1,3 @@
-
 @import '../utilities/variables';
 
 button {
@@ -9,10 +8,15 @@ button {
   cursor: pointer;
   margin-top: 8px;
   padding: 8px;
-  width: 100%;
+  width: 100%; // This needs to be adjusted based on your layout needs
   font-size: 1rem;
   text-align: center;
   transition: background-color 0.3s ease;
+
+  // Remove width for the Update Card button
+  &.inline {
+    width: auto; // Allow inline buttons to have auto width
+  }
 }
 
 button:hover {
@@ -38,4 +42,3 @@ button:hover {
 .delete-button:hover {
   background-color: $error-hover-color;
 }
-  

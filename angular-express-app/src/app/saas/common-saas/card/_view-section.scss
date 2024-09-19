@@ -1,8 +1,18 @@
-
 .view-section {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-  
+.button-container {
+  display: flex;
+  gap: 10px; /* Adds space between the buttons */
+}
+
+.view-section button {
+  margin-right: 5px; /* Optional margin for spacing */
+}
+
+.edit-section button {
+  margin-right: 5px; /* Optional margin for spacing */
+}

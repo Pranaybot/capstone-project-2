@@ -4,6 +4,7 @@ import { CardService } from "../../../../../services/work-area/card.service";
 import { Card } from "../../../../../shared/models/card";
 import { List } from "../../../../../shared/models/list";
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-card',
@@ -11,7 +12,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./card.component.scss'],
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 })
 export class CardComponent {
