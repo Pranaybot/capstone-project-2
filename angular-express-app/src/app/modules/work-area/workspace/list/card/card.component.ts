@@ -62,7 +62,7 @@ export class CardComponent {
   deleteCard(listId: string, cardId: string): void {
     this.cardService.delete_card(listId, cardId).subscribe(() => {
       if (this.list.cards) {
-        this.list.cards = this.list.cards.filter((l: Card) => l.id !== cardId);
+        this.list.cards = this.list.cards.filter((c: Card) => c.id !== cardId);
       }
     });
   }

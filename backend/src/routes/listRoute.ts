@@ -50,8 +50,19 @@ router.delete('/:id', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Invalid list ID' });
     }
 
+    // Fetch the list details to get its cards
+    const list = await listController.findList(listId);
+    if (!list) {
+      return res.status(404).json({ message: 'List not found' });
+    }
+
+    // Delete each card associated with the list
+    for (const card of list.cards) {
+      await cardController.deleteCard(card.id);
+    }
+
     await listController.deleteList(listId);
-    return res.json({ message: 'List deleted successfully' });
+    return res.json({ message: 'List and its cards deleted successfully' });
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
