@@ -1,4 +1,3 @@
-
 import { Component, Input } from '@angular/core';
 import { CardService } from "../../../../../services/work-area/card.service";
 import { Card } from "../../../../../shared/models/card";
@@ -19,59 +18,51 @@ import { FormsModule } from '@angular/forms';
 export class CardComponent {
   @Input() list!: List;
   @Input() card!: Card;
+  isEditing: boolean = false; // Track edit mode in the component itself
 
   constructor(private cardService: CardService) {}
 
-  editCard(card: Card): void {
-    card.isEditing = true;
-    card.editingUsername = card.username;
-    card.editingTitle = card.title;
-    card.editingDescription = card.description;
-    card.editingActivity = card.activity;
+  editCard(): void {
+    this.isEditing = true; // Set edit mode
   }
-  
 
   saveCard(card: Card, list: List): void {
+
     if (!card.id || !list.id) {
       console.error('Card ID or List ID is undefined. Cannot update card.');
       return;
     }
-  
-    card.isEditing = false;
-    card.username = card.editingUsername ?? card.username;
-    card.title = card.editingTitle ?? card.title;
-    card.description = card.editingDescription ?? card.description;
-    card.activity = card.editingActivity ?? card.activity;
-  
-    this.cardService.update_card(list.id, card.id, card).subscribe((updatedCard: Card) => {
-      if (list.cards) {
+
+    this.cardService.update_card(list.id, card.id, this.card).subscribe((updatedCard: Card) => {
+      if (list.cards) { // Check if cards is defined
         const index = list.cards.findIndex(c => c.id === updatedCard.id);
         if (index !== -1) {
           list.cards[index] = updatedCard;
         }
+      } else {
+        console.error('List cards are undefined.');
       }
     });
-  }
-  
-  
 
-  cancelEdit(card: Card): void {
-    card.isEditing = false;
+    this.isEditing = false; // Exit edit mode
   }
 
-  deleteCard(list: List, card: Card): void {
+  cancelEdit(): void {
+    this.isEditing = false; // Exit edit mode
+  }
 
-    if (!card.id || !list.id) {
-      console.error('Card ID or List ID is undefined. Cannot update card.');
+  deleteCard(list: List): void {
+    if (!this.card.id || !list.id) {
+      console.error('Card ID or List ID is undefined. Cannot delete card.');
       return;
     }
-  
-    this.cardService.delete_card(list.id, card.id).subscribe(() => {
-      if (this.list.cards) {
-        this.list.cards = this.list.cards.filter((c: Card) => c.id !== card.id);
+
+    this.cardService.delete_card(list.id, this.card.id).subscribe(() => {
+      if (this.list.cards) { // Check if cards is defined before filtering
+        this.list.cards = this.list.cards.filter((c: Card) => c.id !== this.card.id);
+      } else {
+        console.error('List cards are undefined.');
       }
     });
   }
-  
 }
-

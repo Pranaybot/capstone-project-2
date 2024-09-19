@@ -89,7 +89,6 @@ export class ListComponent implements OnInit {
     }
   }
   
-
   addNewList(name: string, username: string, title: string, description: string, activity: string): void {
     if (this.lists.length < this.maxLists) {
       this.listService.add_list(name, username, title, description, activity).subscribe((list: List) => {

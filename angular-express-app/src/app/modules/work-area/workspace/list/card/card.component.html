@@ -1,35 +1,35 @@
 <div class="card-container">
-  <div *ngIf="!card.isEditing" class="view-section">
+  <div *ngIf="!isEditing" class="view-section">
     <p><strong>Username:</strong> {{ card.username }}</p>
     <p><strong>Title:</strong> {{ card.title }}</p>
     <p><strong>Description:</strong> {{ card.description }}</p>
     <p><strong>Activity:</strong> {{ card.activity }}</p>
     <div class="button-container">
-      <button (click)="editCard(card)">Update Card</button>
-      <button *ngIf="list && card" (click)="deleteCard(list!, card!)">Delete Card</button>
+      <button (click)="editCard()">Update Card</button>
+      <button *ngIf="list && card" (click)="deleteCard(list)">Delete Card</button>
     </div>
   </div>
 
-  <div *ngIf="card.isEditing" class="edit-section">
+  <div *ngIf="isEditing" class="edit-section">
     <form (ngSubmit)="saveCard(card, list!)">
       <div>
-        <label for="editingUsername">Username:</label>
-        <input type="text" id="editingUsername" [(ngModel)]="card.editingUsername" name="editingUsername" required>
+        <label for="username">Username:</label>
+        <input type="text" id="username" [(ngModel)]="card.username" name="username" required>
       </div>
       <div>
-        <label for="editingTitle">Title:</label>
-        <input type="text" id="editingTitle" [(ngModel)]="card.editingTitle" name="editingTitle" required>
+        <label for="title">Title:</label>
+        <input type="text" id="title" [(ngModel)]="card.title" name="title" required>
       </div>
       <div>
-        <label for="editingDescription">Description:</label>
-        <textarea id="editingDescription" [(ngModel)]="card.editingDescription" name="editingDescription" required></textarea>
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="card.description" name="description" required></textarea>
       </div>
       <div>
-        <label for="editingActivity">Activity:</label>
-        <input type="text" id="editingActivity" [(ngModel)]="card.editingActivity" name="editingActivity" required>
+        <label for="activity">Activity:</label>
+        <input type="text" id="activity" [(ngModel)]="card.activity" name="activity" required>
       </div>
       <button type="submit">Save</button>
-      <button type="button" (click)="cancelEdit(card)">Cancel</button>
+      <button type="button" (click)="cancelEdit()">Cancel</button>
     </form>
   </div>
 </div>
